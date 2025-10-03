@@ -86,7 +86,7 @@ export default function WalnutPrivacyPolicy() {
 
       <h3>4.3 Transit Security</h3>
       <ul>
-        <li>All data transmitted to Anthropic's API is encrypted using TLS 1.2 or higher</li>
+        <li>All data transmitted for document processing is encrypted using TLS 1.2 or higher</li>
         <li>We use secure HTTPS protocols for all network communications</li>
         <li>Documents are only transmitted during processing and are not stored on external servers</li>
       </ul>
@@ -94,10 +94,7 @@ export default function WalnutPrivacyPolicy() {
       <h2>5. DATA SHARING AND DISCLOSURE</h2>
 
       <h3>5.1 Third-Party Services</h3>
-      <p>We share data only with:</p>
-      <ul>
-        <li><strong>Anthropic API:</strong> For document processing only (documents are temporarily processed and not retained)</li>
-      </ul>
+      <p>We use third-party AI services for document processing only. Documents are temporarily processed and not retained by these service providers.</p>
       <p>We do not use any analytics providers or share data with any other third parties.</p>
 
       <h3>5.2 We Never Share</h3>
@@ -163,8 +160,8 @@ export default function WalnutPrivacyPolicy() {
       <h3>9.1 API Processing</h3>
       <p>When you upload documents for processing:</p>
       <ul>
-        <li>Data is transmitted to Anthropic's servers (location may vary)</li>
-        <li>Processing occurs according to Anthropic's data protection standards</li>
+        <li>Data is transmitted to third-party AI service providers (location may vary)</li>
+        <li>Processing occurs according to the service provider's data protection standards</li>
         <li>Extracted data is immediately returned to your device</li>
         <li>No health data is retained on external servers</li>
       </ul>
@@ -237,7 +234,7 @@ export default function WalnutPrivacyPolicy() {
       <h2>15. YOUR CONSENT</h2>
       <p>By using Health Stack, you consent to:</p>
       <ul>
-        <li>Processing of documents through Anthropic's API (temporary, no retention)</li>
+        <li>Processing of documents through third-party AI services (temporary, no retention)</li>
         <li>Storage of health data exclusively on your device</li>
       </ul>
       <p>We do not collect any analytics, usage data, or personal information.</p>
@@ -245,12 +242,12 @@ export default function WalnutPrivacyPolicy() {
 
       <h2>16. CONTACT US</h2>
       <p>If you have questions or concerns about this Privacy Policy, please contact us at:</p>
-      <p><a href="mailto:mayankgandhi50@gmail.com">mayankgandhi50@gmail.com</a></p>
+      <p><a href="mailto:healthstack@mayankgandhi.com">healthstack@mayankgandhi.com</a></p>
 
       <h2>17. LEGAL BASIS FOR PROCESSING</h2>
       <p>We process your information based on:</p>
       <ul>
-        <li><strong>Consent:</strong> For document processing through Anthropic's API</li>
+        <li><strong>Consent:</strong> For document processing through third-party AI services</li>
         <li><strong>Legal Obligation:</strong> When required by law (though we have no access to your device-stored data)</li>
       </ul>
       <p>We do not process any analytics or usage data.</p>
@@ -260,6 +257,16 @@ export default function WalnutPrivacyPolicy() {
 
       <h2>19. DATA PORTABILITY</h2>
       <p>You can export your health data at any time in standard formats. Your data remains on your device, and you can back it up using your device's standard backup mechanisms (such as encrypted device backups).</p>
+
+      <h2>20. APP AVAILABILITY AND SERVICE CONTINUITY</h2>
+      <p>We reserve the right to modify, suspend, or discontinue the Health Stack App at any time, with or without notice. This includes but is not limited to:</p>
+      <ul>
+        <li>Temporary or permanent suspension of the App</li>
+        <li>Removal from the Apple App Store</li>
+        <li>Changes to features, functionality, or third-party integrations</li>
+        <li>Termination of support or updates</li>
+      </ul>
+      <p>We are not liable for any loss, damage, or inconvenience caused by such modifications, suspensions, or discontinuation. Because all your health data is stored locally on your device, you will retain access to your data even if the App is discontinued, suspended, or removed from the App Store.</p>
 
       <p><strong>Last Review Date: 3 Oct 2025</strong></p>
 
