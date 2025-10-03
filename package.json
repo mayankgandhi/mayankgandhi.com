@@ -6,7 +6,8 @@
   "scripts": {
     "build": "remix vite:build",
     "dev": "remix vite:dev",
-    "start": "remix-serve build/server/index.js",
+    "deploy": "npm run build && wrangler pages deploy ./build/client",
+    "preview": "wrangler pages dev ./build/client",
     "typecheck": "tsc"
   },
   "keywords": [],
@@ -14,15 +15,16 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "@remix-run/node": "^2.17.1",
+    "@remix-run/cloudflare": "^2.17.1",
+    "@remix-run/cloudflare-pages": "^2.17.1",
     "@remix-run/react": "^2.17.1",
-    "@remix-run/serve": "^2.17.1",
     "isbot": "^4.4.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "@remix-run/dev": "^2.17.1",
-    "vite": "^6.3.6"
+    "vite": "^6.3.6",
+    "wrangler": "^3.114.14"
   }
 }
