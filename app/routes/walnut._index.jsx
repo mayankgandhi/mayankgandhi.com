@@ -3,8 +3,8 @@ import { Link } from "@remix-run/react";
 export default function WalnutIndex() {
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.6", maxWidth: "800px", margin: "0 auto", padding: "20px", textAlign: "center" }}>
-      <h1>Health Stack</h1>
-      <p>Manage your health documents and information securely on your iOS device</p>
+      <h1>Walnut</h1>
+      <p>Your personal health journal - track your wellness journey securely on your iOS device</p>
 
       <div style={{ marginTop: "40px" }}>
         <h2>Legal Information</h2>
