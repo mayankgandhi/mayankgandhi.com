@@ -1,7 +1,14 @@
-import { Link } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
 import { useState } from "react";
+import { getPosts } from "../utils/posts.server";
+
+export const loader = async () => {
+  const posts = await getPosts();
+  return { posts };
+};
 
 export default function Index() {
+  const { posts } = useLoaderData();
   const [activeTab, setActiveTab] = useState("about");
 
   const tabStyle = (isActive) => ({
@@ -38,6 +45,7 @@ export default function Index() {
           <button onClick={() => setActiveTab("experience")} style={tabStyle(activeTab === "experience")}>Experience</button>
           <button onClick={() => setActiveTab("skills")} style={tabStyle(activeTab === "skills")}>Skills</button>
           <button onClick={() => setActiveTab("apps")} style={tabStyle(activeTab === "apps")}>Apps</button>
+          <button onClick={() => setActiveTab("blog")} style={tabStyle(activeTab === "blog")}>Blog</button>
         </div>
       </nav>
 
@@ -203,6 +211,50 @@ export default function Index() {
                 </Link>
               </div>
             </div>
+          </div>
+        )}
+
+        {activeTab === "blog" && (
+          <div>
+            <h2 style={{ fontSize: "clamp(22px, 4vw, 28px)", fontWeight: "600", color: "#1e293b", marginBottom: "clamp(16px, 3vw, 24px)" }}>Blog</h2>
+            {posts.length === 0 ? (
+              <div style={{ backgroundColor: "white", padding: "clamp(20px, 4vw, 32px)", borderRadius: "12px", boxShadow: "0 1px 3px rgba(0,0,0,0.1)", textAlign: "center" }}>
+                <p style={{ color: "#64748b", fontSize: "clamp(14px, 2vw, 16px)" }}>No blog posts yet. Check back soon!</p>
+              </div>
+            ) : (
+              <div style={{ display: "flex", flexDirection: "column", gap: "clamp(16px, 3vw, 24px)" }}>
+                {posts.map((post) => (
+                  <div key={post.slug} style={{ backgroundColor: "white", padding: "clamp(20px, 4vw, 32px)", borderRadius: "12px", boxShadow: "0 1px 3px rgba(0,0,0,0.1)" }}>
+                    <Link to={`/blog/${post.slug}`} style={{ textDecoration: "none", color: "inherit" }}>
+                      <h3 style={{ marginTop: "0", marginBottom: "8px", fontSize: "clamp(18px, 3vw, 22px)", fontWeight: "600", color: "#1e293b", cursor: "pointer" }}>
+                        {post.title}
+                      </h3>
+                    </Link>
+                    <p style={{ margin: "8px 0", fontSize: "clamp(12px, 2vw, 14px)", color: "#64748b" }}>
+                      {new Date(post.date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
+                    </p>
+                    {post.description && (
+                      <p style={{ margin: "12px 0", fontSize: "clamp(14px, 2vw, 16px)", color: "#475569", lineHeight: "1.6" }}>
+                        {post.description}
+                      </p>
+                    )}
+                    <Link
+                      to={`/blog/${post.slug}`}
+                      style={{
+                        display: "inline-block",
+                        marginTop: "12px",
+                        color: "#007AFF",
+                        fontSize: "clamp(13px, 2vw, 14px)",
+                        fontWeight: "500",
+                        textDecoration: "none"
+                      }}
+                    >
+                      Read more →
+                    </Link>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         )}
       </main>
