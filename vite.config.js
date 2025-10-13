@@ -16,6 +16,13 @@ export default defineConfig({
   ssr: {
     resolve: {
       conditions: ["workerd", "worker", "browser"],
+      externalConditions: ["workerd", "worker"],
+    },
+    noExternal: true,
+  },
+  resolve: {
+    alias: {
+      path: "path-browserify",
     },
   },
 });

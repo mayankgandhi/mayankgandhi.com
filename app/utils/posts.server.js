@@ -1,44 +1,47 @@
-import fs from "fs";
-import path from "path";
 import { marked } from "marked";
 import fm from "front-matter";
 
-const postsPath = path.join(process.cwd(), "app", "posts");
+// Import all markdown files using Vite's glob import
+const postModules = import.meta.glob("../posts/*.md", {
+  query: "?raw",
+  import: "default",
+  eager: true
+});
 
 export async function getPosts() {
-  const dir = await fs.promises.readdir(postsPath);
+  const posts = Object.entries(postModules).map(([filepath, content]) => {
+    // Extract filename from filepath
+    const filename = filepath.split("/").pop();
+    const slug = filename.replace(/\.md$/, "");
 
-  const posts = await Promise.all(
-    dir
-      .filter(filename => filename.endsWith(".md"))
-      .map(async filename => {
-        const file = await fs.promises.readFile(
-          path.join(postsPath, filename),
-          "utf-8"
-        );
-        const { attributes, body } = fm(file);
+    // Parse frontmatter
+    const { attributes, body } = fm(content);
 
-        return {
-          slug: filename.replace(/\.md$/, ""),
-          title: attributes.title,
-          date: attributes.date,
-          description: attributes.description || "",
-          content: body
-        };
-      })
-  );
+    return {
+      slug,
+      title: attributes.title,
+      date: attributes.date,
+      description: attributes.description || "",
+      content: body
+    };
+  });
 
   // Sort posts by date (newest first)
   return posts.sort((a, b) => new Date(b.date) - new Date(a.date));
 }
 
 export async function getPost(slug) {
-  const file = await fs.promises.readFile(
-    path.join(postsPath, `${slug}.md`),
-    "utf-8"
+  // Find the matching post file
+  const postPath = Object.keys(postModules).find(path =>
+    path.endsWith(`${slug}.md`)
   );
 
-  const { attributes, body } = fm(file);
+  if (!postPath) {
+    throw new Error(`Post not found: ${slug}`);
+  }
+
+  const content = postModules[postPath];
+  const { attributes, body } = fm(content);
   const html = marked(body);
 
   return {
