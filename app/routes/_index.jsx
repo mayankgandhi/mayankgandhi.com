@@ -194,21 +194,38 @@ export default function Index() {
                   Features automatic prescription parsing, medication reminders, follow-up scheduling,
                   and real-time health metrics tracking using SwiftUI and Swift Data.
                 </p>
-                <Link
-                  to="/walnut"
-                  style={{
-                    display: "inline-block",
-                    padding: "10px 20px",
-                    backgroundColor: "#007AFF",
-                    color: "white",
-                    textDecoration: "none",
-                    borderRadius: "8px",
-                    fontSize: "clamp(13px, 2vw, 14px)",
-                    fontWeight: "500"
-                  }}
-                >
-                  Learn More
-                </Link>
+                <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
+                  <Link
+                    to="/walnut"
+                    style={{
+                      display: "inline-block",
+                      padding: "10px 20px",
+                      backgroundColor: "#007AFF",
+                      color: "white",
+                      textDecoration: "none",
+                      borderRadius: "8px",
+                      fontSize: "clamp(13px, 2vw, 14px)",
+                      fontWeight: "500"
+                    }}
+                  >
+                    Learn More
+                  </Link>
+                  <a
+                    href="#"
+                    style={{
+                      display: "inline-block",
+                      padding: "10px 20px",
+                      backgroundColor: "#f1f5f9",
+                      color: "#334155",
+                      textDecoration: "none",
+                      borderRadius: "8px",
+                      fontSize: "clamp(13px, 2vw, 14px)",
+                      fontWeight: "500"
+                    }}
+                  >
+                    App Store
+                  </a>
+                </div>
               </div>
 
               <div style={{ backgroundColor: "white", padding: "clamp(20px, 4vw, 32px)", borderRadius: "12px", boxShadow: "0 1px 3px rgba(0,0,0,0.1)" }}>
@@ -218,21 +235,38 @@ export default function Index() {
                   and medication schedules. Features customizable alarms, recurring reminders, smart notifications,
                   and an intuitive interface for managing all your important events in one place.
                 </p>
-                <Link
-                  to="/ticker"
-                  style={{
-                    display: "inline-block",
-                    padding: "10px 20px",
-                    backgroundColor: "#007AFF",
-                    color: "white",
-                    textDecoration: "none",
-                    borderRadius: "8px",
-                    fontSize: "clamp(13px, 2vw, 14px)",
-                    fontWeight: "500"
-                  }}
-                >
-                  Learn More
-                </Link>
+                <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
+                  <Link
+                    to="/ticker"
+                    style={{
+                      display: "inline-block",
+                      padding: "10px 20px",
+                      backgroundColor: "#007AFF",
+                      color: "white",
+                      textDecoration: "none",
+                      borderRadius: "8px",
+                      fontSize: "clamp(13px, 2vw, 14px)",
+                      fontWeight: "500"
+                    }}
+                  >
+                    Learn More
+                  </Link>
+                  <a
+                    href="#"
+                    style={{
+                      display: "inline-block",
+                      padding: "10px 20px",
+                      backgroundColor: "#f1f5f9",
+                      color: "#334155",
+                      textDecoration: "none",
+                      borderRadius: "8px",
+                      fontSize: "clamp(13px, 2vw, 14px)",
+                      fontWeight: "500"
+                    }}
+                  >
+                    App Store
+                  </a>
+                </div>
               </div>
             </div>
           </div>

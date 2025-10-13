@@ -1,6 +1,6 @@
 import { Link } from "@remix-run/react";
 
-export default function CashewIndex() {
+export default function TickerIndex() {
   return (
     <div style={{
       fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif",
@@ -20,17 +20,17 @@ export default function CashewIndex() {
           height: "clamp(100px, 20vw, 140px)",
           margin: "0 auto 32px",
           borderRadius: "clamp(22px, 4vw, 30px)",
-          backgroundColor: "#007AFF",
+          backgroundColor: "#FF9500",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          boxShadow: "0 10px 40px rgba(0, 122, 255, 0.3)"
+          boxShadow: "0 10px 40px rgba(255, 149, 0, 0.3)"
         }}>
           <span style={{
             fontSize: "clamp(48px, 10vw, 64px)",
             fontWeight: "600",
             color: "white"
-          }}>💳</span>
+          }}>⏰</span>
         </div>
 
         {/* App Name */}
@@ -40,7 +40,7 @@ export default function CashewIndex() {
           color: "#1d1d1f",
           margin: "0 0 16px 0",
           letterSpacing: "-0.02em"
-        }}>Cashew</h1>
+        }}>Ticker</h1>
 
         {/* Tagline */}
         <p style={{
@@ -49,7 +49,7 @@ export default function CashewIndex() {
           color: "#6e6e73",
           margin: "0 0 40px 0",
           letterSpacing: "-0.01em"
-        }}>Your Personal Credit Card Dashboard</p>
+        }}>Never Miss What Matters</p>
 
         {/* App Store Button */}
         <a
@@ -57,21 +57,21 @@ export default function CashewIndex() {
           style={{
             display: "inline-block",
             padding: "14px 32px",
-            backgroundColor: "#007AFF",
+            backgroundColor: "#FF9500",
             color: "white",
             textDecoration: "none",
             borderRadius: "100px",
             fontSize: "17px",
             fontWeight: "500",
             transition: "all 0.3s ease",
-            boxShadow: "0 4px 20px rgba(0, 122, 255, 0.3)"
+            boxShadow: "0 4px 20px rgba(255, 149, 0, 0.3)"
           }}
         >
           Download on the App Store
         </a>
       </div>
 
-      {/* Feature Section 1 - Track Your Cards */}
+      {/* Feature Section 1 - Tasks & Reminders */}
       <div style={{
         backgroundColor: "#f5f5f7",
         padding: "clamp(60px, 10vw, 100px) clamp(20px, 5vw, 40px)"
@@ -87,7 +87,7 @@ export default function CashewIndex() {
             color: "#1d1d1f",
             margin: "0 0 16px 0",
             letterSpacing: "-0.02em"
-          }}>Track All Your Cards in One Place</h2>
+          }}>All Your Tasks in One Place</h2>
           <p style={{
             fontSize: "clamp(17px, 2.5vw, 21px)",
             color: "#6e6e73",
@@ -97,7 +97,7 @@ export default function CashewIndex() {
             marginRight: "auto",
             lineHeight: "1.5"
           }}>
-            Keep track of all your credit cards, their balances, and payment due dates. Never miss a payment again.
+            Organize your daily tasks, important events, and reminders with an intuitive interface that keeps you focused.
           </p>
 
           {/* Placeholder for Screenshot */}
@@ -113,12 +113,12 @@ export default function CashewIndex() {
             <span style={{
               fontSize: "clamp(60px, 10vw, 100px)",
               opacity: 0.3
-            }}>📱</span>
+            }}>✓</span>
           </div>
         </div>
       </div>
 
-      {/* Feature Section 2 - Widgets */}
+      {/* Feature Section 2 - Customizable Alarms */}
       <div style={{
         backgroundColor: "#ffffff",
         padding: "clamp(60px, 10vw, 100px) clamp(20px, 5vw, 40px)"
@@ -134,7 +134,7 @@ export default function CashewIndex() {
             color: "#1d1d1f",
             margin: "0 0 16px 0",
             letterSpacing: "-0.02em"
-          }}>Homescreen & Lockscreen Widgets</h2>
+          }}>Customizable Alarms</h2>
           <p style={{
             fontSize: "clamp(17px, 2.5vw, 21px)",
             color: "#6e6e73",
@@ -144,7 +144,7 @@ export default function CashewIndex() {
             marginRight: "auto",
             lineHeight: "1.5"
           }}>
-            Quick access to your credit card information right from your home screen or lock screen.
+            Set up alarms with custom sounds, snooze options, and repeat patterns. Wake up your way.
           </p>
 
           {/* Placeholder for Screenshot */}
@@ -160,12 +160,12 @@ export default function CashewIndex() {
             <span style={{
               fontSize: "clamp(60px, 10vw, 100px)",
               opacity: 0.3
-            }}>🏠</span>
+            }}>🔔</span>
           </div>
         </div>
       </div>
 
-      {/* Feature Section 3 - Notifications */}
+      {/* Feature Section 3 - Recurring Reminders */}
       <div style={{
         backgroundColor: "#f5f5f7",
         padding: "clamp(60px, 10vw, 100px) clamp(20px, 5vw, 40px)"
@@ -181,7 +181,7 @@ export default function CashewIndex() {
             color: "#1d1d1f",
             margin: "0 0 16px 0",
             letterSpacing: "-0.02em"
-          }}>Smart Payment Reminders</h2>
+          }}>Smart Recurring Reminders</h2>
           <p style={{
             fontSize: "clamp(17px, 2.5vw, 21px)",
             color: "#6e6e73",
@@ -191,7 +191,7 @@ export default function CashewIndex() {
             marginRight: "auto",
             lineHeight: "1.5"
           }}>
-            Get timely notifications before your payment due dates. Stay on top of your finances effortlessly.
+            Set up daily, weekly, or monthly reminders for medications, birthdays, bills, and more. Stay consistent effortlessly.
           </p>
 
           {/* Placeholder for Screenshot */}
@@ -207,7 +207,101 @@ export default function CashewIndex() {
             <span style={{
               fontSize: "clamp(60px, 10vw, 100px)",
               opacity: 0.3
-            }}>🔔</span>
+            }}>🔄</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Feature Section 4 - Important Dates */}
+      <div style={{
+        backgroundColor: "#ffffff",
+        padding: "clamp(60px, 10vw, 100px) clamp(20px, 5vw, 40px)"
+      }}>
+        <div style={{
+          maxWidth: "1200px",
+          margin: "0 auto",
+          textAlign: "center"
+        }}>
+          <h2 style={{
+            fontSize: "clamp(28px, 5vw, 48px)",
+            fontWeight: "700",
+            color: "#1d1d1f",
+            margin: "0 0 16px 0",
+            letterSpacing: "-0.02em"
+          }}>Remember Important Dates</h2>
+          <p style={{
+            fontSize: "clamp(17px, 2.5vw, 21px)",
+            color: "#6e6e73",
+            margin: "0 0 60px 0",
+            maxWidth: "600px",
+            marginLeft: "auto",
+            marginRight: "auto",
+            lineHeight: "1.5"
+          }}>
+            Track birthdays, anniversaries, and special occasions. Get advance notifications so you're always prepared.
+          </p>
+
+          {/* Placeholder for Screenshot */}
+          <div style={{
+            backgroundColor: "#f5f5f7",
+            borderRadius: "clamp(20px, 3vw, 32px)",
+            height: "clamp(400px, 50vw, 600px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            boxShadow: "0 20px 60px rgba(0, 0, 0, 0.1)"
+          }}>
+            <span style={{
+              fontSize: "clamp(60px, 10vw, 100px)",
+              opacity: 0.3
+            }}>🎂</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Feature Section 5 - Intuitive Interface */}
+      <div style={{
+        backgroundColor: "#f5f5f7",
+        padding: "clamp(60px, 10vw, 100px) clamp(20px, 5vw, 40px)"
+      }}>
+        <div style={{
+          maxWidth: "1200px",
+          margin: "0 auto",
+          textAlign: "center"
+        }}>
+          <h2 style={{
+            fontSize: "clamp(28px, 5vw, 48px)",
+            fontWeight: "700",
+            color: "#1d1d1f",
+            margin: "0 0 16px 0",
+            letterSpacing: "-0.02em"
+          }}>Beautiful & Intuitive</h2>
+          <p style={{
+            fontSize: "clamp(17px, 2.5vw, 21px)",
+            color: "#6e6e73",
+            margin: "0 0 60px 0",
+            maxWidth: "600px",
+            marginLeft: "auto",
+            marginRight: "auto",
+            lineHeight: "1.5"
+          }}>
+            Clean design that's easy to use. Manage all your important events from a single, elegant interface.
+          </p>
+
+          {/* Placeholder for Screenshot */}
+          <div style={{
+            backgroundColor: "#e8e8ed",
+            borderRadius: "clamp(20px, 3vw, 32px)",
+            height: "clamp(400px, 50vw, 600px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            boxShadow: "0 20px 60px rgba(0, 0, 0, 0.1)"
+          }}>
+            <span style={{
+              fontSize: "clamp(60px, 10vw, 100px)",
+              opacity: 0.3
+            }}>✨</span>
           </div>
         </div>
       </div>
@@ -232,68 +326,16 @@ export default function CashewIndex() {
             color: "#1d1d1f",
             margin: "0 0 20px 0",
             letterSpacing: "-0.02em"
-          }}>Privacy First</h2>
+          }}>Your Time, Your Privacy</h2>
           <p style={{
             fontSize: "clamp(17px, 2.5vw, 19px)",
             color: "#6e6e73",
             lineHeight: "1.6",
             marginBottom: "40px"
           }}>
-            Your financial data stays on your device. We don't collect, track, or share any of your personal information.
-            What's yours stays yours.
+            All your reminders and tasks stay private on your device. No tracking, no data collection, no sharing.
+            Your schedule is yours alone.
           </p>
-        </div>
-      </div>
-
-      {/* Legal Links Section */}
-      <div style={{
-        backgroundColor: "#f5f5f7",
-        padding: "clamp(40px, 8vw, 60px) clamp(20px, 5vw, 40px)"
-      }}>
-        <div style={{
-          maxWidth: "1200px",
-          margin: "0 auto",
-          textAlign: "center"
-        }}>
-          <div style={{
-            display: "flex",
-            gap: "clamp(16px, 3vw, 24px)",
-            justifyContent: "center",
-            flexWrap: "wrap"
-          }}>
-            <Link
-              to="/cashew/privacy-policy"
-              style={{
-                padding: "12px 24px",
-                backgroundColor: "transparent",
-                color: "#007AFF",
-                textDecoration: "none",
-                borderRadius: "100px",
-                fontSize: "clamp(15px, 2vw, 17px)",
-                fontWeight: "500",
-                border: "2px solid #007AFF",
-                transition: "all 0.3s ease"
-              }}
-            >
-              Privacy Policy
-            </Link>
-            <Link
-              to="/cashew/terms"
-              style={{
-                padding: "12px 24px",
-                backgroundColor: "transparent",
-                color: "#007AFF",
-                textDecoration: "none",
-                borderRadius: "100px",
-                fontSize: "clamp(15px, 2vw, 17px)",
-                fontWeight: "500",
-                border: "2px solid #007AFF",
-                transition: "all 0.3s ease"
-              }}
-            >
-              Terms & Conditions
-            </Link>
-          </div>
         </div>
       </div>
 
@@ -308,14 +350,14 @@ export default function CashewIndex() {
           fontSize: "clamp(13px, 2vw, 15px)",
           margin: "0"
         }}>
-          © 2025 Cashew. All rights reserved.
+          © 2025 Ticker. All rights reserved.
         </p>
         <p style={{
           color: "#86868b",
           fontSize: "clamp(13px, 2vw, 15px)",
           margin: "16px 0 0 0"
         }}>
-          Made with care by <a href="/" style={{ color: "#007AFF", textDecoration: "none" }}>Mayank Gandhi</a>
+          Made with care by <a href="/" style={{ color: "#FF9500", textDecoration: "none" }}>Mayank Gandhi</a>
         </p>
       </div>
     </div>
