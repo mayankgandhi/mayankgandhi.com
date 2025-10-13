@@ -18,7 +18,9 @@ export default defineConfig({
       conditions: ["workerd", "worker", "browser"],
       externalConditions: ["workerd", "worker"],
     },
-    noExternal: true,
+    optimizeDeps: {
+      include: ["react", "react-dom", "react/jsx-runtime", "react/jsx-dev-runtime"],
+    },
   },
   resolve: {
     alias: {

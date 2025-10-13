@@ -1,7 +1,7 @@
 ---
-title: Swift Concurrent Execution: Complete Guide
+title: "Swift Concurrent Execution: Complete Guide"
 date: 2025-10-06
-description: A comprehensive guide to concurrent execution in Swift, covering Task Groups, Dispatch Groups, async/let, Combine, NSOperationQueue, Actors, and performance comparisons.
+description: "A comprehensive guide to concurrent execution in Swift, covering Task Groups, Dispatch Groups, async/let, Combine, NSOperationQueue, Actors, and performance comparisons."
 ---
 
 # Swift Concurrent Execution: Complete Guide
