@@ -210,6 +210,30 @@ export default function Index() {
                   Learn More
                 </Link>
               </div>
+
+              <div style={{ backgroundColor: "white", padding: "clamp(20px, 4vw, 32px)", borderRadius: "12px", boxShadow: "0 1px 3px rgba(0,0,0,0.1)" }}>
+                <h3 style={{ marginTop: "0", fontSize: "clamp(18px, 3vw, 22px)", fontWeight: "600", color: "#1e293b" }}>Ticker - Task & Reminder Manager</h3>
+                <p style={{ color: "#475569", marginBottom: "16px", fontSize: "clamp(14px, 2vw, 16px)" }}>
+                  Comprehensive alarm and reminder app helping users stay on top of daily tasks, important birthdays,
+                  and medication schedules. Features customizable alarms, recurring reminders, smart notifications,
+                  and an intuitive interface for managing all your important events in one place.
+                </p>
+                <Link
+                  to="/ticker"
+                  style={{
+                    display: "inline-block",
+                    padding: "10px 20px",
+                    backgroundColor: "#007AFF",
+                    color: "white",
+                    textDecoration: "none",
+                    borderRadius: "8px",
+                    fontSize: "clamp(13px, 2vw, 14px)",
+                    fontWeight: "500"
+                  }}
+                >
+                  Learn More
+                </Link>
+              </div>
             </div>
           </div>
         )}
