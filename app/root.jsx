@@ -9,6 +9,156 @@ export default function App() {
         <Meta />
         <Links />
         <style>{`
+          :root {
+            --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Noto Sans", Arial, sans-serif;
+            --text: #0f172a;
+            --text-muted: #475569;
+            --bg-page: #f8fafc;
+            --border: #e5e7eb;
+            --accent: #007AFF;
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+          }
+
+          html { color-scheme: light; }
+
+          body {
+            margin: 0;
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--bg-page);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+          }
+
+          a { color: var(--accent); text-decoration: none; }
+
+          .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 16px;
+          }
+
+          /* Header */
+          .site-header {
+            background: linear-gradient(180deg, #eaf2ff 0%, #f7fbff 100%);
+            padding: clamp(24px, 5vw, 56px) 0;
+            border-bottom: 1px solid var(--border);
+          }
+          .site-title {
+            margin: 0;
+            font-size: clamp(36px, 6vw, 56px);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: #0b1220;
+          }
+          .site-subtitle {
+            margin: 8px 0 20px 0;
+            font-size: clamp(18px, 4vw, 24px);
+            font-weight: 500;
+            color: var(--text-muted);
+          }
+          .contact {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            font-size: clamp(12px, 2vw, 14px);
+            color: var(--text-muted);
+          }
+          .contact a { color: var(--text-muted); }
+
+          /* Navigation */
+          .site-nav {
+            background: white;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            padding: 12px 0;
+            backdrop-filter: saturate(180%) blur(8px);
+          }
+          .tabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+          }
+          .tab {
+            background: transparent;
+            color: #334155;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 999px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+          }
+          .tab:hover { background: #f1f5f9; }
+          .tab.is-active {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+          }
+
+          /* Main and layout */
+          .main { padding: clamp(20px, 4vw, 40px) 0; }
+          .stack { display: flex; flex-direction: column; gap: clamp(16px, 3vw, 24px); }
+          .row { display: flex; align-items: flex-start; flex-wrap: wrap; gap: 12px; }
+          .row-between { justify-content: space-between; }
+
+          /* Cards */
+          .card {
+            background: white;
+            padding: clamp(20px, 4vw, 32px);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+          }
+          .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+            gap: clamp(16px, 3vw, 24px);
+          }
+
+          /* Typography */
+          .section-heading {
+            margin-top: 0;
+            margin-bottom: 12px;
+            font-size: clamp(22px, 4vw, 28px);
+            font-weight: 700;
+            color: #0f172a;
+            letter-spacing: -0.01em;
+          }
+          .subheading {
+            margin-top: 0;
+            margin-bottom: 12px;
+            font-size: clamp(18px, 3vw, 20px);
+            font-weight: 600;
+            color: #1e293b;
+          }
+          .text-muted { color: var(--text-muted); }
+
+          /* Buttons */
+          .btn {
+            display: inline-block;
+            padding: 10px 16px;
+            border-radius: 10px;
+            font-size: clamp(13px, 2vw, 14px);
+            font-weight: 600;
+            text-decoration: none;
+            border: 1px solid transparent;
+            transition: filter 0.15s ease, transform 0.08s ease;
+          }
+          .btn:active { transform: translateY(1px); }
+          .btn-primary { background: var(--accent); color: white; }
+          .btn-primary:hover { filter: brightness(0.97); }
+          .btn-secondary { background: #f1f5f9; color: #334155; }
+          .btn-secondary:hover { filter: brightness(0.98); }
+
           .markdown-content h1 {
             font-size: clamp(28px, 5vw, 36px);
             font-weight: 700;
@@ -135,7 +285,7 @@ export default function App() {
           }
         `}</style>
       </head>
-      <body style={{ margin: 0 }}>
+      <body>
         <Outlet />
         <Scripts />
       </body>
