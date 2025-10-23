@@ -1,11 +1,263 @@
 import { Link, useLoaderData } from "@remix-run/react";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useMemo, useCallback, memo } from "react";
 import { getPosts } from "../utils/posts.server";
 
 export const loader = async () => {
   const posts = await getPosts();
   return { posts };
 };
+
+// Static data moved outside component to prevent recreation
+const SKILLS_DATA = {
+  languages: ["Swift", "Objective-C", "Java", "Go", "SQL", "HTML", "CSS"],
+  frameworks: ["SwiftUI", "Combine", "UIKit", "AVFoundation", "CoreML", "CoreData", "MapKit", "Vision", "Lottie", "TCA"],
+  tools: ["Xcode", "Instruments", "MetricKit", "CocoaPods", "SPM", "TestFlight", "Tuist", "Git", "JIRA"]
+};
+
+const NAVIGATION_ITEMS = [
+  { id: "about", label: "About", icon: "👤" },
+  { id: "experience", label: "Experience", icon: "💼" },
+  { id: "skills", label: "Skills", icon: "⚡" },
+  { id: "projects", label: "Projects", icon: "🚀" },
+  { id: "blog", label: "Blog", icon: "📝" }
+];
+
+const SOCIAL_LINKS = [
+  { icon: "💻", href: "https://github.com/mayankgandhi", label: "GitHub" },
+  { icon: "💼", href: "https://linkedin.com/in/mayankgandhi98", label: "LinkedIn" },
+  { icon: "📧", href: "mailto:mayankgandhi50@gmail.com", label: "Email" }
+];
+
+const EXPERIENCE_DATA = [
+  {
+    title: "Senior iOS Engineer",
+    company: "Radius",
+    location: "Hyderabad, IN",
+    period: "Feb '23 - Jul '25",
+    highlights: [
+      "Architected multi-app ecosystem using Tuist for 3 applications, implementing shared design system and networking layer that reduced development time by 40%",
+      "Optimised app performance through systematic profiling, achieving 30% reduction in launch time and 25% decrease in memory usage",
+      "Built comprehensive real estate platform with multi-form offer management and DocuSign API integration",
+      "Developed interactive property mapping with polygon drawing for 2M+ listings",
+      "Mentored developers through technical sessions on modern iOS architectures"
+    ]
+  },
+  {
+    title: "iOS Engineer II",
+    company: "Compass",
+    location: "Hyderabad, IN",
+    period: "Jul '22 - Jan '23",
+    highlights: [
+      "Led Swift modernisation initiative across 35-engineer iOS team implementing Composable Architecture (TCA)",
+      "Reduced infrastructure costs by $200K annually through strategic native routing implementation",
+      "Integrated Core ML client targeting system driving $100M+ in annual revenue",
+      "Established technical documentation standards and provided critical production support"
+    ]
+  },
+  {
+    title: "iOS Engineer",
+    company: "Grab",
+    location: "Hyderabad, IN",
+    period: "Jan '20 - Jul '22",
+    highlights: [
+      "Architected and delivered risk management features reaching 10M+ users",
+      "Implemented complex multi-entry point features using RIBs architecture",
+      "Drove technical excellence through comprehensive documentation standards"
+    ]
+  }
+];
+
+const PROJECTS_DATA = [
+  { name: "Cashew", subtitle: "Credit Card Tracker", icon: "💳", desc: "Published iOS financial management app solving bill tracking and payment oversight challenges. Built with modular Tuist architecture, CoreData persistence, push notifications for payment alerts, home screen widgets, and Combine framework for reactive data binding.", link: "/cashew" },
+  { name: "Walnut", subtitle: "Medical Documents Manager", icon: "🏥", desc: "Personal wellness app addressing medication adherence and prescription management. Features automatic prescription parsing, medication reminders, follow-up scheduling, and real-time health metrics tracking using SwiftUI and Swift Data.", link: "/walnut" },
+  { name: "Ticker", subtitle: "Task & Reminder Manager", icon: "⏰", desc: "Comprehensive alarm and reminder app helping users stay on top of daily tasks, important birthdays, and medication schedules. Features customizable alarms, recurring reminders, smart notifications, and an intuitive interface.", link: "/ticker" }
+];
+
+const STATS_CONFIG = [
+  { value: 6, label: "Years Experience", suffix: "+", duration: 2000 },
+  { value: 300, label: "Cost Savings", prefix: "$", suffix: "K+", duration: 2000 },
+  { value: 10, label: "Million Users", suffix: "M+", duration: 2000 },
+  { value: 3, label: "Major Projects", suffix: "", duration: 1500 }
+];
+
+// Throttle utility function
+const throttle = (func, delay) => {
+  let timeoutId;
+  let lastRan;
+  return function (...args) {
+    if (!lastRan) {
+      func.apply(this, args);
+      lastRan = Date.now();
+    } else {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        if (Date.now() - lastRan >= delay) {
+          func.apply(this, args);
+          lastRan = Date.now();
+        }
+      }, delay - (Date.now() - lastRan));
+    }
+  };
+};
+
+// Memoized floating shapes component
+const FloatingShapes = memo(({ mousePosition }) => (
+  <div style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, zIndex: 1, pointerEvents: "none", overflow: "hidden" }}>
+    <div style={{
+      position: "absolute",
+      top: "10%",
+      left: "5%",
+      width: "300px",
+      height: "300px",
+      background: "radial-gradient(circle, rgba(102, 126, 234, 0.15) 0%, transparent 70%)",
+      borderRadius: "50%",
+      filter: "blur(60px)",
+      transform: `translate(${mousePosition.x * 30}px, ${mousePosition.y * 30}px)`,
+      transition: "transform 0.5s ease-out",
+      willChange: "transform"
+    }} />
+    <div style={{
+      position: "absolute",
+      top: "50%",
+      right: "10%",
+      width: "400px",
+      height: "400px",
+      background: "radial-gradient(circle, rgba(118, 75, 162, 0.12) 0%, transparent 70%)",
+      borderRadius: "50%",
+      filter: "blur(70px)",
+      transform: `translate(${mousePosition.x * -40}px, ${mousePosition.y * -40}px)`,
+      transition: "transform 0.5s ease-out",
+      willChange: "transform"
+    }} />
+    <div style={{
+      position: "absolute",
+      bottom: "10%",
+      left: "30%",
+      width: "350px",
+      height: "350px",
+      background: "radial-gradient(circle, rgba(240, 147, 251, 0.1) 0%, transparent 70%)",
+      borderRadius: "50%",
+      filter: "blur(65px)",
+      transform: `translate(${mousePosition.x * 25}px, ${mousePosition.y * 25}px)`,
+      transition: "transform 0.5s ease-out",
+      willChange: "transform"
+    }} />
+  </div>
+));
+
+FloatingShapes.displayName = "FloatingShapes";
+
+// Memoized navigation component
+const FloatingNav = memo(({ activeSection, scrollToSection }) => (
+  <nav style={{
+    position: "fixed",
+    right: "40px",
+    top: "50%",
+    transform: "translateY(-50%)",
+    zIndex: 100,
+    display: "flex",
+    flexDirection: "column",
+    gap: "20px",
+    padding: "28px 24px",
+    background: "rgba(15, 15, 25, 0.6)",
+    backdropFilter: "blur(20px)",
+    borderRadius: "20px",
+    border: "1px solid rgba(102, 126, 234, 0.2)",
+    boxShadow: "0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)"
+  }}
+  className="floating-nav">
+    {NAVIGATION_ITEMS.map((section) => (
+      <button
+        key={section.id}
+        onClick={() => scrollToSection(section.id)}
+        style={{
+          background: "none",
+          border: "none",
+          cursor: "pointer",
+          display: "flex",
+          alignItems: "center",
+          gap: "12px",
+          padding: "0",
+          transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+          position: "relative"
+        }}
+        className="nav-button"
+        aria-label={`Navigate to ${section.label}`}
+      >
+        <span style={{
+          fontSize: "18px",
+          opacity: activeSection === section.id ? 1 : 0.4,
+          transition: "all 0.3s ease"
+        }}>
+          {section.icon}
+        </span>
+        <div style={{
+          width: activeSection === section.id ? "50px" : "24px",
+          height: "3px",
+          background: activeSection === section.id
+            ? "linear-gradient(90deg, #667eea 0%, #764ba2 100%)"
+            : "rgba(148, 163, 184, 0.3)",
+          borderRadius: "2px",
+          transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+          boxShadow: activeSection === section.id ? "0 0 12px rgba(102, 126, 234, 0.6)" : "none"
+        }} />
+        <span style={{
+          fontSize: "13px",
+          color: activeSection === section.id ? "#667eea" : "#94a3b8",
+          fontWeight: activeSection === section.id ? "600" : "normal",
+          opacity: activeSection === section.id ? 1 : 0,
+          transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+          whiteSpace: "nowrap",
+          letterSpacing: "0.02em",
+          textShadow: activeSection === section.id ? "0 0 8px rgba(102, 126, 234, 0.5)" : "none"
+        }}>
+          {section.label}
+        </span>
+      </button>
+    ))}
+  </nav>
+));
+
+FloatingNav.displayName = "FloatingNav";
+
+// Memoized stats card component
+const StatCard = memo(({ stat, index }) => (
+  <div
+    className="stat-card"
+    style={{
+      textAlign: "center",
+      padding: "32px",
+      background: "rgba(255, 255, 255, 0.02)",
+      border: "1px solid rgba(102, 126, 234, 0.1)",
+      borderRadius: "16px",
+      transition: "all 0.3s ease"
+    }}
+  >
+    <div style={{
+      fontSize: "clamp(36px, 5vw, 48px)",
+      fontWeight: "800",
+      background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+      WebkitBackgroundClip: "text",
+      WebkitTextFillColor: "transparent",
+      backgroundClip: "text",
+      marginBottom: "12px",
+      fontVariantNumeric: "tabular-nums"
+    }}>
+      {stat.prefix || ""}{stat.value}{stat.suffix || ""}
+    </div>
+    <div style={{
+      fontSize: "14px",
+      color: "rgba(255, 255, 255, 0.5)",
+      textTransform: "uppercase",
+      letterSpacing: "0.1em",
+      fontWeight: "600"
+    }}>
+      {stat.label}
+    </div>
+  </div>
+));
+
+StatCard.displayName = "StatCard";
 
 export default function Index() {
   const { posts } = useLoaderData();
@@ -14,63 +266,68 @@ export default function Index() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [stats, setStats] = useState({ years: 0, savings: 0, users: 0, projects: 0 });
 
-  // Mouse tracking for parallax effects
+  // Throttled mouse tracking - only updates every 66ms (15fps) instead of every frame
   useEffect(() => {
-    const handleMouseMove = (e) => {
+    const handleMouseMove = throttle((e) => {
       setMousePosition({
         x: (e.clientX / window.innerWidth) * 2 - 1,
         y: (e.clientY / window.innerHeight) * 2 - 1
       });
-    };
-    window.addEventListener("mousemove", handleMouseMove);
+    }, 66); // ~15fps for smooth performance
+
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  // Animated counters
+  // Optimized animated counters with single interval
   useEffect(() => {
-    const animateValue = (start, end, duration, setter) => {
-      const startTime = Date.now();
-      const timer = setInterval(() => {
-        const now = Date.now();
-        const progress = Math.min((now - startTime) / duration, 1);
-        const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-        const current = Math.floor(start + (end - start) * easeOutQuart);
-        setter(current);
-        if (progress === 1) clearInterval(timer);
-      }, 16);
-    };
+    const startTime = Date.now();
+    const maxDuration = 2000;
 
-    setTimeout(() => {
-      animateValue(0, 6, 2000, (val) => setStats(prev => ({ ...prev, years: val })));
-      animateValue(0, 300, 2000, (val) => setStats(prev => ({ ...prev, savings: val })));
-      animateValue(0, 10, 2000, (val) => setStats(prev => ({ ...prev, users: val })));
-      animateValue(0, 3, 1500, (val) => setStats(prev => ({ ...prev, projects: val })));
-    }, 500);
+    const timer = setInterval(() => {
+      const now = Date.now();
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / maxDuration, 1);
+      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+
+      setStats({
+        years: Math.floor(6 * easeOutQuart),
+        savings: Math.floor(300 * easeOutQuart),
+        users: Math.floor(10 * easeOutQuart),
+        projects: Math.floor(3 * easeOutQuart)
+      });
+
+      if (progress === 1) clearInterval(timer);
+    }, 16);
+
+    return () => clearInterval(timer);
   }, []);
 
-  // Scroll spy
-  useEffect(() => {
-    const handleScroll = () => {
-      const sections = ["about", "experience", "skills", "projects", "blog"];
-      const scrollPosition = window.scrollY + 100;
+  // Memoized scroll handler
+  const handleScroll = useCallback(() => {
+    const sections = ["about", "experience", "skills", "projects", "blog"];
+    const scrollPosition = window.scrollY + 100;
 
-      for (const section of sections) {
-        const element = document.getElementById(section);
-        if (element) {
-          const { offsetTop, offsetHeight } = element;
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setActiveSection(section);
-            break;
-          }
+    for (const section of sections) {
+      const element = document.getElementById(section);
+      if (element) {
+        const { offsetTop, offsetHeight } = element;
+        if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+          setActiveSection(section);
+          break;
         }
       }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    }
   }, []);
 
-  // Intersection Observer
+  // Optimized scroll spy with throttling
+  useEffect(() => {
+    const throttledScroll = throttle(handleScroll, 100);
+    window.addEventListener("scroll", throttledScroll, { passive: true });
+    return () => window.removeEventListener("scroll", throttledScroll);
+  }, [handleScroll]);
+
+  // Optimized intersection observer
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -80,7 +337,7 @@ export default function Index() {
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.1, rootMargin: "0px 0px -100px 0px" }
     );
 
     const sections = document.querySelectorAll("section[id]");
@@ -89,18 +346,21 @@ export default function Index() {
     return () => observer.disconnect();
   }, []);
 
-  const scrollToSection = (sectionId) => {
+  // Memoized scroll to section handler
+  const scrollToSection = useCallback((sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: "smooth", block: "start" });
     }
-  };
+  }, []);
 
-  const skills = {
-    languages: ["Swift", "Objective-C", "Java", "Go", "SQL", "HTML", "CSS"],
-    frameworks: ["SwiftUI", "Combine", "UIKit", "AVFoundation", "CoreML", "CoreData", "MapKit", "Vision", "Lottie", "TCA"],
-    tools: ["Xcode", "Instruments", "MetricKit", "CocoaPods", "SPM", "TestFlight", "Tuist", "Git", "JIRA"]
-  };
+  // Memoized stats display data
+  const statsDisplay = useMemo(() => STATS_CONFIG.map((config, index) => ({
+    value: stats[Object.keys(stats)[index]],
+    label: config.label,
+    prefix: config.prefix,
+    suffix: config.suffix
+  })), [stats]);
 
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.6", minHeight: "100vh", backgroundColor: "#0a0a0f", position: "relative", overflow: "hidden" }}>
@@ -118,121 +378,12 @@ export default function Index() {
       }} />
 
       {/* Floating shapes */}
-      <div style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, zIndex: 1, pointerEvents: "none", overflow: "hidden" }}>
-        <div className="floating-shape" style={{
-          position: "absolute",
-          top: "10%",
-          left: "5%",
-          width: "300px",
-          height: "300px",
-          background: "radial-gradient(circle, rgba(102, 126, 234, 0.15) 0%, transparent 70%)",
-          borderRadius: "50%",
-          filter: "blur(60px)",
-          transform: `translate(${mousePosition.x * 30}px, ${mousePosition.y * 30}px)`,
-          transition: "transform 0.5s ease-out"
-        }} />
-        <div className="floating-shape" style={{
-          position: "absolute",
-          top: "50%",
-          right: "10%",
-          width: "400px",
-          height: "400px",
-          background: "radial-gradient(circle, rgba(118, 75, 162, 0.12) 0%, transparent 70%)",
-          borderRadius: "50%",
-          filter: "blur(70px)",
-          transform: `translate(${mousePosition.x * -40}px, ${mousePosition.y * -40}px)`,
-          transition: "transform 0.5s ease-out"
-        }} />
-        <div className="floating-shape" style={{
-          position: "absolute",
-          bottom: "10%",
-          left: "30%",
-          width: "350px",
-          height: "350px",
-          background: "radial-gradient(circle, rgba(240, 147, 251, 0.1) 0%, transparent 70%)",
-          borderRadius: "50%",
-          filter: "blur(65px)",
-          transform: `translate(${mousePosition.x * 25}px, ${mousePosition.y * 25}px)`,
-          transition: "transform 0.5s ease-out"
-        }} />
-      </div>
+      <FloatingShapes mousePosition={mousePosition} />
 
       {/* Content wrapper */}
       <div style={{ position: "relative", zIndex: 2 }}>
         {/* Enhanced Floating Navigation */}
-        <nav style={{
-          position: "fixed",
-          right: "40px",
-          top: "50%",
-          transform: "translateY(-50%)",
-          zIndex: 100,
-          display: "flex",
-          flexDirection: "column",
-          gap: "20px",
-          padding: "28px 24px",
-          background: "rgba(15, 15, 25, 0.6)",
-          backdropFilter: "blur(20px)",
-          borderRadius: "20px",
-          border: "1px solid rgba(102, 126, 234, 0.2)",
-          boxShadow: "0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)"
-        }}
-        className="floating-nav">
-          {[
-            { id: "about", label: "About", icon: "👤" },
-            { id: "experience", label: "Experience", icon: "💼" },
-            { id: "skills", label: "Skills", icon: "⚡" },
-            { id: "projects", label: "Projects", icon: "🚀" },
-            { id: "blog", label: "Blog", icon: "📝" }
-          ].map((section) => (
-            <button
-              key={section.id}
-              onClick={() => scrollToSection(section.id)}
-              style={{
-                background: "none",
-                border: "none",
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                gap: "12px",
-                padding: "0",
-                transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                position: "relative"
-              }}
-              className="nav-button"
-              aria-label={`Navigate to ${section.label}`}
-            >
-              <span style={{
-                fontSize: "18px",
-                opacity: activeSection === section.id ? 1 : 0.4,
-                transition: "all 0.3s ease"
-              }}>
-                {section.icon}
-              </span>
-              <div style={{
-                width: activeSection === section.id ? "50px" : "24px",
-                height: "3px",
-                background: activeSection === section.id
-                  ? "linear-gradient(90deg, #667eea 0%, #764ba2 100%)"
-                  : "rgba(148, 163, 184, 0.3)",
-                borderRadius: "2px",
-                transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
-                boxShadow: activeSection === section.id ? "0 0 12px rgba(102, 126, 234, 0.6)" : "none"
-              }} />
-              <span style={{
-                fontSize: "13px",
-                color: activeSection === section.id ? "#667eea" : "#94a3b8",
-                fontWeight: activeSection === section.id ? "600" : "normal",
-                opacity: activeSection === section.id ? 1 : 0,
-                transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                whiteSpace: "nowrap",
-                letterSpacing: "0.02em",
-                textShadow: activeSection === section.id ? "0 0 8px rgba(102, 126, 234, 0.5)" : "none"
-              }}>
-                {section.label}
-              </span>
-            </button>
-          ))}
-        </nav>
+        <FloatingNav activeSection={activeSection} scrollToSection={scrollToSection} />
 
         {/* Hero Header */}
         <header style={{
@@ -370,11 +521,7 @@ export default function Index() {
               marginTop: "48px",
               animation: "fadeInUp 0.8s ease-out 0.5s both"
             }}>
-              {[
-                { icon: "💻", href: "https://github.com/mayankgandhi", label: "GitHub" },
-                { icon: "💼", href: "https://linkedin.com/in/mayankgandhi98", label: "LinkedIn" },
-                { icon: "📧", href: "mailto:mayankgandhi50@gmail.com", label: "Email" }
-              ].map((social) => (
+              {SOCIAL_LINKS.map((social) => (
                 <a
                   key={social.label}
                   href={social.href}
@@ -446,46 +593,8 @@ export default function Index() {
               gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
               gap: "40px"
             }}>
-              {[
-                { value: stats.years, label: "Years Experience", suffix: "+" },
-                { value: stats.savings, label: "Cost Savings", prefix: "$", suffix: "K+" },
-                { value: stats.users, label: "Million Users", suffix: "M+" },
-                { value: stats.projects, label: "Major Projects", suffix: "" }
-              ].map((stat, index) => (
-                <div
-                  key={index}
-                  className="stat-card"
-                  style={{
-                    textAlign: "center",
-                    padding: "32px",
-                    background: "rgba(255, 255, 255, 0.02)",
-                    border: "1px solid rgba(102, 126, 234, 0.1)",
-                    borderRadius: "16px",
-                    transition: "all 0.3s ease"
-                  }}
-                >
-                  <div style={{
-                    fontSize: "clamp(36px, 5vw, 48px)",
-                    fontWeight: "800",
-                    background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                    marginBottom: "12px",
-                    fontVariantNumeric: "tabular-nums"
-                  }}>
-                    {stat.prefix}{stat.value}{stat.suffix}
-                  </div>
-                  <div style={{
-                    fontSize: "14px",
-                    color: "rgba(255, 255, 255, 0.5)",
-                    textTransform: "uppercase",
-                    letterSpacing: "0.1em",
-                    fontWeight: "600"
-                  }}>
-                    {stat.label}
-                  </div>
-                </div>
+              {statsDisplay.map((stat, index) => (
+                <StatCard key={index} stat={stat} index={index} />
               ))}
             </div>
           </div>
@@ -650,44 +759,7 @@ export default function Index() {
                 boxShadow: "0 0 10px rgba(102, 126, 234, 0.5)"
               }} />
 
-              {[
-                {
-                  title: "Senior iOS Engineer",
-                  company: "Radius",
-                  location: "Hyderabad, IN",
-                  period: "Feb '23 - Jul '25",
-                  highlights: [
-                    "Architected multi-app ecosystem using Tuist for 3 applications, implementing shared design system and networking layer that reduced development time by 40%",
-                    "Optimised app performance through systematic profiling, achieving 30% reduction in launch time and 25% decrease in memory usage",
-                    "Built comprehensive real estate platform with multi-form offer management and DocuSign API integration",
-                    "Developed interactive property mapping with polygon drawing for 2M+ listings",
-                    "Mentored developers through technical sessions on modern iOS architectures"
-                  ]
-                },
-                {
-                  title: "iOS Engineer II",
-                  company: "Compass",
-                  location: "Hyderabad, IN",
-                  period: "Jul '22 - Jan '23",
-                  highlights: [
-                    "Led Swift modernisation initiative across 35-engineer iOS team implementing Composable Architecture (TCA)",
-                    "Reduced infrastructure costs by $200K annually through strategic native routing implementation",
-                    "Integrated Core ML client targeting system driving $100M+ in annual revenue",
-                    "Established technical documentation standards and provided critical production support"
-                  ]
-                },
-                {
-                  title: "iOS Engineer",
-                  company: "Grab",
-                  location: "Hyderabad, IN",
-                  period: "Jan '20 - Jul '22",
-                  highlights: [
-                    "Architected and delivered risk management features reaching 10M+ users",
-                    "Implemented complex multi-entry point features using RIBs architecture",
-                    "Drove technical excellence through comprehensive documentation standards"
-                  ]
-                }
-              ].map((job, index) => (
+              {EXPERIENCE_DATA.map((job, index) => (
                 <div
                   key={index}
                   className="timeline-item"
@@ -812,7 +884,7 @@ export default function Index() {
               }} />
             </div>
 
-            {Object.entries(skills).map(([category, items], catIndex) => (
+            {Object.entries(SKILLS_DATA).map(([category, items], catIndex) => (
               <div key={category} style={{ marginBottom: "48px" }}>
                 <h3 style={{
                   fontSize: "20px",
@@ -907,11 +979,7 @@ export default function Index() {
               gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 350px), 1fr))",
               gap: "32px"
             }}>
-              {[
-                { name: "Cashew", subtitle: "Credit Card Tracker", icon: "💳", desc: "Published iOS financial management app solving bill tracking and payment oversight challenges. Built with modular Tuist architecture, CoreData persistence, push notifications for payment alerts, home screen widgets, and Combine framework for reactive data binding.", link: "/cashew" },
-                { name: "Walnut", subtitle: "Medical Documents Manager", icon: "🏥", desc: "Personal wellness app addressing medication adherence and prescription management. Features automatic prescription parsing, medication reminders, follow-up scheduling, and real-time health metrics tracking using SwiftUI and Swift Data.", link: "/walnut" },
-                { name: "Ticker", subtitle: "Task & Reminder Manager", icon: "⏰", desc: "Comprehensive alarm and reminder app helping users stay on top of daily tasks, important birthdays, and medication schedules. Features customizable alarms, recurring reminders, smart notifications, and an intuitive interface.", link: "/ticker" }
-              ].map((project, index) => (
+              {PROJECTS_DATA.map((project, index) => (
                 <div
                   key={project.name}
                   className="project-card glass-card"
@@ -1165,6 +1233,10 @@ export default function Index() {
           .floating-nav {
             display: none;
           }
+        }
+
+        .glass-card {
+          will-change: transform;
         }
 
         .glass-card:hover {
