@@ -159,11 +159,11 @@ const FloatingNav = memo(({ activeSection, scrollToSection }) => (
     flexDirection: "column",
     gap: "20px",
     padding: "28px 24px",
-    background: "rgba(15, 15, 25, 0.6)",
+    background: "rgba(255, 255, 255, 0.8)",
     backdropFilter: "blur(20px)",
     borderRadius: "20px",
     border: "1px solid rgba(102, 126, 234, 0.2)",
-    boxShadow: "0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)"
+    boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.5)"
   }}
   className="floating-nav">
     {NAVIGATION_ITEMS.map((section) => (
@@ -247,7 +247,7 @@ const StatCard = memo(({ stat, index }) => (
     </div>
     <div style={{
       fontSize: "14px",
-      color: "rgba(255, 255, 255, 0.5)",
+      color: "rgba(0, 0, 0, 0.5)",
       textTransform: "uppercase",
       letterSpacing: "0.1em",
       fontWeight: "600"
@@ -363,7 +363,7 @@ export default function Index() {
   })), [stats]);
 
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.6", minHeight: "100vh", backgroundColor: "#0a0a0f", position: "relative", overflow: "hidden" }}>
+    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.6", minHeight: "100vh", backgroundColor: "#f8f9fa", position: "relative", overflow: "hidden" }}>
       {/* Animated background grid */}
       <div className="bg-grid" style={{
         position: "fixed",
@@ -426,7 +426,7 @@ export default function Index() {
               margin: "0 0 24px 0",
               fontSize: "clamp(48px, 8vw, 80px)",
               fontWeight: "900",
-              background: "linear-gradient(135deg, #ffffff 0%, #667eea 50%, #764ba2 100%)",
+              background: "linear-gradient(135deg, #1a1a2e 0%, #667eea 50%, #764ba2 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
@@ -442,7 +442,7 @@ export default function Index() {
               margin: "0 0 40px 0",
               fontSize: "clamp(24px, 5vw, 36px)",
               fontWeight: "400",
-              color: "rgba(255, 255, 255, 0.7)",
+              color: "rgba(0, 0, 0, 0.7)",
               letterSpacing: "0.02em",
               animation: "fadeInUp 0.8s ease-out 0.2s both"
             }}>
@@ -451,7 +451,7 @@ export default function Index() {
 
             <p style={{
               fontSize: "clamp(16px, 2.5vw, 20px)",
-              color: "rgba(255, 255, 255, 0.5)",
+              color: "rgba(0, 0, 0, 0.5)",
               maxWidth: "700px",
               margin: "0 auto 48px",
               lineHeight: "1.8",
@@ -474,7 +474,7 @@ export default function Index() {
                 style={{
                   padding: "16px 36px",
                   background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-                  color: "white",
+                  color: "#1a1a1a",
                   textDecoration: "none",
                   borderRadius: "12px",
                   fontSize: "16px",
@@ -482,9 +482,9 @@ export default function Index() {
                   display: "inline-flex",
                   alignItems: "center",
                   gap: "10px",
-                  boxShadow: "0 4px 24px rgba(102, 126, 234, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
+                  boxShadow: "0 4px 24px rgba(102, 126, 234, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.5)",
                   transition: "all 0.3s ease",
-                  border: "1px solid rgba(255, 255, 255, 0.1)"
+                  border: "1px solid rgba(0, 0, 0, 0.1)"
                 }}
               >
                 <span>Get In Touch</span>
@@ -495,8 +495,8 @@ export default function Index() {
                 className="secondary-button"
                 style={{
                   padding: "16px 36px",
-                  background: "rgba(255, 255, 255, 0.05)",
-                  color: "rgba(255, 255, 255, 0.9)",
+                  background: "rgba(0, 0, 0, 0.05)",
+                  color: "rgba(0, 0, 0, 0.9)",
                   textDecoration: "none",
                   borderRadius: "12px",
                   fontSize: "16px",
@@ -504,7 +504,7 @@ export default function Index() {
                   display: "inline-flex",
                   alignItems: "center",
                   gap: "10px",
-                  border: "1px solid rgba(255, 255, 255, 0.1)",
+                  border: "1px solid rgba(0, 0, 0, 0.1)",
                   backdropFilter: "blur(10px)",
                   transition: "all 0.3s ease"
                 }}
@@ -534,8 +534,8 @@ export default function Index() {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    background: "rgba(255, 255, 255, 0.05)",
-                    border: "1px solid rgba(255, 255, 255, 0.1)",
+                    background: "rgba(0, 0, 0, 0.05)",
+                    border: "1px solid rgba(0, 0, 0, 0.1)",
                     borderRadius: "12px",
                     fontSize: "20px",
                     transition: "all 0.3s ease",
@@ -582,7 +582,7 @@ export default function Index() {
         {/* Stats Section */}
         <section style={{
           padding: "80px 24px",
-          background: "rgba(15, 15, 25, 0.5)",
+          background: "rgba(255, 255, 255, 0.75)",
           backdropFilter: "blur(20px)",
           borderTop: "1px solid rgba(102, 126, 234, 0.1)",
           borderBottom: "1px solid rgba(102, 126, 234, 0.1)"
@@ -617,7 +617,7 @@ export default function Index() {
               <h2 style={{
                 fontSize: "clamp(36px, 5vw, 52px)",
                 fontWeight: "800",
-                background: "linear-gradient(135deg, #ffffff 0%, #667eea 100%)",
+                background: "linear-gradient(135deg, #1a1a2e 0%, #667eea 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
@@ -636,11 +636,11 @@ export default function Index() {
             </div>
 
             <div className="glass-card" style={{
-              background: "rgba(15, 15, 25, 0.6)",
+              background: "rgba(255, 255, 255, 0.8)",
               padding: "60px",
               borderRadius: "24px",
               border: "1px solid rgba(102, 126, 234, 0.2)",
-              boxShadow: "0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05)",
+              boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.4)",
               backdropFilter: "blur(20px)",
               position: "relative",
               overflow: "hidden"
@@ -659,7 +659,7 @@ export default function Index() {
 
               <p style={{
                 fontSize: "clamp(18px, 2.5vw, 24px)",
-                color: "rgba(255, 255, 255, 0.8)",
+                color: "rgba(0, 0, 0, 0.8)",
                 lineHeight: "1.8",
                 marginBottom: "48px",
                 position: "relative"
@@ -697,17 +697,17 @@ export default function Index() {
                     <h3 style={{
                       fontSize: "24px",
                       fontWeight: "700",
-                      color: "rgba(255, 255, 255, 0.9)",
+                      color: "rgba(0, 0, 0, 0.9)",
                       margin: "0 0 4px 0"
                     }}>
                       Education
                     </h3>
                   </div>
                 </div>
-                <p style={{ fontSize: "20px", color: "rgba(255, 255, 255, 0.7)", margin: "8px 0", fontWeight: "600" }}>
+                <p style={{ fontSize: "20px", color: "rgba(0, 0, 0, 0.7)", margin: "8px 0", fontWeight: "600" }}>
                   B.S. Computer Science, GPA 3.45
                 </p>
-                <p style={{ fontSize: "18px", color: "rgba(255, 255, 255, 0.5)", margin: "8px 0" }}>
+                <p style={{ fontSize: "18px", color: "rgba(0, 0, 0, 0.5)", margin: "8px 0" }}>
                   University of Arizona, Spring 2019
                 </p>
               </div>
@@ -729,7 +729,7 @@ export default function Index() {
               <h2 style={{
                 fontSize: "clamp(36px, 5vw, 52px)",
                 fontWeight: "800",
-                background: "linear-gradient(135deg, #ffffff 0%, #667eea 100%)",
+                background: "linear-gradient(135deg, #1a1a2e 0%, #667eea 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
@@ -782,11 +782,11 @@ export default function Index() {
                   }} />
 
                   <div className="glass-card" style={{
-                    background: "rgba(15, 15, 25, 0.6)",
+                    background: "rgba(255, 255, 255, 0.8)",
                     padding: "40px",
                     borderRadius: "20px",
                     border: "1px solid rgba(102, 126, 234, 0.2)",
-                    boxShadow: "0 8px 32px rgba(0, 0, 0, 0.4)",
+                    boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
                     backdropFilter: "blur(20px)",
                     transition: "all 0.3s ease"
                   }}>
@@ -803,7 +803,7 @@ export default function Index() {
                           margin: "0 0 12px 0",
                           fontSize: "clamp(20px, 3vw, 26px)",
                           fontWeight: "700",
-                          color: "rgba(255, 255, 255, 0.95)"
+                          color: "rgba(0, 0, 0, 0.95)"
                         }}>
                           {job.title}
                         </h3>
@@ -818,7 +818,7 @@ export default function Index() {
                         }}>
                           {job.company}
                         </p>
-                        <p style={{ margin: "0", fontSize: "14px", color: "rgba(255, 255, 255, 0.4)" }}>
+                        <p style={{ margin: "0", fontSize: "14px", color: "rgba(0, 0, 0, 0.4)" }}>
                           📍 {job.location}
                         </p>
                       </div>
@@ -828,7 +828,7 @@ export default function Index() {
                         border: "1px solid rgba(102, 126, 234, 0.3)",
                         borderRadius: "10px",
                         fontSize: "14px",
-                        color: "rgba(255, 255, 255, 0.7)",
+                        color: "rgba(0, 0, 0, 0.7)",
                         fontWeight: "600"
                       }}>
                         {job.period}
@@ -837,7 +837,7 @@ export default function Index() {
                     <ul style={{
                       margin: "0",
                       paddingLeft: "24px",
-                      color: "rgba(255, 255, 255, 0.6)",
+                      color: "rgba(0, 0, 0, 0.6)",
                       fontSize: "16px",
                       lineHeight: "1.8"
                     }}>
@@ -866,7 +866,7 @@ export default function Index() {
               <h2 style={{
                 fontSize: "clamp(36px, 5vw, 52px)",
                 fontWeight: "800",
-                background: "linear-gradient(135deg, #ffffff 0%, #667eea 100%)",
+                background: "linear-gradient(135deg, #1a1a2e 0%, #667eea 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
@@ -889,7 +889,7 @@ export default function Index() {
                 <h3 style={{
                   fontSize: "20px",
                   fontWeight: "700",
-                  color: "rgba(255, 255, 255, 0.9)",
+                  color: "rgba(0, 0, 0, 0.9)",
                   marginBottom: "24px",
                   textTransform: "capitalize",
                   display: "flex",
@@ -924,7 +924,7 @@ export default function Index() {
                         background: "rgba(102, 126, 234, 0.1)",
                         border: "1px solid rgba(102, 126, 234, 0.3)",
                         borderRadius: "12px",
-                        color: "rgba(255, 255, 255, 0.8)",
+                        color: "rgba(0, 0, 0, 0.8)",
                         fontSize: "15px",
                         fontWeight: "600",
                         transition: "all 0.3s ease",
@@ -956,7 +956,7 @@ export default function Index() {
               <h2 style={{
                 fontSize: "clamp(36px, 5vw, 52px)",
                 fontWeight: "800",
-                background: "linear-gradient(135deg, #ffffff 0%, #667eea 100%)",
+                background: "linear-gradient(135deg, #1a1a2e 0%, #667eea 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
@@ -984,11 +984,11 @@ export default function Index() {
                   key={project.name}
                   className="project-card glass-card"
                   style={{
-                    background: "rgba(15, 15, 25, 0.6)",
+                    background: "rgba(255, 255, 255, 0.8)",
                     padding: "40px",
                     borderRadius: "24px",
                     border: "1px solid rgba(102, 126, 234, 0.2)",
-                    boxShadow: "0 8px 32px rgba(0, 0, 0, 0.4)",
+                    boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
                     backdropFilter: "blur(20px)",
                     display: "flex",
                     flexDirection: "column",
@@ -1028,7 +1028,7 @@ export default function Index() {
                     marginBottom: "8px",
                     fontSize: "26px",
                     fontWeight: "700",
-                    color: "rgba(255, 255, 255, 0.95)"
+                    color: "rgba(0, 0, 0, 0.95)"
                   }}>
                     {project.name}
                   </h3>
@@ -1045,7 +1045,7 @@ export default function Index() {
                   </p>
 
                   <p style={{
-                    color: "rgba(255, 255, 255, 0.6)",
+                    color: "rgba(0, 0, 0, 0.6)",
                     marginBottom: "32px",
                     fontSize: "16px",
                     lineHeight: "1.7",
@@ -1091,7 +1091,7 @@ export default function Index() {
               <h2 style={{
                 fontSize: "clamp(36px, 5vw, 52px)",
                 fontWeight: "800",
-                background: "linear-gradient(135deg, #ffffff 0%, #667eea 100%)",
+                background: "linear-gradient(135deg, #1a1a2e 0%, #667eea 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
@@ -1111,7 +1111,7 @@ export default function Index() {
 
             {posts.length === 0 ? (
               <div className="glass-card" style={{
-                background: "rgba(15, 15, 25, 0.6)",
+                background: "rgba(255, 255, 255, 0.8)",
                 padding: "80px 40px",
                 borderRadius: "24px",
                 border: "1px solid rgba(102, 126, 234, 0.2)",
@@ -1119,7 +1119,7 @@ export default function Index() {
                 backdropFilter: "blur(20px)"
               }}>
                 <div style={{ fontSize: "64px", marginBottom: "24px" }}>✍️</div>
-                <p style={{ color: "rgba(255, 255, 255, 0.5)", fontSize: "20px", margin: 0 }}>
+                <p style={{ color: "rgba(0, 0, 0, 0.5)", fontSize: "20px", margin: 0 }}>
                   No blog posts yet. Check back soon!
                 </p>
               </div>
@@ -1131,11 +1131,11 @@ export default function Index() {
                     to={`/blog/${post.slug}`}
                     className="blog-card glass-card"
                     style={{
-                      background: "rgba(15, 15, 25, 0.6)",
+                      background: "rgba(255, 255, 255, 0.8)",
                       padding: "48px",
                       borderRadius: "24px",
                       border: "1px solid rgba(102, 126, 234, 0.2)",
-                      boxShadow: "0 8px 32px rgba(0, 0, 0, 0.4)",
+                      boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
                       backdropFilter: "blur(20px)",
                       transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
                       textDecoration: "none",
@@ -1147,7 +1147,7 @@ export default function Index() {
                       marginBottom: "16px",
                       fontSize: "28px",
                       fontWeight: "700",
-                      color: "rgba(255, 255, 255, 0.95)",
+                      color: "rgba(0, 0, 0, 0.95)",
                       transition: "color 0.3s ease"
                     }}>
                       {post.title}
@@ -1170,7 +1170,7 @@ export default function Index() {
                       <p style={{
                         margin: "0",
                         fontSize: "18px",
-                        color: "rgba(255, 255, 255, 0.6)",
+                        color: "rgba(0, 0, 0, 0.6)",
                         lineHeight: "1.7"
                       }}>
                         {post.description}
@@ -1185,7 +1185,7 @@ export default function Index() {
 
         {/* Footer */}
         <footer style={{
-          background: "rgba(15, 15, 25, 0.8)",
+          background: "rgba(255, 255, 255, 0.95)",
           backdropFilter: "blur(20px)",
           borderTop: "1px solid rgba(102, 126, 234, 0.1)",
           padding: "60px 24px",
@@ -1194,7 +1194,7 @@ export default function Index() {
           <p style={{
             margin: "0",
             fontSize: "16px",
-            color: "rgba(255, 255, 255, 0.4)"
+            color: "rgba(0, 0, 0, 0.4)"
           }}>
             © 2025 Mayank Gandhi · Built with passion & precision
           </p>
@@ -1282,11 +1282,11 @@ export default function Index() {
 
         .cta-button:hover {
           transform: translateY(-3px);
-          box-shadow: 0 8px 32px rgba(102, 126, 234, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+          box-shadow: 0 8px 32px rgba(102, 126, 234, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.6);
         }
 
         .secondary-button:hover {
-          background: rgba(255, 255, 255, 0.1);
+          background: rgba(0, 0, 0, 0.1);
           border-color: rgba(102, 126, 234, 0.4);
           transform: translateY(-3px);
         }

@@ -66,7 +66,7 @@ export default function CashewIndex() {
   }, []);
 
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.6", minHeight: "100vh", backgroundColor: "#0a0a0f", position: "relative", overflow: "hidden" }}>
+    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.6", minHeight: "100vh", backgroundColor: "#f8f9fa", position: "relative", overflow: "hidden" }}>
       {/* Animated background grid */}
       <div style={{
         position: "fixed",
@@ -93,15 +93,15 @@ export default function CashewIndex() {
               display: "inline-flex",
               alignItems: "center",
               gap: "8px",
-              color: "rgba(255, 255, 255, 0.6)",
+              color: "rgba(0, 0, 0, 0.6)",
               textDecoration: "none",
               fontSize: "14px",
               fontWeight: "500",
               transition: "all 0.3s ease",
               padding: "8px 16px",
               borderRadius: "8px",
-              background: "rgba(255, 255, 255, 0.05)",
-              border: "1px solid rgba(255, 255, 255, 0.1)"
+              background: "rgba(0, 0, 0, 0.05)",
+              border: "1px solid rgba(0, 0, 0, 0.1)"
             }}
             className="back-link"
           >
@@ -133,7 +133,7 @@ export default function CashewIndex() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              boxShadow: "0 20px 60px rgba(0, 122, 255, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
+              boxShadow: "0 20px 60px rgba(0, 122, 255, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.5)",
               animation: isVisible ? "fadeInUp 0.8s ease-out 0.2s both" : "none"
             }}>
               <span style={{
@@ -147,7 +147,7 @@ export default function CashewIndex() {
               margin: "0 0 24px 0",
               fontSize: "clamp(40px, 7vw, 64px)",
               fontWeight: "900",
-              background: "linear-gradient(135deg, #ffffff 0%, #007AFF 50%, #00BFFF 100%)",
+              background: "linear-gradient(135deg, #1a1a2e 0%, #007AFF 50%, #00BFFF 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
@@ -161,7 +161,7 @@ export default function CashewIndex() {
             <p style={{
               fontSize: "clamp(20px, 4vw, 32px)",
               fontWeight: "400",
-              color: "rgba(255, 255, 255, 0.7)",
+              color: "rgba(0, 0, 0, 0.7)",
               margin: "0 0 48px 0",
               letterSpacing: "0.01em",
               animation: isVisible ? "fadeInUp 0.8s ease-out 0.4s both" : "none"
@@ -179,14 +179,14 @@ export default function CashewIndex() {
                 gap: "10px",
                 padding: "18px 40px",
                 background: "linear-gradient(135deg, #007AFF 0%, #00BFFF 100%)",
-                color: "white",
+                color: "#1a1a1a",
                 textDecoration: "none",
                 borderRadius: "12px",
                 fontSize: "18px",
                 fontWeight: "600",
-                boxShadow: "0 4px 24px rgba(0, 122, 255, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
+                boxShadow: "0 4px 24px rgba(0, 122, 255, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.5)",
                 transition: "all 0.3s ease",
-                border: "1px solid rgba(255, 255, 255, 0.1)",
+                border: "1px solid rgba(0, 0, 0, 0.1)",
                 animation: isVisible ? "fadeInUp 0.8s ease-out 0.5s both" : "none"
               }}
             >
@@ -202,7 +202,7 @@ export default function CashewIndex() {
             <h2 style={{
               fontSize: "clamp(32px, 5vw, 48px)",
               fontWeight: "800",
-              background: "linear-gradient(135deg, #ffffff 0%, #007AFF 100%)",
+              background: "linear-gradient(135deg, #1a1a2e 0%, #007AFF 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
@@ -226,11 +226,11 @@ export default function CashewIndex() {
                 key={index}
                 className="glass-card feature-card"
                 style={{
-                  background: "rgba(15, 15, 25, 0.6)",
+                  background: "rgba(255, 255, 255, 0.8)",
                   padding: "60px",
                   borderRadius: "24px",
                   border: "1px solid rgba(0, 122, 255, 0.2)",
-                  boxShadow: "0 8px 32px rgba(0, 0, 0, 0.4)",
+                  boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
                   backdropFilter: "blur(20px)",
                   transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
                   display: "grid",
@@ -258,13 +258,13 @@ export default function CashewIndex() {
                     margin: "0 0 16px 0",
                     fontSize: "clamp(24px, 4vw, 32px)",
                     fontWeight: "700",
-                    color: "rgba(255, 255, 255, 0.95)"
+                    color: "rgba(0, 0, 0, 0.95)"
                   }}>
                     {feature.title}
                   </h3>
                   <p style={{
                     fontSize: "clamp(16px, 2.5vw, 20px)",
-                    color: "rgba(255, 255, 255, 0.6)",
+                    color: "rgba(0, 0, 0, 0.6)",
                     lineHeight: "1.8",
                     margin: 0
                   }}>
@@ -294,7 +294,7 @@ export default function CashewIndex() {
         {/* Privacy Section */}
         <section style={{
           padding: "100px 24px",
-          background: "rgba(15, 15, 25, 0.5)",
+          background: "rgba(255, 255, 255, 0.75)",
           backdropFilter: "blur(20px)",
           borderTop: "1px solid rgba(0, 122, 255, 0.1)"
         }}>
@@ -316,7 +316,7 @@ export default function CashewIndex() {
             <h2 style={{
               fontSize: "clamp(32px, 5vw, 44px)",
               fontWeight: "700",
-              color: "rgba(255, 255, 255, 0.95)",
+              color: "rgba(0, 0, 0, 0.95)",
               marginBottom: "24px",
               letterSpacing: "-0.02em"
             }}>
@@ -324,7 +324,7 @@ export default function CashewIndex() {
             </h2>
             <p style={{
               fontSize: "clamp(18px, 2.5vw, 22px)",
-              color: "rgba(255, 255, 255, 0.6)",
+              color: "rgba(0, 0, 0, 0.6)",
               lineHeight: "1.8",
               maxWidth: "700px",
               margin: "0 auto 48px"
@@ -373,7 +373,7 @@ export default function CashewIndex() {
 
         {/* Footer */}
         <footer style={{
-          background: "rgba(15, 15, 25, 0.8)",
+          background: "rgba(255, 255, 255, 0.95)",
           backdropFilter: "blur(20px)",
           borderTop: "1px solid rgba(0, 122, 255, 0.1)",
           padding: "60px 24px",
@@ -382,14 +382,14 @@ export default function CashewIndex() {
           <p style={{
             margin: "0 0 16px 0",
             fontSize: "15px",
-            color: "rgba(255, 255, 255, 0.4)"
+            color: "rgba(0, 0, 0, 0.4)"
           }}>
             © 2025 Cashew. All rights reserved.
           </p>
           <p style={{
             margin: "0",
             fontSize: "15px",
-            color: "rgba(255, 255, 255, 0.4)"
+            color: "rgba(0, 0, 0, 0.4)"
           }}>
             Made with care by{" "}
             <Link to="/" style={{
@@ -435,7 +435,7 @@ export default function CashewIndex() {
 
         .cta-button:hover {
           transform: translateY(-3px);
-          box-shadow: 0 8px 32px rgba(0, 122, 255, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+          box-shadow: 0 8px 32px rgba(0, 122, 255, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.6);
         }
 
         .outline-button:hover {
@@ -445,8 +445,8 @@ export default function CashewIndex() {
         }
 
         .back-link:hover {
-          background: rgba(255, 255, 255, 0.1);
-          color: rgba(255, 255, 255, 0.9);
+          background: rgba(0, 0, 0, 0.1);
+          color: rgba(0, 0, 0, 0.9);
         }
 
         * {

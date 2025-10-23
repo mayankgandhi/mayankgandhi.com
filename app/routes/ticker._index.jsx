@@ -1,365 +1,426 @@
 import { Link } from "@remix-run/react";
+import { memo, useState, useEffect } from "react";
+
+// Static data
+const FEATURES = [
+  {
+    title: "All Your Tasks in One Place",
+    description: "Organize your daily tasks, important events, and reminders with an intuitive interface that keeps you focused.",
+    icon: "✓"
+  },
+  {
+    title: "Customizable Alarms",
+    description: "Set up alarms with custom sounds, snooze options, and repeat patterns. Wake up your way.",
+    icon: "🔔"
+  },
+  {
+    title: "Smart Recurring Reminders",
+    description: "Set up daily, weekly, or monthly reminders for medications, birthdays, bills, and more. Stay consistent effortlessly.",
+    icon: "🔄"
+  },
+  {
+    title: "Remember Important Dates",
+    description: "Track birthdays, anniversaries, and special occasions. Get advance notifications so you're always prepared.",
+    icon: "🎂"
+  },
+  {
+    title: "Beautiful & Intuitive",
+    description: "Clean design that's easy to use. Manage all your important events from a single, elegant interface.",
+    icon: "✨"
+  }
+];
+
+// Memoized floating shapes
+const FloatingShapes = memo(() => (
+  <div style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, zIndex: 0, pointerEvents: "none", overflow: "hidden" }}>
+    <div style={{
+      position: "absolute",
+      top: "10%",
+      left: "5%",
+      width: "300px",
+      height: "300px",
+      background: "radial-gradient(circle, rgba(255, 149, 0, 0.15) 0%, transparent 70%)",
+      borderRadius: "50%",
+      filter: "blur(60px)"
+    }} />
+    <div style={{
+      position: "absolute",
+      top: "50%",
+      right: "10%",
+      width: "400px",
+      height: "400px",
+      background: "radial-gradient(circle, rgba(255, 149, 0, 0.12) 0%, transparent 70%)",
+      borderRadius: "50%",
+      filter: "blur(70px)"
+    }} />
+    <div style={{
+      position: "absolute",
+      bottom: "10%",
+      left: "30%",
+      width: "350px",
+      height: "350px",
+      background: "radial-gradient(circle, rgba(255, 159, 10, 0.1) 0%, transparent 70%)",
+      borderRadius: "50%",
+      filter: "blur(65px)"
+    }} />
+  </div>
+));
+
+FloatingShapes.displayName = "FloatingShapes";
 
 export default function TickerIndex() {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
+
   return (
-    <div style={{
-      fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif",
-      minHeight: "100vh",
-      backgroundColor: "#ffffff"
-    }}>
-      {/* Hero Section */}
+    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.6", minHeight: "100vh", backgroundColor: "#f8f9fa", position: "relative", overflow: "hidden" }}>
+      {/* Animated background grid */}
       <div style={{
-        maxWidth: "1200px",
-        margin: "0 auto",
-        padding: "clamp(60px, 10vw, 120px) clamp(20px, 5vw, 40px)",
-        textAlign: "center"
-      }}>
-        {/* App Icon */}
-        <div style={{
-          width: "clamp(100px, 20vw, 140px)",
-          height: "clamp(100px, 20vw, 140px)",
-          margin: "0 auto 32px",
-          borderRadius: "clamp(22px, 4vw, 30px)",
-          backgroundColor: "#FF9500",
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundImage: "linear-gradient(rgba(255, 149, 0, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 149, 0, 0.03) 1px, transparent 1px)",
+        backgroundSize: "50px 50px",
+        zIndex: 0,
+        pointerEvents: "none"
+      }} />
+
+      {/* Floating shapes */}
+      <FloatingShapes />
+
+      {/* Content */}
+      <div style={{ position: "relative", zIndex: 1 }}>
+        {/* Back to Home Link */}
+        <div style={{ padding: "24px", maxWidth: "1200px", margin: "0 auto" }}>
+          <Link
+            to="/"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "8px",
+              color: "rgba(0, 0, 0, 0.6)",
+              textDecoration: "none",
+              fontSize: "14px",
+              fontWeight: "500",
+              transition: "all 0.3s ease",
+              padding: "8px 16px",
+              borderRadius: "8px",
+              background: "rgba(0, 0, 0, 0.05)",
+              border: "1px solid rgba(0, 0, 0, 0.1)"
+            }}
+            className="back-link"
+          >
+            ← Back to Home
+          </Link>
+        </div>
+
+        {/* Hero Section */}
+        <header style={{
+          minHeight: "80vh",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          boxShadow: "0 10px 40px rgba(255, 149, 0, 0.3)"
+          padding: "60px 24px",
+          background: "radial-gradient(ellipse at top, rgba(255, 149, 0, 0.15) 0%, transparent 50%)"
         }}>
-          <span style={{
-            fontSize: "clamp(48px, 10vw, 64px)",
-            fontWeight: "600",
-            color: "white"
-          }}>⏰</span>
-        </div>
-
-        {/* App Name */}
-        <h1 style={{
-          fontSize: "clamp(36px, 6vw, 56px)",
-          fontWeight: "700",
-          color: "#1d1d1f",
-          margin: "0 0 16px 0",
-          letterSpacing: "-0.02em"
-        }}>Ticker</h1>
-
-        {/* Tagline */}
-        <p style={{
-          fontSize: "clamp(20px, 3vw, 28px)",
-          fontWeight: "400",
-          color: "#6e6e73",
-          margin: "0 0 40px 0",
-          letterSpacing: "-0.01em"
-        }}>Never Miss What Matters</p>
-
-        {/* App Store Button */}
-        <a
-          href="#"
-          style={{
-            display: "inline-block",
-            padding: "14px 32px",
-            backgroundColor: "#FF9500",
-            color: "white",
-            textDecoration: "none",
-            borderRadius: "100px",
-            fontSize: "17px",
-            fontWeight: "500",
-            transition: "all 0.3s ease",
-            boxShadow: "0 4px 20px rgba(255, 149, 0, 0.3)"
-          }}
-        >
-          Download on the App Store
-        </a>
-      </div>
-
-      {/* Feature Section 1 - Tasks & Reminders */}
-      <div style={{
-        backgroundColor: "#f5f5f7",
-        padding: "clamp(60px, 10vw, 100px) clamp(20px, 5vw, 40px)"
-      }}>
-        <div style={{
-          maxWidth: "1200px",
-          margin: "0 auto",
-          textAlign: "center"
-        }}>
-          <h2 style={{
-            fontSize: "clamp(28px, 5vw, 48px)",
-            fontWeight: "700",
-            color: "#1d1d1f",
-            margin: "0 0 16px 0",
-            letterSpacing: "-0.02em"
-          }}>All Your Tasks in One Place</h2>
-          <p style={{
-            fontSize: "clamp(17px, 2.5vw, 21px)",
-            color: "#6e6e73",
-            margin: "0 0 60px 0",
-            maxWidth: "600px",
-            marginLeft: "auto",
-            marginRight: "auto",
-            lineHeight: "1.5"
-          }}>
-            Organize your daily tasks, important events, and reminders with an intuitive interface that keeps you focused.
-          </p>
-
-          {/* Placeholder for Screenshot */}
           <div style={{
-            backgroundColor: "#e8e8ed",
-            borderRadius: "clamp(20px, 3vw, 32px)",
-            height: "clamp(400px, 50vw, 600px)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            boxShadow: "0 20px 60px rgba(0, 0, 0, 0.1)"
+            maxWidth: "900px",
+            textAlign: "center",
+            animation: isVisible ? "fadeInUp 0.8s ease-out both" : "none"
           }}>
-            <span style={{
-              fontSize: "clamp(60px, 10vw, 100px)",
-              opacity: 0.3
-            }}>✓</span>
+            {/* App Icon */}
+            <div style={{
+              width: "clamp(120px, 20vw, 160px)",
+              height: "clamp(120px, 20vw, 160px)",
+              margin: "0 auto 40px",
+              borderRadius: "clamp(28px, 5vw, 38px)",
+              background: "linear-gradient(135deg, #FF9500 0%, #FF9F0A 100%)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 20px 60px rgba(255, 149, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.5)",
+              animation: isVisible ? "fadeInUp 0.8s ease-out 0.2s both" : "none"
+            }}>
+              <span style={{
+                fontSize: "clamp(56px, 10vw, 80px)",
+                filter: "drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2))"
+              }}>⏰</span>
+            </div>
+
+            {/* App Name */}
+            <h1 style={{
+              margin: "0 0 24px 0",
+              fontSize: "clamp(40px, 7vw, 64px)",
+              fontWeight: "900",
+              background: "linear-gradient(135deg, #1a1a2e 0%, #FF9500 50%, #FF9F0A 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+              letterSpacing: "-0.03em",
+              animation: isVisible ? "fadeInUp 0.8s ease-out 0.3s both" : "none"
+            }}>
+              Ticker
+            </h1>
+
+            {/* Tagline */}
+            <p style={{
+              fontSize: "clamp(20px, 4vw, 32px)",
+              fontWeight: "400",
+              color: "rgba(0, 0, 0, 0.7)",
+              margin: "0 0 48px 0",
+              letterSpacing: "0.01em",
+              animation: isVisible ? "fadeInUp 0.8s ease-out 0.4s both" : "none"
+            }}>
+              Never Miss What Matters
+            </p>
+
+            {/* App Store Button */}
+            <a
+              href="#"
+              className="cta-button"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "10px",
+                padding: "18px 40px",
+                background: "linear-gradient(135deg, #FF9500 0%, #FF9F0A 100%)",
+                color: "#1a1a1a",
+                textDecoration: "none",
+                borderRadius: "12px",
+                fontSize: "18px",
+                fontWeight: "600",
+                boxShadow: "0 4px 24px rgba(255, 149, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.5)",
+                transition: "all 0.3s ease",
+                border: "1px solid rgba(0, 0, 0, 0.1)",
+                animation: isVisible ? "fadeInUp 0.8s ease-out 0.5s both" : "none"
+              }}
+            >
+              <span>Download on the App Store</span>
+              <span style={{ fontSize: "20px" }}>→</span>
+            </a>
           </div>
-        </div>
-      </div>
+        </header>
 
-      {/* Feature Section 2 - Customizable Alarms */}
-      <div style={{
-        backgroundColor: "#ffffff",
-        padding: "clamp(60px, 10vw, 100px) clamp(20px, 5vw, 40px)"
-      }}>
-        <div style={{
-          maxWidth: "1200px",
-          margin: "0 auto",
-          textAlign: "center"
-        }}>
-          <h2 style={{
-            fontSize: "clamp(28px, 5vw, 48px)",
-            fontWeight: "700",
-            color: "#1d1d1f",
-            margin: "0 0 16px 0",
-            letterSpacing: "-0.02em"
-          }}>Customizable Alarms</h2>
-          <p style={{
-            fontSize: "clamp(17px, 2.5vw, 21px)",
-            color: "#6e6e73",
-            margin: "0 0 60px 0",
-            maxWidth: "600px",
-            marginLeft: "auto",
-            marginRight: "auto",
-            lineHeight: "1.5"
-          }}>
-            Set up alarms with custom sounds, snooze options, and repeat patterns. Wake up your way.
-          </p>
-
-          {/* Placeholder for Screenshot */}
-          <div style={{
-            backgroundColor: "#f5f5f7",
-            borderRadius: "clamp(20px, 3vw, 32px)",
-            height: "clamp(400px, 50vw, 600px)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            boxShadow: "0 20px 60px rgba(0, 0, 0, 0.1)"
-          }}>
-            <span style={{
-              fontSize: "clamp(60px, 10vw, 100px)",
-              opacity: 0.3
-            }}>🔔</span>
+        {/* Features Section */}
+        <main style={{ maxWidth: "1200px", margin: "0 auto", padding: "80px 24px" }}>
+          <div style={{ marginBottom: "80px", textAlign: "center" }}>
+            <h2 style={{
+              fontSize: "clamp(32px, 5vw, 48px)",
+              fontWeight: "800",
+              background: "linear-gradient(135deg, #1a1a2e 0%, #FF9500 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+              marginBottom: "16px",
+              letterSpacing: "-0.02em"
+            }}>
+              Stay Organized, Stay Ahead
+            </h2>
+            <div style={{
+              width: "80px",
+              height: "4px",
+              background: "linear-gradient(90deg, #FF9500 0%, #FF9F0A 100%)",
+              margin: "0 auto",
+              borderRadius: "2px"
+            }} />
           </div>
-        </div>
-      </div>
 
-      {/* Feature Section 3 - Recurring Reminders */}
-      <div style={{
-        backgroundColor: "#f5f5f7",
-        padding: "clamp(60px, 10vw, 100px) clamp(20px, 5vw, 40px)"
-      }}>
-        <div style={{
-          maxWidth: "1200px",
-          margin: "0 auto",
-          textAlign: "center"
-        }}>
-          <h2 style={{
-            fontSize: "clamp(28px, 5vw, 48px)",
-            fontWeight: "700",
-            color: "#1d1d1f",
-            margin: "0 0 16px 0",
-            letterSpacing: "-0.02em"
-          }}>Smart Recurring Reminders</h2>
-          <p style={{
-            fontSize: "clamp(17px, 2.5vw, 21px)",
-            color: "#6e6e73",
-            margin: "0 0 60px 0",
-            maxWidth: "600px",
-            marginLeft: "auto",
-            marginRight: "auto",
-            lineHeight: "1.5"
-          }}>
-            Set up daily, weekly, or monthly reminders for medications, birthdays, bills, and more. Stay consistent effortlessly.
-          </p>
-
-          {/* Placeholder for Screenshot */}
-          <div style={{
-            backgroundColor: "#e8e8ed",
-            borderRadius: "clamp(20px, 3vw, 32px)",
-            height: "clamp(400px, 50vw, 600px)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            boxShadow: "0 20px 60px rgba(0, 0, 0, 0.1)"
-          }}>
-            <span style={{
-              fontSize: "clamp(60px, 10vw, 100px)",
-              opacity: 0.3
-            }}>🔄</span>
+          <div style={{ display: "flex", flexDirection: "column", gap: "60px" }}>
+            {FEATURES.map((feature, index) => (
+              <div
+                key={index}
+                className="glass-card feature-card"
+                style={{
+                  background: "rgba(255, 255, 255, 0.8)",
+                  padding: "60px",
+                  borderRadius: "24px",
+                  border: "1px solid rgba(255, 149, 0, 0.2)",
+                  boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
+                  backdropFilter: "blur(20px)",
+                  transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+                  display: "grid",
+                  gridTemplateColumns: index % 2 === 0 ? "1fr 1fr" : "1fr 1fr",
+                  gap: "60px",
+                  alignItems: "center"
+                }}
+              >
+                <div style={{ order: index % 2 === 0 ? 1 : 2 }}>
+                  <div style={{
+                    width: "80px",
+                    height: "80px",
+                    background: "linear-gradient(135deg, #FF9500 0%, #FF9F0A 100%)",
+                    borderRadius: "20px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: "40px",
+                    marginBottom: "32px",
+                    boxShadow: "0 8px 24px rgba(255, 149, 0, 0.4)"
+                  }}>
+                    {feature.icon}
+                  </div>
+                  <h3 style={{
+                    margin: "0 0 16px 0",
+                    fontSize: "clamp(24px, 4vw, 32px)",
+                    fontWeight: "700",
+                    color: "rgba(0, 0, 0, 0.95)"
+                  }}>
+                    {feature.title}
+                  </h3>
+                  <p style={{
+                    fontSize: "clamp(16px, 2.5vw, 20px)",
+                    color: "rgba(0, 0, 0, 0.6)",
+                    lineHeight: "1.8",
+                    margin: 0
+                  }}>
+                    {feature.description}
+                  </p>
+                </div>
+                <div style={{
+                  order: index % 2 === 0 ? 2 : 1,
+                  background: "rgba(255, 149, 0, 0.05)",
+                  borderRadius: "20px",
+                  height: "clamp(300px, 40vw, 500px)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  border: "1px solid rgba(255, 149, 0, 0.15)"
+                }}>
+                  <span style={{
+                    fontSize: "clamp(80px, 12vw, 120px)",
+                    opacity: 0.3
+                  }}>{feature.icon}</span>
+                </div>
+              </div>
+            ))}
           </div>
-        </div>
-      </div>
+        </main>
 
-      {/* Feature Section 4 - Important Dates */}
-      <div style={{
-        backgroundColor: "#ffffff",
-        padding: "clamp(60px, 10vw, 100px) clamp(20px, 5vw, 40px)"
-      }}>
-        <div style={{
-          maxWidth: "1200px",
-          margin: "0 auto",
-          textAlign: "center"
+        {/* Privacy Section */}
+        <section style={{
+          padding: "100px 24px",
+          background: "rgba(255, 255, 255, 0.75)",
+          backdropFilter: "blur(20px)",
+          borderTop: "1px solid rgba(255, 149, 0, 0.1)"
         }}>
-          <h2 style={{
-            fontSize: "clamp(28px, 5vw, 48px)",
-            fontWeight: "700",
-            color: "#1d1d1f",
-            margin: "0 0 16px 0",
-            letterSpacing: "-0.02em"
-          }}>Remember Important Dates</h2>
-          <p style={{
-            fontSize: "clamp(17px, 2.5vw, 21px)",
-            color: "#6e6e73",
-            margin: "0 0 60px 0",
-            maxWidth: "600px",
-            marginLeft: "auto",
-            marginRight: "auto",
-            lineHeight: "1.5"
-          }}>
-            Track birthdays, anniversaries, and special occasions. Get advance notifications so you're always prepared.
-          </p>
-
-          {/* Placeholder for Screenshot */}
-          <div style={{
-            backgroundColor: "#f5f5f7",
-            borderRadius: "clamp(20px, 3vw, 32px)",
-            height: "clamp(400px, 50vw, 600px)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            boxShadow: "0 20px 60px rgba(0, 0, 0, 0.1)"
-          }}>
-            <span style={{
-              fontSize: "clamp(60px, 10vw, 100px)",
-              opacity: 0.3
-            }}>🎂</span>
+          <div style={{ maxWidth: "900px", margin: "0 auto", textAlign: "center" }}>
+            <div style={{
+              width: "80px",
+              height: "80px",
+              background: "linear-gradient(135deg, #FF9500 0%, #FF9F0A 100%)",
+              borderRadius: "20px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "40px",
+              margin: "0 auto 32px",
+              boxShadow: "0 8px 24px rgba(255, 149, 0, 0.4)"
+            }}>
+              🔒
+            </div>
+            <h2 style={{
+              fontSize: "clamp(32px, 5vw, 44px)",
+              fontWeight: "700",
+              color: "rgba(0, 0, 0, 0.95)",
+              marginBottom: "24px",
+              letterSpacing: "-0.02em"
+            }}>
+              Your Time, Your Privacy
+            </h2>
+            <p style={{
+              fontSize: "clamp(18px, 2.5vw, 22px)",
+              color: "rgba(0, 0, 0, 0.6)",
+              lineHeight: "1.8",
+              maxWidth: "700px",
+              margin: "0 auto"
+            }}>
+              All your reminders and tasks stay private on your device. No tracking, no data collection, no sharing.
+              Your schedule is yours alone.
+            </p>
           </div>
-        </div>
-      </div>
+        </section>
 
-      {/* Feature Section 5 - Intuitive Interface */}
-      <div style={{
-        backgroundColor: "#f5f5f7",
-        padding: "clamp(60px, 10vw, 100px) clamp(20px, 5vw, 40px)"
-      }}>
-        <div style={{
-          maxWidth: "1200px",
-          margin: "0 auto",
+        {/* Footer */}
+        <footer style={{
+          background: "rgba(255, 255, 255, 0.95)",
+          backdropFilter: "blur(20px)",
+          borderTop: "1px solid rgba(255, 149, 0, 0.1)",
+          padding: "60px 24px",
           textAlign: "center"
         }}>
-          <h2 style={{
-            fontSize: "clamp(28px, 5vw, 48px)",
-            fontWeight: "700",
-            color: "#1d1d1f",
+          <p style={{
             margin: "0 0 16px 0",
-            letterSpacing: "-0.02em"
-          }}>Beautiful & Intuitive</h2>
-          <p style={{
-            fontSize: "clamp(17px, 2.5vw, 21px)",
-            color: "#6e6e73",
-            margin: "0 0 60px 0",
-            maxWidth: "600px",
-            marginLeft: "auto",
-            marginRight: "auto",
-            lineHeight: "1.5"
+            fontSize: "15px",
+            color: "rgba(0, 0, 0, 0.4)"
           }}>
-            Clean design that's easy to use. Manage all your important events from a single, elegant interface.
+            © 2025 Ticker. All rights reserved.
           </p>
-
-          {/* Placeholder for Screenshot */}
-          <div style={{
-            backgroundColor: "#e8e8ed",
-            borderRadius: "clamp(20px, 3vw, 32px)",
-            height: "clamp(400px, 50vw, 600px)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            boxShadow: "0 20px 60px rgba(0, 0, 0, 0.1)"
-          }}>
-            <span style={{
-              fontSize: "clamp(60px, 10vw, 100px)",
-              opacity: 0.3
-            }}>✨</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Privacy Section */}
-      <div style={{
-        backgroundColor: "#ffffff",
-        padding: "clamp(60px, 10vw, 100px) clamp(20px, 5vw, 40px)"
-      }}>
-        <div style={{
-          maxWidth: "800px",
-          margin: "0 auto",
-          textAlign: "center"
-        }}>
-          <div style={{
-            fontSize: "clamp(40px, 8vw, 56px)",
-            marginBottom: "24px"
-          }}>🔒</div>
-          <h2 style={{
-            fontSize: "clamp(28px, 5vw, 40px)",
-            fontWeight: "700",
-            color: "#1d1d1f",
-            margin: "0 0 20px 0",
-            letterSpacing: "-0.02em"
-          }}>Your Time, Your Privacy</h2>
           <p style={{
-            fontSize: "clamp(17px, 2.5vw, 19px)",
-            color: "#6e6e73",
-            lineHeight: "1.6",
-            marginBottom: "40px"
+            margin: "0",
+            fontSize: "15px",
+            color: "rgba(0, 0, 0, 0.4)"
           }}>
-            All your reminders and tasks stay private on your device. No tracking, no data collection, no sharing.
-            Your schedule is yours alone.
+            Made with care by{" "}
+            <Link to="/" style={{
+              color: "#FF9500",
+              textDecoration: "none",
+              fontWeight: "500",
+              transition: "color 0.3s ease"
+            }}>
+              Mayank Gandhi
+            </Link>
           </p>
-        </div>
+        </footer>
       </div>
 
-      {/* Footer */}
-      <div style={{
-        backgroundColor: "#1d1d1f",
-        padding: "clamp(40px, 8vw, 60px) clamp(20px, 5vw, 40px)",
-        textAlign: "center"
-      }}>
-        <p style={{
-          color: "#86868b",
-          fontSize: "clamp(13px, 2vw, 15px)",
-          margin: "0"
-        }}>
-          © 2025 Ticker. All rights reserved.
-        </p>
-        <p style={{
-          color: "#86868b",
-          fontSize: "clamp(13px, 2vw, 15px)",
-          margin: "16px 0 0 0"
-        }}>
-          Made with care by <a href="/" style={{ color: "#FF9500", textDecoration: "none" }}>Mayank Gandhi</a>
-        </p>
-      </div>
+      {/* CSS */}
+      <style>{`
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @media (max-width: 768px) {
+          .feature-card {
+            grid-template-columns: 1fr !important;
+          }
+
+          .feature-card > div {
+            order: 1 !important;
+          }
+        }
+
+        .glass-card:hover {
+          transform: translateY(-8px);
+          border-color: rgba(255, 149, 0, 0.4);
+          box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6);
+        }
+
+        .cta-button:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 8px 32px rgba(255, 149, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+        }
+
+        .back-link:hover {
+          background: rgba(0, 0, 0, 0.1);
+          color: rgba(0, 0, 0, 0.9);
+        }
+
+        * {
+          scroll-behavior: smooth;
+        }
+      `}</style>
     </div>
   );
 }
