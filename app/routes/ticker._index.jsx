@@ -571,6 +571,37 @@ export default function TickerIndex() {
           padding: "60px 24px",
           textAlign: "center"
         }}>
+          <div style={{ marginBottom: "24px" }}>
+            <Link
+              to="/ticker/privacy-policy"
+              style={{
+                color: "#FF9500",
+                textDecoration: "none",
+                fontSize: "14px",
+                fontWeight: "500",
+                transition: "color 0.3s ease",
+                margin: "0 16px"
+              }}
+              className="footer-link"
+            >
+              Privacy Policy
+            </Link>
+            <span style={{ color: "rgba(0, 0, 0, 0.3)" }}>•</span>
+            <Link
+              to="/ticker/terms"
+              style={{
+                color: "#FF9500",
+                textDecoration: "none",
+                fontSize: "14px",
+                fontWeight: "500",
+                transition: "color 0.3s ease",
+                margin: "0 16px"
+              }}
+              className="footer-link"
+            >
+              Terms & Conditions
+            </Link>
+          </div>
           <p style={{
             margin: "0 0 16px 0",
             fontSize: "15px",
@@ -655,6 +686,10 @@ export default function TickerIndex() {
           background: rgba(0, 0, 0, 0.15);
           color: rgba(0, 0, 0, 0.9);
           transform: translateX(-4px);
+        }
+
+        .footer-link:hover {
+          color: #FF3B30;
         }
 
         * {
