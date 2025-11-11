@@ -1,5 +1,5 @@
 import { Link, useLoaderData } from "@remix-run/react";
-import { useState, useEffect, useMemo, useCallback, memo } from "react";
+import { useState, useEffect } from "react";
 import { getPosts } from "../utils/posts.server";
 
 export const loader = async () => {
@@ -7,25 +7,16 @@ export const loader = async () => {
   return { posts };
 };
 
-// Static data moved outside component to prevent recreation
 const SKILLS_DATA = {
   languages: ["Swift", "Objective-C", "Java", "Go", "SQL", "HTML", "CSS"],
   frameworks: ["SwiftUI", "Combine", "UIKit", "AVFoundation", "CoreML", "CoreData", "MapKit", "Vision", "Lottie", "TCA"],
   tools: ["Xcode", "Instruments", "MetricKit", "CocoaPods", "SPM", "TestFlight", "Tuist", "Git", "JIRA"]
 };
 
-const NAVIGATION_ITEMS = [
-  { id: "about", label: "About", icon: "👤" },
-  { id: "experience", label: "Experience", icon: "💼" },
-  { id: "skills", label: "Skills", icon: "⚡" },
-  { id: "projects", label: "Projects", icon: "🚀" },
-  { id: "blog", label: "Blog", icon: "📝" }
-];
-
 const SOCIAL_LINKS = [
-  { icon: "💻", href: "https://github.com/mayankgandhi", label: "GitHub" },
-  { icon: "💼", href: "https://linkedin.com/in/mayankgandhi98", label: "LinkedIn" },
-  { icon: "📧", href: "mailto:mayankgandhi50@gmail.com", label: "Email" }
+  { icon: "GitHub", href: "https://github.com/mayankgandhi", label: "GitHub" },
+  { icon: "LinkedIn", href: "https://linkedin.com/in/mayankgandhi98", label: "LinkedIn" },
+  { icon: "Email", href: "mailto:mayankgandhi50@gmail.com", label: "Email" }
 ];
 
 const EXPERIENCE_DATA = [
@@ -74,1251 +65,507 @@ const PROJECTS_DATA = [
 ];
 
 const STATS_CONFIG = [
-  { value: 6, label: "Years Experience", suffix: "+", duration: 2000 },
-  { value: 300, label: "Cost Savings", prefix: "$", suffix: "K+", duration: 2000 },
-  { value: 10, label: "Million Users", suffix: "M+", duration: 2000 },
-  { value: 3, label: "Major Projects", suffix: "", duration: 1500 }
+  { value: 6, label: "Years Experience", suffix: "+" },
+  { value: 300, label: "Cost Savings", prefix: "$", suffix: "K+" },
+  { value: 10, label: "Million Users", suffix: "M+" },
+  { value: 3, label: "Major Projects", suffix: "" }
 ];
-
-// Throttle utility function
-const throttle = (func, delay) => {
-  let timeoutId;
-  let lastRan;
-  return function (...args) {
-    if (!lastRan) {
-      func.apply(this, args);
-      lastRan = Date.now();
-    } else {
-      clearTimeout(timeoutId);
-      timeoutId = setTimeout(() => {
-        if (Date.now() - lastRan >= delay) {
-          func.apply(this, args);
-          lastRan = Date.now();
-        }
-      }, delay - (Date.now() - lastRan));
-    }
-  };
-};
-
-// Memoized floating shapes component
-const FloatingShapes = memo(({ mousePosition }) => (
-  <div style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, zIndex: 1, pointerEvents: "none", overflow: "hidden" }}>
-    <div style={{
-      position: "absolute",
-      top: "10%",
-      left: "5%",
-      width: "300px",
-      height: "300px",
-      background: "radial-gradient(circle, rgba(102, 126, 234, 0.15) 0%, transparent 70%)",
-      borderRadius: "50%",
-      filter: "blur(60px)",
-      transform: `translate(${mousePosition.x * 30}px, ${mousePosition.y * 30}px)`,
-      transition: "transform 0.5s ease-out",
-      willChange: "transform"
-    }} />
-    <div style={{
-      position: "absolute",
-      top: "50%",
-      right: "10%",
-      width: "400px",
-      height: "400px",
-      background: "radial-gradient(circle, rgba(118, 75, 162, 0.12) 0%, transparent 70%)",
-      borderRadius: "50%",
-      filter: "blur(70px)",
-      transform: `translate(${mousePosition.x * -40}px, ${mousePosition.y * -40}px)`,
-      transition: "transform 0.5s ease-out",
-      willChange: "transform"
-    }} />
-    <div style={{
-      position: "absolute",
-      bottom: "10%",
-      left: "30%",
-      width: "350px",
-      height: "350px",
-      background: "radial-gradient(circle, rgba(240, 147, 251, 0.1) 0%, transparent 70%)",
-      borderRadius: "50%",
-      filter: "blur(65px)",
-      transform: `translate(${mousePosition.x * 25}px, ${mousePosition.y * 25}px)`,
-      transition: "transform 0.5s ease-out",
-      willChange: "transform"
-    }} />
-  </div>
-));
-
-FloatingShapes.displayName = "FloatingShapes";
-
-// Memoized navigation component
-const FloatingNav = memo(({ activeSection, scrollToSection }) => (
-  <nav style={{
-    position: "fixed",
-    right: "40px",
-    top: "50%",
-    transform: "translateY(-50%)",
-    zIndex: 100,
-    display: "flex",
-    flexDirection: "column",
-    gap: "20px",
-    padding: "28px 24px",
-    background: "rgba(255, 255, 255, 0.8)",
-    backdropFilter: "blur(20px)",
-    borderRadius: "20px",
-    border: "1px solid rgba(102, 126, 234, 0.2)",
-    boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.5)"
-  }}
-  className="floating-nav">
-    {NAVIGATION_ITEMS.map((section) => (
-      <button
-        key={section.id}
-        onClick={() => scrollToSection(section.id)}
-        style={{
-          background: "none",
-          border: "none",
-          cursor: "pointer",
-          display: "flex",
-          alignItems: "center",
-          gap: "12px",
-          padding: "0",
-          transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-          position: "relative"
-        }}
-        className="nav-button"
-        aria-label={`Navigate to ${section.label}`}
-      >
-        <span style={{
-          fontSize: "18px",
-          opacity: activeSection === section.id ? 1 : 0.4,
-          transition: "all 0.3s ease"
-        }}>
-          {section.icon}
-        </span>
-        <div style={{
-          width: activeSection === section.id ? "50px" : "24px",
-          height: "3px",
-          background: activeSection === section.id
-            ? "linear-gradient(90deg, #667eea 0%, #764ba2 100%)"
-            : "rgba(148, 163, 184, 0.3)",
-          borderRadius: "2px",
-          transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
-          boxShadow: activeSection === section.id ? "0 0 12px rgba(102, 126, 234, 0.6)" : "none"
-        }} />
-        <span style={{
-          fontSize: "13px",
-          color: activeSection === section.id ? "#667eea" : "#94a3b8",
-          fontWeight: activeSection === section.id ? "600" : "normal",
-          opacity: activeSection === section.id ? 1 : 0,
-          transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-          whiteSpace: "nowrap",
-          letterSpacing: "0.02em",
-          textShadow: activeSection === section.id ? "0 0 8px rgba(102, 126, 234, 0.5)" : "none"
-        }}>
-          {section.label}
-        </span>
-      </button>
-    ))}
-  </nav>
-));
-
-FloatingNav.displayName = "FloatingNav";
-
-// Memoized stats card component
-const StatCard = memo(({ stat, index }) => (
-  <div
-    className="stat-card"
-    style={{
-      textAlign: "center",
-      padding: "32px",
-      background: "rgba(255, 255, 255, 0.02)",
-      border: "1px solid rgba(102, 126, 234, 0.1)",
-      borderRadius: "16px",
-      transition: "all 0.3s ease"
-    }}
-  >
-    <div style={{
-      fontSize: "clamp(36px, 5vw, 48px)",
-      fontWeight: "800",
-      background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-      WebkitBackgroundClip: "text",
-      WebkitTextFillColor: "transparent",
-      backgroundClip: "text",
-      marginBottom: "12px",
-      fontVariantNumeric: "tabular-nums"
-    }}>
-      {stat.prefix || ""}{stat.value}{stat.suffix || ""}
-    </div>
-    <div style={{
-      fontSize: "14px",
-      color: "rgba(0, 0, 0, 0.5)",
-      textTransform: "uppercase",
-      letterSpacing: "0.1em",
-      fontWeight: "600"
-    }}>
-      {stat.label}
-    </div>
-  </div>
-));
-
-StatCard.displayName = "StatCard";
 
 export default function Index() {
   const { posts } = useLoaderData();
-  const [activeSection, setActiveSection] = useState("about");
-  const [isVisible, setIsVisible] = useState({});
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [stats, setStats] = useState({ years: 0, savings: 0, users: 0, projects: 0 });
-
-  // Throttled mouse tracking - only updates every 66ms (15fps) instead of every frame
-  useEffect(() => {
-    const handleMouseMove = throttle((e) => {
-      setMousePosition({
-        x: (e.clientX / window.innerWidth) * 2 - 1,
-        y: (e.clientY / window.innerHeight) * 2 - 1
-      });
-    }, 66); // ~15fps for smooth performance
-
-    window.addEventListener("mousemove", handleMouseMove, { passive: true });
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
-
-  // Optimized animated counters with single interval
-  useEffect(() => {
-    const startTime = Date.now();
-    const maxDuration = 2000;
-
-    const timer = setInterval(() => {
-      const now = Date.now();
-      const elapsed = now - startTime;
-      const progress = Math.min(elapsed / maxDuration, 1);
-      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-
-      setStats({
-        years: Math.floor(6 * easeOutQuart),
-        savings: Math.floor(300 * easeOutQuart),
-        users: Math.floor(10 * easeOutQuart),
-        projects: Math.floor(3 * easeOutQuart)
-      });
-
-      if (progress === 1) clearInterval(timer);
-    }, 16);
-
-    return () => clearInterval(timer);
-  }, []);
-
-  // Memoized scroll handler
-  const handleScroll = useCallback(() => {
-    const sections = ["about", "experience", "skills", "projects", "blog"];
-    const scrollPosition = window.scrollY + 100;
-
-    for (const section of sections) {
-      const element = document.getElementById(section);
-      if (element) {
-        const { offsetTop, offsetHeight } = element;
-        if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-          setActiveSection(section);
-          break;
-        }
-      }
-    }
-  }, []);
-
-  // Optimized scroll spy with throttling
-  useEffect(() => {
-    const throttledScroll = throttle(handleScroll, 100);
-    window.addEventListener("scroll", throttledScroll, { passive: true });
-    return () => window.removeEventListener("scroll", throttledScroll);
-  }, [handleScroll]);
-
-  // Optimized intersection observer
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setIsVisible((prev) => ({ ...prev, [entry.target.id]: true }));
-          }
-        });
-      },
-      { threshold: 0.1, rootMargin: "0px 0px -100px 0px" }
-    );
-
-    const sections = document.querySelectorAll("section[id]");
-    sections.forEach((section) => observer.observe(section));
-
-    return () => observer.disconnect();
-  }, []);
-
-  // Memoized scroll to section handler
-  const scrollToSection = useCallback((sectionId) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  }, []);
-
-  // Memoized stats display data
-  const statsDisplay = useMemo(() => STATS_CONFIG.map((config, index) => ({
-    value: stats[Object.keys(stats)[index]],
-    label: config.label,
-    prefix: config.prefix,
-    suffix: config.suffix
-  })), [stats]);
 
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.6", minHeight: "100vh", backgroundColor: "#f8f9fa", position: "relative", overflow: "hidden" }}>
-      {/* Animated background grid */}
-      <div className="bg-grid" style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundImage: "linear-gradient(rgba(102, 126, 234, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(102, 126, 234, 0.03) 1px, transparent 1px)",
-        backgroundSize: "50px 50px",
-        zIndex: 0,
-        pointerEvents: "none"
-      }} />
+    <div style={{
+      fontFamily: "system-ui, -apple-system, sans-serif",
+      lineHeight: "1.7",
+      backgroundColor: "#fff",
+      color: "#333"
+    }}>
+      {/* Header */}
+      <header style={{
+        maxWidth: "800px",
+        margin: "0 auto",
+        padding: "80px 24px 60px",
+        textAlign: "center"
+      }}>
+        <div style={{
+          display: "inline-block",
+          padding: "6px 12px",
+          background: "#f5f5f5",
+          borderRadius: "4px",
+          fontSize: "12px",
+          marginBottom: "24px",
+          color: "#666",
+          textTransform: "uppercase",
+          letterSpacing: "0.05em"
+        }}>
+          Available for Opportunities
+        </div>
 
-      {/* Floating shapes */}
-      <FloatingShapes mousePosition={mousePosition} />
+        <h1 style={{
+          margin: "0 0 16px 0",
+          fontSize: "48px",
+          fontWeight: "700",
+          color: "#000",
+          letterSpacing: "-0.02em"
+        }}>
+          Mayank Gandhi
+        </h1>
 
-      {/* Content wrapper */}
-      <div style={{ position: "relative", zIndex: 2 }}>
-        {/* Enhanced Floating Navigation */}
-        <FloatingNav activeSection={activeSection} scrollToSection={scrollToSection} />
+        <h2 style={{
+          margin: "0 0 32px 0",
+          fontSize: "24px",
+          fontWeight: "400",
+          color: "#666"
+        }}>
+          Senior iOS Engineer
+        </h2>
 
-        {/* Hero Header */}
-        <header style={{
-          minHeight: "100vh",
+        <p style={{
+          fontSize: "18px",
+          color: "#666",
+          maxWidth: "600px",
+          margin: "0 auto 40px",
+          lineHeight: "1.7"
+        }}>
+          Crafting exceptional iOS experiences with 6+ years of expertise in scalable architecture,
+          performance optimization, and team leadership
+        </p>
+
+        <div style={{
           display: "flex",
-          alignItems: "center",
+          gap: "16px",
           justifyContent: "center",
-          position: "relative",
-          padding: "40px 24px",
-          background: "radial-gradient(ellipse at top, rgba(102, 126, 234, 0.15) 0%, transparent 50%)",
-          overflow: "hidden"
+          flexWrap: "wrap",
+          marginBottom: "32px"
         }}>
-          <div style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            background: "linear-gradient(135deg, transparent 0%, rgba(118, 75, 162, 0.05) 50%, transparent 100%)",
-            pointerEvents: "none"
-          }} />
+          <a
+            href="mailto:mayankgandhi50@gmail.com"
+            style={{
+              padding: "12px 24px",
+              background: "#000",
+              color: "#fff",
+              textDecoration: "none",
+              borderRadius: "4px",
+              fontSize: "16px",
+              fontWeight: "500"
+            }}
+          >
+            Get In Touch
+          </a>
+          <a
+            href="#projects"
+            style={{
+              padding: "12px 24px",
+              background: "#f5f5f5",
+              color: "#000",
+              textDecoration: "none",
+              borderRadius: "4px",
+              fontSize: "16px",
+              fontWeight: "500"
+            }}
+          >
+            View Projects
+          </a>
+        </div>
 
-          <div style={{ maxWidth: "1000px", width: "100%", position: "relative", zIndex: 1, textAlign: "center" }}>
-            <div style={{
-              display: "inline-block",
-              padding: "8px 20px",
-              background: "rgba(102, 126, 234, 0.1)",
-              border: "1px solid rgba(102, 126, 234, 0.3)",
-              borderRadius: "30px",
-              marginBottom: "32px",
-              animation: "fadeInUp 0.8s ease-out",
-              backdropFilter: "blur(10px)"
-            }}>
-              <span style={{ color: "#667eea", fontSize: "14px", fontWeight: "600", letterSpacing: "0.05em" }}>
-                ✨ AVAILABLE FOR OPPORTUNITIES
-              </span>
-            </div>
+        <div style={{
+          display: "flex",
+          gap: "16px",
+          justifyContent: "center"
+        }}>
+          {SOCIAL_LINKS.map((social) => (
+            <a
+              key={social.label}
+              href={social.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                color: "#666",
+                textDecoration: "none",
+                fontSize: "14px",
+                fontWeight: "500"
+              }}
+            >
+              {social.icon}
+            </a>
+          ))}
+        </div>
+      </header>
 
-            <h1 style={{
-              margin: "0 0 24px 0",
-              fontSize: "clamp(48px, 8vw, 80px)",
-              fontWeight: "900",
-              background: "linear-gradient(135deg, #1a1a2e 0%, #667eea 50%, #764ba2 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-              letterSpacing: "-0.04em",
-              lineHeight: "1.1",
-              animation: "fadeInUp 0.8s ease-out 0.1s both",
-              textShadow: "0 0 80px rgba(102, 126, 234, 0.3)"
-            }}>
-              Mayank Gandhi
-            </h1>
-
-            <h2 style={{
-              margin: "0 0 40px 0",
-              fontSize: "clamp(24px, 5vw, 36px)",
-              fontWeight: "400",
-              color: "rgba(0, 0, 0, 0.7)",
-              letterSpacing: "0.02em",
-              animation: "fadeInUp 0.8s ease-out 0.2s both"
-            }}>
-              Senior iOS Engineer
-            </h2>
-
-            <p style={{
-              fontSize: "clamp(16px, 2.5vw, 20px)",
-              color: "rgba(0, 0, 0, 0.5)",
-              maxWidth: "700px",
-              margin: "0 auto 48px",
-              lineHeight: "1.8",
-              animation: "fadeInUp 0.8s ease-out 0.3s both"
-            }}>
-              Crafting exceptional iOS experiences with 6+ years of expertise in scalable architecture,
-              performance optimization, and team leadership
-            </p>
-
-            <div style={{
-              display: "flex",
-              gap: "20px",
-              justifyContent: "center",
-              flexWrap: "wrap",
-              animation: "fadeInUp 0.8s ease-out 0.4s both"
-            }}>
-              <a
-                href="mailto:mayankgandhi50@gmail.com"
-                className="cta-button"
-                style={{
-                  padding: "16px 36px",
-                  background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-                  color: "#1a1a1a",
-                  textDecoration: "none",
-                  borderRadius: "12px",
-                  fontSize: "16px",
-                  fontWeight: "600",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "10px",
-                  boxShadow: "0 4px 24px rgba(102, 126, 234, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.5)",
-                  transition: "all 0.3s ease",
-                  border: "1px solid rgba(0, 0, 0, 0.1)"
-                }}
-              >
-                <span>Get In Touch</span>
-                <span style={{ fontSize: "20px" }}>→</span>
-              </a>
-              <a
-                href="#projects"
-                className="secondary-button"
-                style={{
-                  padding: "16px 36px",
-                  background: "rgba(0, 0, 0, 0.05)",
-                  color: "rgba(0, 0, 0, 0.9)",
-                  textDecoration: "none",
-                  borderRadius: "12px",
-                  fontSize: "16px",
-                  fontWeight: "600",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "10px",
-                  border: "1px solid rgba(0, 0, 0, 0.1)",
-                  backdropFilter: "blur(10px)",
-                  transition: "all 0.3s ease"
-                }}
-              >
-                <span>View Projects</span>
-              </a>
-            </div>
-
-            {/* Social Links */}
-            <div style={{
-              display: "flex",
-              gap: "20px",
-              justifyContent: "center",
-              marginTop: "48px",
-              animation: "fadeInUp 0.8s ease-out 0.5s both"
-            }}>
-              {SOCIAL_LINKS.map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="social-link"
-                  style={{
-                    width: "48px",
-                    height: "48px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    background: "rgba(0, 0, 0, 0.05)",
-                    border: "1px solid rgba(0, 0, 0, 0.1)",
-                    borderRadius: "12px",
-                    fontSize: "20px",
-                    transition: "all 0.3s ease",
-                    backdropFilter: "blur(10px)"
-                  }}
-                  aria-label={social.label}
-                >
-                  {social.icon}
-                </a>
-              ))}
-            </div>
-          </div>
-
-          {/* Scroll indicator */}
-          <div style={{
-            position: "absolute",
-            bottom: "40px",
-            left: "50%",
-            transform: "translateX(-50%)",
-            animation: "bounce 2s infinite"
-          }}>
-            <div style={{
-              width: "30px",
-              height: "50px",
-              border: "2px solid rgba(102, 126, 234, 0.3)",
-              borderRadius: "15px",
-              position: "relative"
-            }}>
+      {/* Stats Section */}
+      <section style={{
+        padding: "60px 24px",
+        background: "#fafafa",
+        borderTop: "1px solid #eee",
+        borderBottom: "1px solid #eee"
+      }}>
+        <div style={{
+          maxWidth: "800px",
+          margin: "0 auto",
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
+          gap: "40px",
+          textAlign: "center"
+        }}>
+          {STATS_CONFIG.map((stat, index) => (
+            <div key={index}>
               <div style={{
-                width: "6px",
-                height: "10px",
-                background: "#667eea",
-                borderRadius: "3px",
-                position: "absolute",
-                top: "8px",
-                left: "50%",
-                transform: "translateX(-50%)",
-                animation: "scrollIndicator 2s infinite"
-              }} />
+                fontSize: "36px",
+                fontWeight: "700",
+                color: "#000",
+                marginBottom: "8px"
+              }}>
+                {stat.prefix || ""}{stat.value}{stat.suffix || ""}
+              </div>
+              <div style={{
+                fontSize: "13px",
+                color: "#666",
+                textTransform: "uppercase",
+                letterSpacing: "0.05em"
+              }}>
+                {stat.label}
+              </div>
             </div>
-          </div>
-        </header>
+          ))}
+        </div>
+      </section>
 
-        {/* Stats Section */}
-        <section style={{
-          padding: "80px 24px",
-          background: "rgba(255, 255, 255, 0.75)",
-          backdropFilter: "blur(20px)",
-          borderTop: "1px solid rgba(102, 126, 234, 0.1)",
-          borderBottom: "1px solid rgba(102, 126, 234, 0.1)"
-        }}>
-          <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
-            <div style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-              gap: "40px"
+      {/* Main Content */}
+      <main style={{ maxWidth: "800px", margin: "0 auto", padding: "80px 24px" }}>
+        {/* About Section */}
+        <section id="about" style={{ marginBottom: "80px" }}>
+          <h2 style={{
+            fontSize: "32px",
+            fontWeight: "700",
+            color: "#000",
+            marginBottom: "32px",
+            letterSpacing: "-0.02em"
+          }}>
+            About
+          </h2>
+
+          <p style={{
+            fontSize: "18px",
+            color: "#666",
+            lineHeight: "1.8",
+            marginBottom: "32px"
+          }}>
+            Senior iOS Engineer with <strong>6+ years</strong> of expertise in architecting scalable native applications and modernising legacy codebases. Proven track record of driving <strong>$300K+</strong> in cost savings and revenue impact while leading technical initiatives across teams of 4-200 engineers. Specialises in performance optimisation, modular architecture design, and mentoring teams in iOS best practices.
+          </p>
+
+          <div style={{
+            padding: "24px",
+            background: "#fafafa",
+            borderRadius: "4px",
+            border: "1px solid #eee"
+          }}>
+            <h3 style={{
+              fontSize: "18px",
+              fontWeight: "600",
+              color: "#000",
+              margin: "0 0 8px 0"
             }}>
-              {statsDisplay.map((stat, index) => (
-                <StatCard key={index} stat={stat} index={index} />
-              ))}
-            </div>
+              Education
+            </h3>
+            <p style={{ fontSize: "16px", color: "#666", margin: "4px 0" }}>
+              B.S. Computer Science, GPA 3.45
+            </p>
+            <p style={{ fontSize: "14px", color: "#999", margin: "4px 0" }}>
+              University of Arizona, Spring 2019
+            </p>
           </div>
         </section>
 
-        {/* Main Content */}
-        <main style={{ maxWidth: "1200px", margin: "0 auto", padding: "100px 24px" }}>
-          {/* About Section */}
-          <section
-            id="about"
-            style={{
-              marginBottom: "160px",
-              scrollMarginTop: "40px",
-              opacity: isVisible.about ? 1 : 0,
-              transform: isVisible.about ? "translateY(0)" : "translateY(60px)",
-              transition: "all 1s cubic-bezier(0.4, 0, 0.2, 1)"
-            }}
-          >
-            <div style={{ marginBottom: "60px", textAlign: "center" }}>
-              <h2 style={{
-                fontSize: "clamp(36px, 5vw, 52px)",
-                fontWeight: "800",
-                background: "linear-gradient(135deg, #1a1a2e 0%, #667eea 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-                marginBottom: "16px",
-                letterSpacing: "-0.02em"
-              }}>
-                About Me
-              </h2>
-              <div style={{
-                width: "80px",
-                height: "4px",
-                background: "linear-gradient(90deg, #667eea 0%, #764ba2 100%)",
-                margin: "0 auto",
-                borderRadius: "2px"
-              }} />
-            </div>
+        {/* Experience Section */}
+        <section id="experience" style={{ marginBottom: "80px" }}>
+          <h2 style={{
+            fontSize: "32px",
+            fontWeight: "700",
+            color: "#000",
+            marginBottom: "32px",
+            letterSpacing: "-0.02em"
+          }}>
+            Experience
+          </h2>
 
-            <div className="glass-card" style={{
-              background: "rgba(255, 255, 255, 0.8)",
-              padding: "60px",
-              borderRadius: "24px",
-              border: "1px solid rgba(102, 126, 234, 0.2)",
-              boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.4)",
-              backdropFilter: "blur(20px)",
-              position: "relative",
-              overflow: "hidden"
-            }}>
-              <div style={{
-                position: "absolute",
-                top: "-100px",
-                right: "-100px",
-                width: "300px",
-                height: "300px",
-                background: "radial-gradient(circle, rgba(102, 126, 234, 0.15) 0%, transparent 70%)",
-                borderRadius: "50%",
-                filter: "blur(60px)",
-                pointerEvents: "none"
-              }} />
-
-              <p style={{
-                fontSize: "clamp(18px, 2.5vw, 24px)",
-                color: "rgba(0, 0, 0, 0.8)",
-                lineHeight: "1.8",
-                marginBottom: "48px",
-                position: "relative"
-              }}>
-                Senior iOS Engineer with <strong style={{ color: "#667eea" }}>6+ years</strong> of expertise in architecting scalable native applications and modernising legacy codebases. Proven track record of driving <strong style={{ color: "#667eea" }}>$300K+</strong> in cost savings and revenue impact while leading technical initiatives across teams of 4-200 engineers. Specialises in performance optimisation, modular architecture design, and mentoring teams in iOS best practices.
-              </p>
-
-              <div style={{
-                padding: "40px",
-                background: "rgba(102, 126, 234, 0.05)",
-                borderRadius: "20px",
-                border: "1px solid rgba(102, 126, 234, 0.15)",
-                position: "relative"
+          <div style={{ display: "flex", flexDirection: "column", gap: "40px" }}>
+            {EXPERIENCE_DATA.map((job, index) => (
+              <div key={index} style={{
+                paddingBottom: "40px",
+                borderBottom: index < EXPERIENCE_DATA.length - 1 ? "1px solid #eee" : "none"
               }}>
                 <div style={{
                   display: "flex",
-                  alignItems: "center",
-                  gap: "16px",
-                  marginBottom: "24px"
+                  justifyContent: "space-between",
+                  alignItems: "start",
+                  flexWrap: "wrap",
+                  marginBottom: "16px",
+                  gap: "12px"
                 }}>
-                  <div style={{
-                    width: "56px",
-                    height: "56px",
-                    background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-                    borderRadius: "16px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: "28px",
-                    boxShadow: "0 8px 24px rgba(102, 126, 234, 0.4)"
-                  }}>
-                    🎓
-                  </div>
                   <div>
                     <h3 style={{
-                      fontSize: "24px",
-                      fontWeight: "700",
-                      color: "rgba(0, 0, 0, 0.9)",
-                      margin: "0 0 4px 0"
+                      margin: "0 0 8px 0",
+                      fontSize: "20px",
+                      fontWeight: "600",
+                      color: "#000"
                     }}>
-                      Education
+                      {job.title}
                     </h3>
-                  </div>
-                </div>
-                <p style={{ fontSize: "20px", color: "rgba(0, 0, 0, 0.7)", margin: "8px 0", fontWeight: "600" }}>
-                  B.S. Computer Science, GPA 3.45
-                </p>
-                <p style={{ fontSize: "18px", color: "rgba(0, 0, 0, 0.5)", margin: "8px 0" }}>
-                  University of Arizona, Spring 2019
-                </p>
-              </div>
-            </div>
-          </section>
-
-          {/* Experience Section - Timeline */}
-          <section
-            id="experience"
-            style={{
-              marginBottom: "160px",
-              scrollMarginTop: "40px",
-              opacity: isVisible.experience ? 1 : 0,
-              transform: isVisible.experience ? "translateY(0)" : "translateY(60px)",
-              transition: "all 1s cubic-bezier(0.4, 0, 0.2, 1)"
-            }}
-          >
-            <div style={{ marginBottom: "60px", textAlign: "center" }}>
-              <h2 style={{
-                fontSize: "clamp(36px, 5vw, 52px)",
-                fontWeight: "800",
-                background: "linear-gradient(135deg, #1a1a2e 0%, #667eea 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-                marginBottom: "16px",
-                letterSpacing: "-0.02em"
-              }}>
-                Experience Journey
-              </h2>
-              <div style={{
-                width: "80px",
-                height: "4px",
-                background: "linear-gradient(90deg, #667eea 0%, #764ba2 100%)",
-                margin: "0 auto",
-                borderRadius: "2px"
-              }} />
-            </div>
-
-            <div style={{ position: "relative", paddingLeft: "60px" }}>
-              {/* Timeline line */}
-              <div style={{
-                position: "absolute",
-                left: "28px",
-                top: "0",
-                bottom: "0",
-                width: "2px",
-                background: "linear-gradient(180deg, #667eea 0%, #764ba2 100%)",
-                boxShadow: "0 0 10px rgba(102, 126, 234, 0.5)"
-              }} />
-
-              {EXPERIENCE_DATA.map((job, index) => (
-                <div
-                  key={index}
-                  className="timeline-item"
-                  style={{
-                    marginBottom: "60px",
-                    position: "relative"
-                  }}
-                >
-                  {/* Timeline dot */}
-                  <div style={{
-                    position: "absolute",
-                    left: "-46px",
-                    top: "8px",
-                    width: "16px",
-                    height: "16px",
-                    background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-                    borderRadius: "50%",
-                    border: "3px solid #0a0a0f",
-                    boxShadow: "0 0 20px rgba(102, 126, 234, 0.8)"
-                  }} />
-
-                  <div className="glass-card" style={{
-                    background: "rgba(255, 255, 255, 0.8)",
-                    padding: "40px",
-                    borderRadius: "20px",
-                    border: "1px solid rgba(102, 126, 234, 0.2)",
-                    boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
-                    backdropFilter: "blur(20px)",
-                    transition: "all 0.3s ease"
-                  }}>
-                    <div style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "start",
-                      flexWrap: "wrap",
-                      marginBottom: "24px",
-                      gap: "16px"
-                    }}>
-                      <div>
-                        <h3 style={{
-                          margin: "0 0 12px 0",
-                          fontSize: "clamp(20px, 3vw, 26px)",
-                          fontWeight: "700",
-                          color: "rgba(0, 0, 0, 0.95)"
-                        }}>
-                          {job.title}
-                        </h3>
-                        <p style={{
-                          margin: "0 0 6px 0",
-                          fontSize: "clamp(18px, 2.5vw, 22px)",
-                          fontWeight: "600",
-                          background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-                          WebkitBackgroundClip: "text",
-                          WebkitTextFillColor: "transparent",
-                          backgroundClip: "text"
-                        }}>
-                          {job.company}
-                        </p>
-                        <p style={{ margin: "0", fontSize: "14px", color: "rgba(0, 0, 0, 0.4)" }}>
-                          📍 {job.location}
-                        </p>
-                      </div>
-                      <span style={{
-                        padding: "8px 20px",
-                        background: "rgba(102, 126, 234, 0.1)",
-                        border: "1px solid rgba(102, 126, 234, 0.3)",
-                        borderRadius: "10px",
-                        fontSize: "14px",
-                        color: "rgba(0, 0, 0, 0.7)",
-                        fontWeight: "600"
-                      }}>
-                        {job.period}
-                      </span>
-                    </div>
-                    <ul style={{
-                      margin: "0",
-                      paddingLeft: "24px",
-                      color: "rgba(0, 0, 0, 0.6)",
+                    <p style={{
+                      margin: "0 0 4px 0",
                       fontSize: "16px",
-                      lineHeight: "1.8"
+                      fontWeight: "500",
+                      color: "#666"
                     }}>
-                      {job.highlights.map((highlight, i) => (
-                        <li key={i} style={{ marginBottom: "12px" }}>{highlight}</li>
-                      ))}
-                    </ul>
+                      {job.company}
+                    </p>
+                    <p style={{ margin: "0", fontSize: "14px", color: "#999" }}>
+                      {job.location}
+                    </p>
                   </div>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* Skills Section - Tag Cloud */}
-          <section
-            id="skills"
-            style={{
-              marginBottom: "160px",
-              scrollMarginTop: "40px",
-              opacity: isVisible.skills ? 1 : 0,
-              transform: isVisible.skills ? "translateY(0)" : "translateY(60px)",
-              transition: "all 1s cubic-bezier(0.4, 0, 0.2, 1)"
-            }}
-          >
-            <div style={{ marginBottom: "60px", textAlign: "center" }}>
-              <h2 style={{
-                fontSize: "clamp(36px, 5vw, 52px)",
-                fontWeight: "800",
-                background: "linear-gradient(135deg, #1a1a2e 0%, #667eea 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-                marginBottom: "16px",
-                letterSpacing: "-0.02em"
-              }}>
-                Skills & Expertise
-              </h2>
-              <div style={{
-                width: "80px",
-                height: "4px",
-                background: "linear-gradient(90deg, #667eea 0%, #764ba2 100%)",
-                margin: "0 auto",
-                borderRadius: "2px"
-              }} />
-            </div>
-
-            {Object.entries(SKILLS_DATA).map(([category, items], catIndex) => (
-              <div key={category} style={{ marginBottom: "48px" }}>
-                <h3 style={{
-                  fontSize: "20px",
-                  fontWeight: "700",
-                  color: "rgba(0, 0, 0, 0.9)",
-                  marginBottom: "24px",
-                  textTransform: "capitalize",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "12px"
-                }}>
                   <span style={{
-                    width: "40px",
-                    height: "40px",
-                    background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-                    borderRadius: "10px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: "20px"
+                    padding: "4px 12px",
+                    background: "#f5f5f5",
+                    borderRadius: "4px",
+                    fontSize: "13px",
+                    color: "#666",
+                    fontWeight: "500"
                   }}>
-                    {catIndex === 0 ? "💻" : catIndex === 1 ? "📱" : "🛠️"}
+                    {job.period}
                   </span>
-                  {category}
-                </h3>
-                <div style={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  gap: "12px"
-                }}>
-                  {items.map((skill, index) => (
-                    <span
-                      key={skill}
-                      className="skill-tag"
-                      style={{
-                        padding: "12px 24px",
-                        background: "rgba(102, 126, 234, 0.1)",
-                        border: "1px solid rgba(102, 126, 234, 0.3)",
-                        borderRadius: "12px",
-                        color: "rgba(0, 0, 0, 0.8)",
-                        fontSize: "15px",
-                        fontWeight: "600",
-                        transition: "all 0.3s ease",
-                        cursor: "pointer",
-                        backdropFilter: "blur(10px)",
-                        animation: `fadeInUp 0.5s ease-out ${index * 0.05}s both`
-                      }}
-                    >
-                      {skill}
-                    </span>
-                  ))}
                 </div>
+                <ul style={{
+                  margin: "0",
+                  paddingLeft: "20px",
+                  color: "#666",
+                  fontSize: "16px",
+                  lineHeight: "1.7"
+                }}>
+                  {job.highlights.map((highlight, i) => (
+                    <li key={i} style={{ marginBottom: "8px" }}>{highlight}</li>
+                  ))}
+                </ul>
               </div>
             ))}
-          </section>
+          </div>
+        </section>
 
-          {/* Projects Section */}
-          <section
-            id="projects"
-            style={{
-              marginBottom: "160px",
-              scrollMarginTop: "40px",
-              opacity: isVisible.projects ? 1 : 0,
-              transform: isVisible.projects ? "translateY(0)" : "translateY(60px)",
-              transition: "all 1s cubic-bezier(0.4, 0, 0.2, 1)"
-            }}
-          >
-            <div style={{ marginBottom: "60px", textAlign: "center" }}>
-              <h2 style={{
-                fontSize: "clamp(36px, 5vw, 52px)",
-                fontWeight: "800",
-                background: "linear-gradient(135deg, #1a1a2e 0%, #667eea 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
+        {/* Skills Section */}
+        <section id="skills" style={{ marginBottom: "80px" }}>
+          <h2 style={{
+            fontSize: "32px",
+            fontWeight: "700",
+            color: "#000",
+            marginBottom: "32px",
+            letterSpacing: "-0.02em"
+          }}>
+            Skills
+          </h2>
+
+          {Object.entries(SKILLS_DATA).map(([category, items]) => (
+            <div key={category} style={{ marginBottom: "32px" }}>
+              <h3 style={{
+                fontSize: "16px",
+                fontWeight: "600",
+                color: "#000",
                 marginBottom: "16px",
-                letterSpacing: "-0.02em"
+                textTransform: "capitalize"
               }}>
-                Featured Projects
-              </h2>
+                {category}
+              </h3>
               <div style={{
-                width: "80px",
-                height: "4px",
-                background: "linear-gradient(90deg, #667eea 0%, #764ba2 100%)",
-                margin: "0 auto",
-                borderRadius: "2px"
-              }} />
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "8px"
+              }}>
+                {items.map((skill) => (
+                  <span
+                    key={skill}
+                    style={{
+                      padding: "6px 12px",
+                      background: "#f5f5f5",
+                      borderRadius: "4px",
+                      color: "#666",
+                      fontSize: "14px",
+                      fontWeight: "500"
+                    }}
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
             </div>
+          ))}
+        </section>
 
-            <div style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 350px), 1fr))",
-              gap: "32px"
-            }}>
-              {PROJECTS_DATA.map((project, index) => (
-                <div
-                  key={project.name}
-                  className="project-card glass-card"
-                  style={{
-                    background: "rgba(255, 255, 255, 0.8)",
-                    padding: "40px",
-                    borderRadius: "24px",
-                    border: "1px solid rgba(102, 126, 234, 0.2)",
-                    boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
-                    backdropFilter: "blur(20px)",
-                    display: "flex",
-                    flexDirection: "column",
-                    position: "relative",
-                    overflow: "hidden",
-                    transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)"
-                  }}
-                >
-                  <div style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    height: "4px",
-                    background: "linear-gradient(90deg, #667eea 0%, #764ba2 100%)",
-                    boxShadow: "0 0 20px rgba(102, 126, 234, 0.6)"
-                  }} />
+        {/* Projects Section */}
+        <section id="projects" style={{ marginBottom: "80px" }}>
+          <h2 style={{
+            fontSize: "32px",
+            fontWeight: "700",
+            color: "#000",
+            marginBottom: "32px",
+            letterSpacing: "-0.02em"
+          }}>
+            Projects
+          </h2>
 
-                  <div style={{
-                    width: "72px",
-                    height: "72px",
-                    background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-                    borderRadius: "20px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: "36px",
-                    marginBottom: "24px",
-                    boxShadow: "0 8px 24px rgba(102, 126, 234, 0.4)",
-                    transition: "transform 0.3s ease"
-                  }}>
-                    {project.icon}
-                  </div>
-
+          <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
+            {PROJECTS_DATA.map((project) => (
+              <div
+                key={project.name}
+                style={{
+                  padding: "24px",
+                  background: "#fafafa",
+                  borderRadius: "4px",
+                  border: "1px solid #eee"
+                }}
+              >
+                <div style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "12px",
+                  marginBottom: "12px"
+                }}>
+                  <span style={{ fontSize: "24px" }}>{project.icon}</span>
                   <h3 style={{
-                    marginTop: "0",
-                    marginBottom: "8px",
-                    fontSize: "26px",
-                    fontWeight: "700",
-                    color: "rgba(0, 0, 0, 0.95)"
+                    margin: "0",
+                    fontSize: "20px",
+                    fontWeight: "600",
+                    color: "#000"
                   }}>
                     {project.name}
                   </h3>
-
-                  <p style={{
-                    fontSize: "14px",
-                    color: "rgba(102, 126, 234, 0.8)",
-                    marginBottom: "20px",
-                    fontWeight: "600",
-                    textTransform: "uppercase",
-                    letterSpacing: "0.1em"
-                  }}>
-                    {project.subtitle}
-                  </p>
-
-                  <p style={{
-                    color: "rgba(0, 0, 0, 0.6)",
-                    marginBottom: "32px",
-                    fontSize: "16px",
-                    lineHeight: "1.7",
-                    flex: "1"
-                  }}>
-                    {project.desc}
-                  </p>
-
-                  <Link
-                    to={project.link}
-                    className="project-link"
-                    style={{
-                      display: "inline-flex",
-                      alignItems: "center",
-                      gap: "8px",
-                      color: "#667eea",
-                      fontSize: "16px",
-                      fontWeight: "600",
-                      textDecoration: "none",
-                      transition: "gap 0.3s ease"
-                    }}
-                  >
-                    <span>Explore Project</span>
-                    <span style={{ transition: "transform 0.3s ease" }}>→</span>
-                  </Link>
                 </div>
+
+                <p style={{
+                  fontSize: "14px",
+                  color: "#999",
+                  marginBottom: "12px",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.05em"
+                }}>
+                  {project.subtitle}
+                </p>
+
+                <p style={{
+                  color: "#666",
+                  marginBottom: "16px",
+                  fontSize: "16px",
+                  lineHeight: "1.7"
+                }}>
+                  {project.desc}
+                </p>
+
+                <Link
+                  to={project.link}
+                  style={{
+                    color: "#000",
+                    fontSize: "14px",
+                    fontWeight: "500",
+                    textDecoration: "none",
+                    borderBottom: "1px solid #000"
+                  }}
+                >
+                  Learn more →
+                </Link>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Blog Section */}
+        <section id="blog" style={{ marginBottom: "80px" }}>
+          <h2 style={{
+            fontSize: "32px",
+            fontWeight: "700",
+            color: "#000",
+            marginBottom: "32px",
+            letterSpacing: "-0.02em"
+          }}>
+            Blog
+          </h2>
+
+          {posts.length === 0 ? (
+            <div style={{
+              padding: "60px 24px",
+              background: "#fafafa",
+              borderRadius: "4px",
+              border: "1px solid #eee",
+              textAlign: "center"
+            }}>
+              <p style={{ color: "#666", fontSize: "16px", margin: 0 }}>
+                No blog posts yet. Check back soon!
+              </p>
+            </div>
+          ) : (
+            <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+              {posts.map((post) => (
+                <Link
+                  key={post.slug}
+                  to={`/blog/${post.slug}`}
+                  style={{
+                    padding: "24px",
+                    background: "#fafafa",
+                    borderRadius: "4px",
+                    border: "1px solid #eee",
+                    textDecoration: "none",
+                    display: "block"
+                  }}
+                >
+                  <h3 style={{
+                    marginTop: "0",
+                    marginBottom: "8px",
+                    fontSize: "20px",
+                    fontWeight: "600",
+                    color: "#000"
+                  }}>
+                    {post.title}
+                  </h3>
+                  <p style={{
+                    margin: "0 0 12px 0",
+                    fontSize: "13px",
+                    color: "#999"
+                  }}>
+                    {new Date(post.date).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric"
+                    })}
+                  </p>
+                  {post.description && (
+                    <p style={{
+                      margin: "0",
+                      fontSize: "16px",
+                      color: "#666",
+                      lineHeight: "1.7"
+                    }}>
+                      {post.description}
+                    </p>
+                  )}
+                </Link>
               ))}
             </div>
-          </section>
+          )}
+        </section>
+      </main>
 
-          {/* Blog Section */}
-          <section
-            id="blog"
-            style={{
-              marginBottom: "100px",
-              scrollMarginTop: "40px",
-              opacity: isVisible.blog ? 1 : 0,
-              transform: isVisible.blog ? "translateY(0)" : "translateY(60px)",
-              transition: "all 1s cubic-bezier(0.4, 0, 0.2, 1)"
-            }}
-          >
-            <div style={{ marginBottom: "60px", textAlign: "center" }}>
-              <h2 style={{
-                fontSize: "clamp(36px, 5vw, 52px)",
-                fontWeight: "800",
-                background: "linear-gradient(135deg, #1a1a2e 0%, #667eea 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-                marginBottom: "16px",
-                letterSpacing: "-0.02em"
-              }}>
-                Latest Articles
-              </h2>
-              <div style={{
-                width: "80px",
-                height: "4px",
-                background: "linear-gradient(90deg, #667eea 0%, #764ba2 100%)",
-                margin: "0 auto",
-                borderRadius: "2px"
-              }} />
-            </div>
-
-            {posts.length === 0 ? (
-              <div className="glass-card" style={{
-                background: "rgba(255, 255, 255, 0.8)",
-                padding: "80px 40px",
-                borderRadius: "24px",
-                border: "1px solid rgba(102, 126, 234, 0.2)",
-                textAlign: "center",
-                backdropFilter: "blur(20px)"
-              }}>
-                <div style={{ fontSize: "64px", marginBottom: "24px" }}>✍️</div>
-                <p style={{ color: "rgba(0, 0, 0, 0.5)", fontSize: "20px", margin: 0 }}>
-                  No blog posts yet. Check back soon!
-                </p>
-              </div>
-            ) : (
-              <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
-                {posts.map((post) => (
-                  <Link
-                    key={post.slug}
-                    to={`/blog/${post.slug}`}
-                    className="blog-card glass-card"
-                    style={{
-                      background: "rgba(255, 255, 255, 0.8)",
-                      padding: "48px",
-                      borderRadius: "24px",
-                      border: "1px solid rgba(102, 126, 234, 0.2)",
-                      boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
-                      backdropFilter: "blur(20px)",
-                      transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
-                      textDecoration: "none",
-                      display: "block"
-                    }}
-                  >
-                    <h3 style={{
-                      marginTop: "0",
-                      marginBottom: "16px",
-                      fontSize: "28px",
-                      fontWeight: "700",
-                      color: "rgba(0, 0, 0, 0.95)",
-                      transition: "color 0.3s ease"
-                    }}>
-                      {post.title}
-                    </h3>
-                    <p style={{
-                      margin: "0 0 20px 0",
-                      fontSize: "14px",
-                      color: "rgba(102, 126, 234, 0.7)",
-                      fontWeight: "500",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.1em"
-                    }}>
-                      📅 {new Date(post.date).toLocaleDateString("en-US", {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric"
-                      })}
-                    </p>
-                    {post.description && (
-                      <p style={{
-                        margin: "0",
-                        fontSize: "18px",
-                        color: "rgba(0, 0, 0, 0.6)",
-                        lineHeight: "1.7"
-                      }}>
-                        {post.description}
-                      </p>
-                    )}
-                  </Link>
-                ))}
-              </div>
-            )}
-          </section>
-        </main>
-
-        {/* Footer */}
-        <footer style={{
-          background: "rgba(255, 255, 255, 0.95)",
-          backdropFilter: "blur(20px)",
-          borderTop: "1px solid rgba(102, 126, 234, 0.1)",
-          padding: "60px 24px",
-          textAlign: "center"
+      {/* Footer */}
+      <footer style={{
+        background: "#fafafa",
+        borderTop: "1px solid #eee",
+        padding: "40px 24px",
+        textAlign: "center"
+      }}>
+        <p style={{
+          margin: "0",
+          fontSize: "14px",
+          color: "#999"
         }}>
-          <p style={{
-            margin: "0",
-            fontSize: "16px",
-            color: "rgba(0, 0, 0, 0.4)"
-          }}>
-            © 2025 Mayank Gandhi · Built with passion & precision
-          </p>
-        </footer>
-      </div>
-
-      {/* Advanced CSS */}
-      <style>{`
-        @keyframes gradient {
-          0%, 100% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-        }
-
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        @keyframes bounce {
-          0%, 100% { transform: translateX(-50%) translateY(0); }
-          50% { transform: translateX(-50%) translateY(-10px); }
-        }
-
-        @keyframes scrollIndicator {
-          0%, 100% { top: 8px; opacity: 1; }
-          50% { top: 20px; opacity: 0.3; }
-        }
-
-        @media (max-width: 768px) {
-          .floating-nav {
-            display: none;
-          }
-        }
-
-        .glass-card {
-          will-change: transform;
-        }
-
-        .glass-card:hover {
-          transform: translateY(-8px);
-          border-color: rgba(102, 126, 234, 0.4);
-          box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(102, 126, 234, 0.3);
-        }
-
-        .stat-card:hover {
-          background: rgba(255, 255, 255, 0.04);
-          border-color: rgba(102, 126, 234, 0.3);
-          transform: translateY(-4px);
-        }
-
-        .skill-tag:hover {
-          background: rgba(102, 126, 234, 0.2);
-          border-color: rgba(102, 126, 234, 0.5);
-          transform: translateY(-2px);
-          box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-        }
-
-        .project-card:hover {
-          transform: translateY(-12px) scale(1.02);
-          border-color: rgba(102, 126, 234, 0.4);
-        }
-
-        .project-card:hover .project-link {
-          gap: 12px;
-        }
-
-        .project-card:hover .project-link span:last-child {
-          transform: translateX(4px);
-        }
-
-        .blog-card:hover {
-          border-color: rgba(102, 126, 234, 0.4);
-          transform: translateY(-8px);
-        }
-
-        .blog-card:hover h3 {
-          color: #667eea;
-        }
-
-        .cta-button:hover {
-          transform: translateY(-3px);
-          box-shadow: 0 8px 32px rgba(102, 126, 234, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.6);
-        }
-
-        .secondary-button:hover {
-          background: rgba(0, 0, 0, 0.1);
-          border-color: rgba(102, 126, 234, 0.4);
-          transform: translateY(-3px);
-        }
-
-        .social-link:hover {
-          background: rgba(102, 126, 234, 0.2);
-          border-color: rgba(102, 126, 234, 0.5);
-          transform: translateY(-3px) scale(1.1);
-        }
-
-        .nav-button:hover div {
-          width: 50px !important;
-        }
-
-        .nav-button:hover span:last-child {
-          opacity: 1 !important;
-        }
-
-        .timeline-item:hover .glass-card {
-          border-color: rgba(102, 126, 234, 0.4);
-          transform: translateX(8px);
-        }
-
-        * {
-          scroll-behavior: smooth;
-        }
-
-        ::selection {
-          background: rgba(102, 126, 234, 0.3);
-          color: white;
-        }
-      `}</style>
+          © 2025 Mayank Gandhi
+        </p>
+      </footer>
     </div>
   );
 }
