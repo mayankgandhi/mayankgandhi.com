@@ -25,6 +25,7 @@ const EXPERIENCE_DATA = [
     company: "Radius",
     location: "Hyderabad, IN",
     period: "Feb '23 - Jul '25",
+    logo: "https://cdn.mayankgandhi.com/Radius_Logo_Dark__1_Logo.jpg",
     highlights: [
       "Architected multi-app ecosystem using Tuist for 3 applications, implementing shared design system and networking layer that reduced development time by 40%",
       "Optimised app performance through systematic profiling, achieving 30% reduction in launch time and 25% decrease in memory usage",
@@ -38,6 +39,7 @@ const EXPERIENCE_DATA = [
     company: "Compass",
     location: "Hyderabad, IN",
     period: "Jul '22 - Jan '23",
+    logo: "https://cdn.mayankgandhi.com/CompassInc_Logo.svg.png",
     highlights: [
       "Led Swift modernisation initiative across 35-engineer iOS team implementing Composable Architecture (TCA)",
       "Reduced infrastructure costs by $200K annually through strategic native routing implementation",
@@ -50,6 +52,7 @@ const EXPERIENCE_DATA = [
     company: "Grab",
     location: "Hyderabad, IN",
     period: "Jan '20 - Jul '22",
+    logo: "https://cdn.mayankgandhi.com/Grab_(application)_logo.svg",
     highlights: [
       "Architected and delivered risk management features reaching 10M+ users",
       "Implemented complex multi-entry point features using RIBs architecture",
@@ -59,9 +62,9 @@ const EXPERIENCE_DATA = [
 ];
 
 const PROJECTS_DATA = [
-  { name: "Cashew", subtitle: "Credit Card Tracker", icon: "💳", desc: "Published iOS financial management app solving bill tracking and payment oversight challenges. Built with modular Tuist architecture, CoreData persistence, push notifications for payment alerts, home screen widgets, and Combine framework for reactive data binding.", link: "/cashew" },
-  { name: "Walnut", subtitle: "Medical Documents Manager", icon: "🏥", desc: "Personal wellness app addressing medication adherence and prescription management. Features automatic prescription parsing, medication reminders, follow-up scheduling, and real-time health metrics tracking using SwiftUI and Swift Data.", link: "/walnut" },
-  { name: "Ticker", subtitle: "Task & Reminder Manager", icon: "⏰", desc: "Comprehensive alarm and reminder app helping users stay on top of daily tasks, important birthdays, and medication schedules. Features customizable alarms, recurring reminders, smart notifications, and an intuitive interface.", link: "/ticker" }
+  { name: "Cashew", subtitle: "Credit Card Tracker", icon: "https://cdn.mayankgandhi.com/cashew-app-icon.png", desc: "Published iOS financial management app solving bill tracking and payment oversight challenges. Built with modular Tuist architecture, CoreData persistence, push notifications for payment alerts, home screen widgets, and Combine framework for reactive data binding.", link: "/cashew" },
+  { name: "Walnut", subtitle: "Medical Documents Manager", icon: "https://cdn.mayankgandhi.com/walnut-app-icon.png", desc: "Personal wellness app addressing medication adherence and prescription management. Features automatic prescription parsing, medication reminders, follow-up scheduling, and real-time health metrics tracking using SwiftUI and Swift Data.", link: "/walnut" },
+  { name: "Ticker", subtitle: "Task & Reminder Manager", icon: "https://cdn.mayankgandhi.com/ticker-app-icon.png", desc: "Comprehensive alarm and reminder app helping users stay on top of daily tasks, important birthdays, and medication schedules. Features customizable alarms, recurring reminders, smart notifications, and an intuitive interface.", link: "/ticker" }
 ];
 
 const STATS_CONFIG = [
@@ -255,25 +258,42 @@ export default function Index() {
           </p>
 
           <div style={{
-            padding: "24px",
+            padding: "32px",
             background: "#fafafa",
-            borderRadius: "4px",
+            borderRadius: "8px",
             border: "1px solid #eee"
           }}>
-            <h3 style={{
-              fontSize: "18px",
-              fontWeight: "600",
-              color: "#000",
-              margin: "0 0 8px 0"
-            }}>
-              Education
-            </h3>
-            <p style={{ fontSize: "16px", color: "#666", margin: "4px 0" }}>
-              B.S. Computer Science, GPA 3.45
-            </p>
-            <p style={{ fontSize: "14px", color: "#999", margin: "4px 0" }}>
-              University of Arizona, Spring 2019
-            </p>
+            <div style={{ display: "flex", gap: "24px", alignItems: "center" }}>
+              <img
+                src="https://cdn.mayankgandhi.com/University_of_Arizona_logo.svg.png"
+                alt="University of Arizona logo"
+                style={{
+                  width: "80px",
+                  height: "80px",
+                  objectFit: "contain",
+                  borderRadius: "8px",
+                  background: "#fff",
+                  padding: "12px",
+                  border: "1px solid #eee"
+                }}
+              />
+              <div style={{ flex: 1 }}>
+                <h3 style={{
+                  fontSize: "20px",
+                  fontWeight: "600",
+                  color: "#000",
+                  margin: "0 0 12px 0"
+                }}>
+                  Education
+                </h3>
+                <p style={{ fontSize: "18px", color: "#333", margin: "0 0 8px 0", fontWeight: "500" }}>
+                  B.S. Computer Science, GPA 3.45
+                </p>
+                <p style={{ fontSize: "16px", color: "#666", margin: "0" }}>
+                  University of Arizona, Spring 2019
+                </p>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -289,51 +309,77 @@ export default function Index() {
             Experience
           </h2>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: "40px" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
             {EXPERIENCE_DATA.map((job, index) => (
               <div key={index} style={{
-                paddingBottom: "40px",
-                borderBottom: index < EXPERIENCE_DATA.length - 1 ? "1px solid #eee" : "none"
+                padding: "32px",
+                background: "#fafafa",
+                borderRadius: "8px",
+                border: "1px solid #eee"
               }}>
                 <div style={{
                   display: "flex",
-                  justifyContent: "space-between",
+                  gap: "24px",
                   alignItems: "start",
-                  flexWrap: "wrap",
-                  marginBottom: "16px",
-                  gap: "12px"
+                  marginBottom: "24px"
                 }}>
-                  <div>
-                    <h3 style={{
-                      margin: "0 0 8px 0",
-                      fontSize: "20px",
-                      fontWeight: "600",
-                      color: "#000"
+                  <img
+                    src={job.logo}
+                    alt={`${job.company} logo`}
+                    style={{
+                      width: "80px",
+                      height: "80px",
+                      objectFit: "contain",
+                      borderRadius: "8px",
+                      background: "#fff",
+                      padding: "12px",
+                      border: "1px solid #eee",
+                      flexShrink: 0
+                    }}
+                  />
+                  <div style={{ flex: 1 }}>
+                    <div style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "start",
+                      flexWrap: "wrap",
+                      gap: "12px",
+                      marginBottom: "12px"
                     }}>
-                      {job.title}
-                    </h3>
-                    <p style={{
-                      margin: "0 0 4px 0",
-                      fontSize: "16px",
-                      fontWeight: "500",
-                      color: "#666"
-                    }}>
-                      {job.company}
-                    </p>
-                    <p style={{ margin: "0", fontSize: "14px", color: "#999" }}>
-                      {job.location}
-                    </p>
+                      <div>
+                        <h3 style={{
+                          margin: "0 0 8px 0",
+                          fontSize: "22px",
+                          fontWeight: "600",
+                          color: "#000"
+                        }}>
+                          {job.title}
+                        </h3>
+                        <p style={{
+                          margin: "0 0 4px 0",
+                          fontSize: "18px",
+                          fontWeight: "500",
+                          color: "#333"
+                        }}>
+                          {job.company}
+                        </p>
+                        <p style={{ margin: "0", fontSize: "15px", color: "#666" }}>
+                          {job.location}
+                        </p>
+                      </div>
+                      <span style={{
+                        padding: "6px 14px",
+                        background: "#fff",
+                        borderRadius: "6px",
+                        fontSize: "14px",
+                        color: "#666",
+                        fontWeight: "500",
+                        border: "1px solid #eee"
+                      }}>
+                        {job.period}
+                      </span>
+                    </div>
                   </div>
-                  <span style={{
-                    padding: "4px 12px",
-                    background: "#f5f5f5",
-                    borderRadius: "4px",
-                    fontSize: "13px",
-                    color: "#666",
-                    fontWeight: "500"
-                  }}>
-                    {job.period}
-                  </span>
                 </div>
                 <ul style={{
                   margin: "0",
@@ -411,49 +457,66 @@ export default function Index() {
             Projects
           </h2>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+            gap: "32px"
+          }}>
             {PROJECTS_DATA.map((project) => (
               <div
                 key={project.name}
                 style={{
-                  padding: "24px",
+                  padding: "32px",
                   background: "#fafafa",
-                  borderRadius: "4px",
-                  border: "1px solid #eee"
+                  borderRadius: "8px",
+                  border: "1px solid #eee",
+                  display: "flex",
+                  flexDirection: "column"
                 }}
               >
                 <div style={{
                   display: "flex",
+                  flexDirection: "column",
                   alignItems: "center",
-                  gap: "12px",
-                  marginBottom: "12px"
+                  textAlign: "center",
+                  marginBottom: "24px"
                 }}>
-                  <span style={{ fontSize: "24px" }}>{project.icon}</span>
+                  <img
+                    src={project.icon}
+                    alt={`${project.name} icon`}
+                    style={{
+                      width: "96px",
+                      height: "96px",
+                      borderRadius: "20px",
+                      marginBottom: "16px",
+                      boxShadow: "0 4px 12px rgba(0,0,0,0.1)"
+                    }}
+                  />
                   <h3 style={{
-                    margin: "0",
-                    fontSize: "20px",
+                    margin: "0 0 8px 0",
+                    fontSize: "24px",
                     fontWeight: "600",
                     color: "#000"
                   }}>
                     {project.name}
                   </h3>
+                  <p style={{
+                    fontSize: "13px",
+                    color: "#999",
+                    margin: "0",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.05em"
+                  }}>
+                    {project.subtitle}
+                  </p>
                 </div>
 
                 <p style={{
-                  fontSize: "14px",
-                  color: "#999",
-                  marginBottom: "12px",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.05em"
-                }}>
-                  {project.subtitle}
-                </p>
-
-                <p style={{
                   color: "#666",
-                  marginBottom: "16px",
-                  fontSize: "16px",
-                  lineHeight: "1.7"
+                  marginBottom: "24px",
+                  fontSize: "15px",
+                  lineHeight: "1.7",
+                  flex: 1
                 }}>
                   {project.desc}
                 </p>
@@ -465,7 +528,8 @@ export default function Index() {
                     fontSize: "14px",
                     fontWeight: "500",
                     textDecoration: "none",
-                    borderBottom: "1px solid #000"
+                    borderBottom: "1px solid #000",
+                    alignSelf: "center"
                   }}
                 >
                   Learn more →
