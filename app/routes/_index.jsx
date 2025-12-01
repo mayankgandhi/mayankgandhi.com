@@ -2,16 +2,159 @@ import { Link, useLoaderData } from "@remix-run/react";
 import { useState, useEffect } from "react";
 import { getPosts } from "../utils/posts.server";
 
+// ExpandableIconCard Component
+function ExpandableIconCard({ 
+  icon, 
+  iconAlt, 
+  isExpanded, 
+  onExpand, 
+  onCollapse,
+  children,
+  onClick,
+  className = "",
+  isMobile = false,
+  gradient = "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+}) {
+  const [isHovered, setIsHovered] = useState(false);
+  // On mobile, only use isExpanded. On desktop, use hover or expanded state
+  const isActive = isMobile ? isExpanded : (isExpanded || isHovered);
+
+  return (
+    <div
+      className={className}
+      style={{
+        position: "relative",
+        transition: "all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)",
+        cursor: onClick ? "pointer" : "default"
+      }}
+      onMouseEnter={() => {
+        if (!isMobile) {
+          setIsHovered(true);
+          if (onExpand) onExpand();
+        }
+      }}
+      onMouseLeave={() => {
+        if (!isMobile) {
+          setIsHovered(false);
+          if (!isExpanded && onCollapse) onCollapse();
+        }
+      }}
+      onClick={onClick}
+    >
+      <div
+        style={{
+          width: isActive ? "340px" : "100px",
+          minHeight: isActive ? "auto" : "100px",
+          padding: isActive ? "28px" : "16px",
+          background: isActive 
+            ? "linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.98) 100%)" 
+            : "linear-gradient(135deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.8) 100%)",
+          backdropFilter: "blur(20px)",
+          WebkitBackdropFilter: "blur(20px)",
+          border: isActive 
+            ? "2px solid rgba(102, 126, 234, 0.3)" 
+            : "2px solid rgba(255,255,255,0.3)",
+          borderRadius: "24px",
+          boxShadow: isActive 
+            ? "0 20px 60px rgba(102, 126, 234, 0.25), 0 0 0 1px rgba(255,255,255,0.5) inset" 
+            : "0 8px 32px rgba(0,0,0,0.08), 0 0 0 1px rgba(255,255,255,0.3) inset",
+          transition: "all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)",
+          overflow: "hidden",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: isActive ? "flex-start" : "center",
+          justifyContent: isActive ? "flex-start" : "center",
+          position: "relative"
+        }}
+      >
+        {/* Gradient overlay on hover */}
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: isActive ? gradient : "transparent",
+            opacity: isActive ? 0.05 : 0,
+            transition: "opacity 0.4s ease",
+            pointerEvents: "none",
+            borderRadius: "24px"
+          }}
+        />
+        <img
+          src={icon}
+          alt={iconAlt}
+          style={{
+            width: "100px",
+            height: "100px",
+            objectFit: "contain",
+            borderRadius: "20px",
+            background: "linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%)",
+            padding: "16px",
+            border: "2px solid rgba(102, 126, 234, 0.1)",
+            flexShrink: 0,
+            transition: "all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)",
+            transform: isActive ? "scale(1.05) rotate(2deg)" : "scale(1) rotate(0deg)",
+            boxShadow: isActive 
+              ? "0 12px 40px rgba(102, 126, 234, 0.2)" 
+              : "0 4px 16px rgba(0,0,0,0.08)",
+            position: "relative",
+            zIndex: 1
+          }}
+        />
+        {isActive && (
+          <div
+            style={{
+              width: "100%",
+              marginTop: "20px",
+              opacity: isActive ? 1 : 0,
+              transition: "opacity 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)",
+              animation: "fadeInUp 0.4s ease-out",
+              position: "relative",
+              zIndex: 1
+            }}
+          >
+            {children}
+          </div>
+        )}
+      </div>
+      <style>{`
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        @media (max-width: 768px) {
+          .expandable-icon-card {
+            width: 100% !important;
+            max-width: 100% !important;
+          }
+          .expandable-icon-card > div {
+            width: 100% !important;
+            max-width: 100% !important;
+          }
+        }
+        @media (hover: none) {
+          .expandable-icon-card {
+            cursor: pointer;
+          }
+        }
+      `}</style>
+    </div>
+  );
+}
+
 export const loader = async () => {
   const posts = await getPosts();
   return { posts };
 };
 
-const SKILLS_DATA = {
-  languages: ["Swift", "Objective-C", "Java", "Go", "SQL", "HTML", "CSS"],
-  frameworks: ["SwiftUI", "Combine", "UIKit", "AVFoundation", "CoreML", "CoreData", "MapKit", "Vision", "Lottie", "TCA"],
-  tools: ["Xcode", "Instruments", "MetricKit", "CocoaPods", "SPM", "TestFlight", "Tuist", "Git", "JIRA"]
-};
 
 const SOCIAL_LINKS = [
   { icon: "GitHub", href: "https://github.com/mayankgandhi", label: "GitHub" },
@@ -67,115 +210,135 @@ const PROJECTS_DATA = [
   { name: "Ticker", subtitle: "Task & Reminder Manager", icon: "https://cdn.mayankgandhi.com/ticker-app-icon.png", desc: "Comprehensive alarm and reminder app helping users stay on top of daily tasks, important birthdays, and medication schedules. Features customizable alarms, recurring reminders, smart notifications, and an intuitive interface.", link: "/ticker" }
 ];
 
-const STATS_CONFIG = [
-  { value: 6, label: "Years Experience", suffix: "+" },
-  { value: 300, label: "Cost Savings", prefix: "$", suffix: "K+" },
-  { value: 10, label: "Million Users", suffix: "M+" },
-  { value: 3, label: "Major Projects", suffix: "" }
-];
 
 export default function Index() {
   const { posts } = useLoaderData();
+  const [expandedExperience, setExpandedExperience] = useState(null);
+  const [expandedProject, setExpandedProject] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const handleExperienceExpand = (index) => {
+    if (isMobile) {
+      setExpandedExperience(expandedExperience === index ? null : index);
+    }
+  };
+
+  const handleProjectExpand = (index) => {
+    if (isMobile) {
+      setExpandedProject(expandedProject === index ? null : index);
+    }
+  };
 
   return (
     <div style={{
-      fontFamily: "system-ui, -apple-system, sans-serif",
+      fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', system-ui, sans-serif",
       lineHeight: "1.7",
-      backgroundColor: "#fff",
-      color: "#333"
+      backgroundColor: "#0a0e27",
+      background: "linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f1419 100%)",
+      color: "#e2e8f0",
+      minHeight: "100vh",
+      position: "relative",
+      overflow: "hidden"
     }}>
+      {/* Animated background elements */}
+      <div style={{
+        position: "fixed",
+        top: "-50%",
+        left: "-50%",
+        width: "200%",
+        height: "200%",
+        background: "radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.15) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.15) 0%, transparent 50%), radial-gradient(circle at 40% 20%, rgba(236, 72, 153, 0.1) 0%, transparent 50%)",
+        animation: "float 20s ease-in-out infinite",
+        pointerEvents: "none",
+        zIndex: 0
+      }} />
+      <style>{`
+        @keyframes float {
+          0%, 100% { transform: translate(0, 0) rotate(0deg); }
+          33% { transform: translate(30px, -30px) rotate(120deg); }
+          66% { transform: translate(-20px, 20px) rotate(240deg); }
+        }
+      `}</style>
+
       {/* Header */}
       <header style={{
-        maxWidth: "800px",
+        maxWidth: "1000px",
         margin: "0 auto",
-        padding: "80px 24px 60px",
-        textAlign: "center"
+        padding: "120px 24px 80px",
+        textAlign: "center",
+        position: "relative",
+        zIndex: 1
       }}>
         <div style={{
           display: "inline-block",
-          padding: "6px 12px",
-          background: "#f5f5f5",
-          borderRadius: "4px",
-          fontSize: "12px",
-          marginBottom: "24px",
-          color: "#666",
+          padding: "10px 20px",
+          background: "linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%)",
+          backdropFilter: "blur(10px)",
+          WebkitBackdropFilter: "blur(10px)",
+          borderRadius: "50px",
+          fontSize: "13px",
+          marginBottom: "32px",
+          color: "#a5b4fc",
           textTransform: "uppercase",
-          letterSpacing: "0.05em"
+          letterSpacing: "0.1em",
+          fontWeight: "600",
+          border: "1px solid rgba(102, 126, 234, 0.3)",
+          boxShadow: "0 8px 32px rgba(102, 126, 234, 0.15)"
         }}>
-          Available for Opportunities
+          ✨ Available for Opportunities
         </div>
 
         <h1 style={{
-          margin: "0 0 16px 0",
-          fontSize: "48px",
-          fontWeight: "700",
-          color: "#000",
-          letterSpacing: "-0.02em"
+          margin: "0 0 20px 0",
+          fontSize: "clamp(42px, 8vw, 72px)",
+          fontWeight: "800",
+          background: "linear-gradient(135deg, #ffffff 0%, #a5b4fc 50%, #c084fc 100%)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          backgroundClip: "text",
+          letterSpacing: "-0.03em",
+          lineHeight: "1.1",
+          textShadow: "0 0 40px rgba(165, 180, 252, 0.3)"
         }}>
           Mayank Gandhi
         </h1>
 
         <h2 style={{
-          margin: "0 0 32px 0",
-          fontSize: "24px",
-          fontWeight: "400",
-          color: "#666"
+          margin: "0 0 40px 0",
+          fontSize: "clamp(20px, 4vw, 28px)",
+          fontWeight: "500",
+          color: "#cbd5e1",
+          letterSpacing: "-0.01em"
         }}>
           Senior iOS Engineer
         </h2>
 
         <p style={{
-          fontSize: "18px",
-          color: "#666",
-          maxWidth: "600px",
-          margin: "0 auto 40px",
-          lineHeight: "1.7"
+          fontSize: "clamp(16px, 2.5vw, 20px)",
+          color: "#94a3b8",
+          maxWidth: "680px",
+          margin: "0 auto 50px",
+          lineHeight: "1.8"
         }}>
-          Crafting exceptional iOS experiences with 6+ years of expertise in scalable architecture,
+          Crafting exceptional iOS experiences with expertise in scalable architecture,
           performance optimization, and team leadership
         </p>
 
         <div style={{
           display: "flex",
-          gap: "16px",
+          gap: "20px",
           justifyContent: "center",
-          flexWrap: "wrap",
-          marginBottom: "32px"
-        }}>
-          <a
-            href="mailto:mayankgandhi50@gmail.com"
-            style={{
-              padding: "12px 24px",
-              background: "#000",
-              color: "#fff",
-              textDecoration: "none",
-              borderRadius: "4px",
-              fontSize: "16px",
-              fontWeight: "500"
-            }}
-          >
-            Get In Touch
-          </a>
-          <a
-            href="#projects"
-            style={{
-              padding: "12px 24px",
-              background: "#f5f5f5",
-              color: "#000",
-              textDecoration: "none",
-              borderRadius: "4px",
-              fontSize: "16px",
-              fontWeight: "500"
-            }}
-          >
-            View Projects
-          </a>
-        </div>
-
-        <div style={{
-          display: "flex",
-          gap: "16px",
-          justifyContent: "center"
+          flexWrap: "wrap"
         }}>
           {SOCIAL_LINKS.map((social) => (
             <a
@@ -184,10 +347,29 @@ export default function Index() {
               target="_blank"
               rel="noopener noreferrer"
               style={{
-                color: "#666",
+                color: "#cbd5e1",
                 textDecoration: "none",
-                fontSize: "14px",
-                fontWeight: "500"
+                fontSize: "15px",
+                fontWeight: "600",
+                padding: "12px 24px",
+                background: "rgba(255, 255, 255, 0.05)",
+                backdropFilter: "blur(10px)",
+                borderRadius: "12px",
+                border: "1px solid rgba(255, 255, 255, 0.1)",
+                transition: "all 0.3s ease",
+                display: "inline-block"
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "rgba(102, 126, 234, 0.2)";
+                e.currentTarget.style.borderColor = "rgba(102, 126, 234, 0.4)";
+                e.currentTarget.style.transform = "translateY(-2px)";
+                e.currentTarget.style.boxShadow = "0 8px 24px rgba(102, 126, 234, 0.2)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "rgba(255, 255, 255, 0.05)";
+                e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.1)";
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.boxShadow = "none";
               }}
             >
               {social.icon}
@@ -196,436 +378,311 @@ export default function Index() {
         </div>
       </header>
 
-      {/* Stats Section */}
-      <section style={{
-        padding: "60px 24px",
-        background: "#fafafa",
-        borderTop: "1px solid #eee",
-        borderBottom: "1px solid #eee"
-      }}>
-        <div style={{
-          maxWidth: "800px",
-          margin: "0 auto",
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
-          gap: "40px",
-          textAlign: "center"
-        }}>
-          {STATS_CONFIG.map((stat, index) => (
-            <div key={index}>
-              <div style={{
-                fontSize: "36px",
-                fontWeight: "700",
-                color: "#000",
-                marginBottom: "8px"
-              }}>
-                {stat.prefix || ""}{stat.value}{stat.suffix || ""}
-              </div>
-              <div style={{
-                fontSize: "13px",
-                color: "#666",
-                textTransform: "uppercase",
-                letterSpacing: "0.05em"
-              }}>
-                {stat.label}
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
 
       {/* Main Content */}
-      <main style={{ maxWidth: "800px", margin: "0 auto", padding: "80px 24px" }}>
-        {/* About Section */}
-        <section id="about" style={{ marginBottom: "80px" }}>
-          <h2 style={{
-            fontSize: "32px",
-            fontWeight: "700",
-            color: "#000",
-            marginBottom: "32px",
-            letterSpacing: "-0.02em"
-          }}>
-            About
-          </h2>
-
-          <p style={{
-            fontSize: "18px",
-            color: "#666",
-            lineHeight: "1.8",
-            marginBottom: "32px"
-          }}>
-            Senior iOS Engineer with <strong>6+ years</strong> of expertise in architecting scalable native applications and modernising legacy codebases. Proven track record of driving <strong>$300K+</strong> in cost savings and revenue impact while leading technical initiatives across teams of 4-200 engineers. Specialises in performance optimisation, modular architecture design, and mentoring teams in iOS best practices.
-          </p>
-
-          <div style={{
-            padding: "32px",
-            background: "#fafafa",
-            borderRadius: "8px",
-            border: "1px solid #eee"
-          }}>
-            <div style={{ display: "flex", gap: "24px", alignItems: "center" }}>
-              <img
-                src="https://cdn.mayankgandhi.com/University_of_Arizona_logo.svg.png"
-                alt="University of Arizona logo"
-                style={{
-                  width: "80px",
-                  height: "80px",
-                  objectFit: "contain",
-                  borderRadius: "8px",
-                  background: "#fff",
-                  padding: "12px",
-                  border: "1px solid #eee"
-                }}
-              />
-              <div style={{ flex: 1 }}>
-                <h3 style={{
-                  fontSize: "20px",
-                  fontWeight: "600",
-                  color: "#000",
-                  margin: "0 0 12px 0"
-                }}>
-                  Education
-                </h3>
-                <p style={{ fontSize: "18px", color: "#333", margin: "0 0 8px 0", fontWeight: "500" }}>
-                  B.S. Computer Science, GPA 3.45
-                </p>
-                <p style={{ fontSize: "16px", color: "#666", margin: "0" }}>
-                  University of Arizona, Spring 2019
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+      <main style={{ 
+        maxWidth: "1200px", 
+        margin: "0 auto", 
+        padding: "0 24px 100px",
+        position: "relative",
+        zIndex: 1
+      }}>
 
         {/* Experience Section */}
-        <section id="experience" style={{ marginBottom: "80px" }}>
+        <section id="experience" style={{ marginBottom: "100px" }}>
           <h2 style={{
-            fontSize: "32px",
-            fontWeight: "700",
-            color: "#000",
-            marginBottom: "32px",
-            letterSpacing: "-0.02em"
+            fontSize: "clamp(32px, 5vw, 48px)",
+            fontWeight: "800",
+            background: "linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+            marginBottom: "48px",
+            letterSpacing: "-0.02em",
+            textAlign: "center"
           }}>
             Experience
           </h2>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
-            {EXPERIENCE_DATA.map((job, index) => (
-              <div key={index} style={{
-                padding: "32px",
-                background: "#fafafa",
-                borderRadius: "8px",
-                border: "1px solid #eee"
-              }}>
-                <div style={{
-                  display: "flex",
-                  gap: "24px",
-                  alignItems: "start",
-                  marginBottom: "24px"
-                }}>
-                  <img
-                    src={job.logo}
-                    alt={`${job.company} logo`}
-                    style={{
-                      width: "80px",
-                      height: "80px",
-                      objectFit: "contain",
-                      borderRadius: "8px",
-                      background: "#fff",
-                      padding: "12px",
-                      border: "1px solid #eee",
-                      flexShrink: 0
-                    }}
-                  />
-                  <div style={{ flex: 1 }}>
+          <div style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "32px",
+            justifyContent: "center",
+            alignItems: "flex-start"
+          }}>
+            {EXPERIENCE_DATA.map((job, index) => {
+              const gradients = [
+                "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+                "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)"
+              ];
+              return (
+                <ExpandableIconCard
+                  key={index}
+                  className="expandable-icon-card"
+                  icon={job.logo}
+                  iconAlt={`${job.company} logo`}
+                  isExpanded={expandedExperience === index}
+                  isMobile={isMobile}
+                  gradient={gradients[index % gradients.length]}
+                  onExpand={() => {
+                    if (isMobile) {
+                      setExpandedExperience(index);
+                    }
+                  }}
+                  onCollapse={() => {
+                    if (isMobile && expandedExperience === index) {
+                      setExpandedExperience(null);
+                    }
+                  }}
+                  onClick={() => handleExperienceExpand(index)}
+                >
+                  <div style={{ width: "100%" }}>
                     <div style={{
                       display: "flex",
                       justifyContent: "space-between",
                       alignItems: "start",
                       flexWrap: "wrap",
                       gap: "12px",
-                      marginBottom: "12px"
+                      marginBottom: "20px"
                     }}>
-                      <div>
+                      <div style={{ flex: 1, minWidth: "200px" }}>
                         <h3 style={{
-                          margin: "0 0 8px 0",
+                          margin: "0 0 10px 0",
                           fontSize: "22px",
-                          fontWeight: "600",
-                          color: "#000"
+                          fontWeight: "700",
+                          color: "#ffffff",
+                          letterSpacing: "-0.01em"
                         }}>
                           {job.title}
                         </h3>
                         <p style={{
-                          margin: "0 0 4px 0",
-                          fontSize: "18px",
-                          fontWeight: "500",
-                          color: "#333"
+                          margin: "0 0 6px 0",
+                          fontSize: "19px",
+                          fontWeight: "600",
+                          color: "#e2e8f0"
                         }}>
                           {job.company}
                         </p>
-                        <p style={{ margin: "0", fontSize: "15px", color: "#666" }}>
+                        <p style={{ margin: "0 0 12px 0", fontSize: "15px", color: "#94a3b8" }}>
                           {job.location}
                         </p>
+                        <span style={{
+                          padding: "8px 16px",
+                          background: "rgba(102, 126, 234, 0.2)",
+                          backdropFilter: "blur(10px)",
+                          borderRadius: "12px",
+                          fontSize: "13px",
+                          color: "#a5b4fc",
+                          fontWeight: "600",
+                          border: "1px solid rgba(102, 126, 234, 0.3)",
+                          display: "inline-block"
+                        }}>
+                          {job.period}
+                        </span>
                       </div>
-                      <span style={{
-                        padding: "6px 14px",
-                        background: "#fff",
-                        borderRadius: "6px",
-                        fontSize: "14px",
-                        color: "#666",
-                        fontWeight: "500",
-                        border: "1px solid #eee"
-                      }}>
-                        {job.period}
-                      </span>
                     </div>
+                    <ul style={{
+                      margin: "0",
+                      paddingLeft: "24px",
+                      color: "#cbd5e1",
+                      fontSize: "15px",
+                      lineHeight: "1.8",
+                      maxHeight: "250px",
+                      overflowY: "auto"
+                    }}>
+                      {job.highlights.map((highlight, i) => (
+                        <li key={i} style={{ marginBottom: "10px", color: "#cbd5e1" }}>{highlight}</li>
+                      ))}
+                    </ul>
                   </div>
-                </div>
-                <ul style={{
-                  margin: "0",
-                  paddingLeft: "20px",
-                  color: "#666",
-                  fontSize: "16px",
-                  lineHeight: "1.7"
-                }}>
-                  {job.highlights.map((highlight, i) => (
-                    <li key={i} style={{ marginBottom: "8px" }}>{highlight}</li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+                </ExpandableIconCard>
+              );
+            })}
           </div>
         </section>
 
-        {/* Skills Section */}
-        <section id="skills" style={{ marginBottom: "80px" }}>
-          <h2 style={{
-            fontSize: "32px",
-            fontWeight: "700",
-            color: "#000",
-            marginBottom: "32px",
-            letterSpacing: "-0.02em"
-          }}>
-            Skills
-          </h2>
-
-          {Object.entries(SKILLS_DATA).map(([category, items]) => (
-            <div key={category} style={{ marginBottom: "32px" }}>
-              <h3 style={{
-                fontSize: "16px",
-                fontWeight: "600",
-                color: "#000",
-                marginBottom: "16px",
-                textTransform: "capitalize"
-              }}>
-                {category}
-              </h3>
-              <div style={{
-                display: "flex",
-                flexWrap: "wrap",
-                gap: "8px"
-              }}>
-                {items.map((skill) => (
-                  <span
-                    key={skill}
-                    style={{
-                      padding: "6px 12px",
-                      background: "#f5f5f5",
-                      borderRadius: "4px",
-                      color: "#666",
-                      fontSize: "14px",
-                      fontWeight: "500"
-                    }}
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ))}
-        </section>
 
         {/* Projects Section */}
-        <section id="projects" style={{ marginBottom: "80px" }}>
+        <section id="projects" style={{ marginBottom: "100px" }}>
           <h2 style={{
-            fontSize: "32px",
-            fontWeight: "700",
-            color: "#000",
-            marginBottom: "32px",
-            letterSpacing: "-0.02em"
+            fontSize: "clamp(32px, 5vw, 48px)",
+            fontWeight: "800",
+            background: "linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+            marginBottom: "48px",
+            letterSpacing: "-0.02em",
+            textAlign: "center"
           }}>
             Projects
           </h2>
 
           <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-            gap: "32px"
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "32px",
+            justifyContent: "center",
+            alignItems: "flex-start"
           }}>
-            {PROJECTS_DATA.map((project) => (
-              <div
-                key={project.name}
-                style={{
-                  padding: "32px",
-                  background: "#fafafa",
-                  borderRadius: "8px",
-                  border: "1px solid #eee",
-                  display: "flex",
-                  flexDirection: "column"
-                }}
-              >
-                <div style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  textAlign: "center",
-                  marginBottom: "24px"
-                }}>
-                  <img
-                    src={project.icon}
-                    alt={`${project.name} icon`}
-                    style={{
-                      width: "96px",
-                      height: "96px",
-                      borderRadius: "20px",
-                      marginBottom: "16px",
-                      boxShadow: "0 4px 12px rgba(0,0,0,0.1)"
-                    }}
-                  />
-                  <h3 style={{
-                    margin: "0 0 8px 0",
-                    fontSize: "24px",
-                    fontWeight: "600",
-                    color: "#000"
-                  }}>
-                    {project.name}
-                  </h3>
-                  <p style={{
-                    fontSize: "13px",
-                    color: "#999",
-                    margin: "0",
-                    textTransform: "uppercase",
-                    letterSpacing: "0.05em"
-                  }}>
-                    {project.subtitle}
-                  </p>
-                </div>
-
-                <p style={{
-                  color: "#666",
-                  marginBottom: "24px",
-                  fontSize: "15px",
-                  lineHeight: "1.7",
-                  flex: 1
-                }}>
-                  {project.desc}
-                </p>
-
-                <Link
-                  to={project.link}
-                  style={{
-                    color: "#000",
-                    fontSize: "14px",
-                    fontWeight: "500",
-                    textDecoration: "none",
-                    borderBottom: "1px solid #000",
-                    alignSelf: "center"
+            {PROJECTS_DATA.map((project, index) => {
+              const gradients = [
+                "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+                "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)"
+              ];
+              return (
+                <ExpandableIconCard
+                  key={project.name}
+                  className="expandable-icon-card"
+                  icon={project.icon}
+                  iconAlt={`${project.name} icon`}
+                  isExpanded={expandedProject === index}
+                  isMobile={isMobile}
+                  gradient={gradients[index % gradients.length]}
+                  onExpand={() => {
+                    if (isMobile) {
+                      setExpandedProject(index);
+                    }
                   }}
+                  onCollapse={() => {
+                    if (isMobile && expandedProject === index) {
+                      setExpandedProject(null);
+                    }
+                  }}
+                  onClick={() => handleProjectExpand(index)}
                 >
-                  Learn more →
-                </Link>
-              </div>
-            ))}
+                  <div style={{ width: "100%" }}>
+                    <h3 style={{
+                      margin: "0 0 10px 0",
+                      fontSize: "24px",
+                      fontWeight: "700",
+                      color: "#ffffff",
+                      letterSpacing: "-0.01em"
+                    }}>
+                      {project.name}
+                    </h3>
+                    <p style={{
+                      fontSize: "13px",
+                      color: "#a5b4fc",
+                      margin: "0 0 16px 0",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.1em",
+                      fontWeight: "600"
+                    }}>
+                      {project.subtitle}
+                    </p>
+                    <p style={{
+                      color: "#cbd5e1",
+                      marginBottom: "20px",
+                      fontSize: "15px",
+                      lineHeight: "1.8"
+                    }}>
+                      {project.desc}
+                    </p>
+                    <Link
+                      to={project.link}
+                      onClick={(e) => {
+                        // Prevent card collapse when clicking link
+                        e.stopPropagation();
+                      }}
+                      style={{
+                        color: "#a5b4fc",
+                        fontSize: "15px",
+                        fontWeight: "600",
+                        textDecoration: "none",
+                        padding: "10px 20px",
+                        background: "rgba(102, 126, 234, 0.15)",
+                        borderRadius: "10px",
+                        border: "1px solid rgba(102, 126, 234, 0.3)",
+                        display: "inline-block",
+                        transition: "all 0.3s ease"
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = "rgba(102, 126, 234, 0.25)";
+                        e.currentTarget.style.borderColor = "rgba(102, 126, 234, 0.5)";
+                        e.currentTarget.style.transform = "translateX(4px)";
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = "rgba(102, 126, 234, 0.15)";
+                        e.currentTarget.style.borderColor = "rgba(102, 126, 234, 0.3)";
+                        e.currentTarget.style.transform = "translateX(0)";
+                      }}
+                    >
+                      Learn more →
+                    </Link>
+                  </div>
+                </ExpandableIconCard>
+              );
+            })}
           </div>
         </section>
 
         {/* Blog Section */}
-        <section id="blog" style={{ marginBottom: "80px" }}>
+        <section id="blog" style={{ marginBottom: "100px", textAlign: "center" }}>
           <h2 style={{
-            fontSize: "32px",
-            fontWeight: "700",
-            color: "#000",
+            fontSize: "clamp(32px, 5vw, 48px)",
+            fontWeight: "800",
+            background: "linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
             marginBottom: "32px",
             letterSpacing: "-0.02em"
           }}>
             Blog
           </h2>
 
-          {posts.length === 0 ? (
-            <div style={{
-              padding: "60px 24px",
-              background: "#fafafa",
-              borderRadius: "4px",
-              border: "1px solid #eee",
-              textAlign: "center"
-            }}>
-              <p style={{ color: "#666", fontSize: "16px", margin: 0 }}>
-                No blog posts yet. Check back soon!
-              </p>
-            </div>
-          ) : (
-            <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
-              {posts.map((post) => (
-                <Link
-                  key={post.slug}
-                  to={`/blog/${post.slug}`}
-                  style={{
-                    padding: "24px",
-                    background: "#fafafa",
-                    borderRadius: "4px",
-                    border: "1px solid #eee",
-                    textDecoration: "none",
-                    display: "block"
-                  }}
-                >
-                  <h3 style={{
-                    marginTop: "0",
-                    marginBottom: "8px",
-                    fontSize: "20px",
-                    fontWeight: "600",
-                    color: "#000"
-                  }}>
-                    {post.title}
-                  </h3>
-                  <p style={{
-                    margin: "0 0 12px 0",
-                    fontSize: "13px",
-                    color: "#999"
-                  }}>
-                    {new Date(post.date).toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric"
-                    })}
-                  </p>
-                  {post.description && (
-                    <p style={{
-                      margin: "0",
-                      fontSize: "16px",
-                      color: "#666",
-                      lineHeight: "1.7"
-                    }}>
-                      {post.description}
-                    </p>
-                  )}
-                </Link>
-              ))}
-            </div>
-          )}
+          <Link
+            to="/blog"
+            style={{
+              color: "#a5b4fc",
+              fontSize: "18px",
+              fontWeight: "600",
+              textDecoration: "none",
+              padding: "14px 32px",
+              background: "rgba(102, 126, 234, 0.15)",
+              borderRadius: "12px",
+              border: "1px solid rgba(102, 126, 234, 0.3)",
+              display: "inline-block",
+              transition: "all 0.3s ease"
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = "rgba(102, 126, 234, 0.25)";
+              e.currentTarget.style.borderColor = "rgba(102, 126, 234, 0.5)";
+              e.currentTarget.style.transform = "translateY(-2px)";
+              e.currentTarget.style.boxShadow = "0 8px 24px rgba(102, 126, 234, 0.2)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "rgba(102, 126, 234, 0.15)";
+              e.currentTarget.style.borderColor = "rgba(102, 126, 234, 0.3)";
+              e.currentTarget.style.transform = "translateY(0)";
+              e.currentTarget.style.boxShadow = "none";
+            }}
+          >
+            View Blog →
+          </Link>
         </section>
       </main>
 
       {/* Footer */}
       <footer style={{
-        background: "#fafafa",
-        borderTop: "1px solid #eee",
-        padding: "40px 24px",
-        textAlign: "center"
+        background: "rgba(10, 14, 39, 0.8)",
+        backdropFilter: "blur(20px)",
+        WebkitBackdropFilter: "blur(20px)",
+        borderTop: "1px solid rgba(102, 126, 234, 0.2)",
+        padding: "50px 24px",
+        textAlign: "center",
+        position: "relative",
+        zIndex: 1
       }}>
         <p style={{
           margin: "0",
-          fontSize: "14px",
-          color: "#999"
+          fontSize: "15px",
+          color: "#94a3b8",
+          fontWeight: "500"
         }}>
           © 2025 Mayank Gandhi
         </p>

@@ -21,7 +21,10 @@ export default function App() {
             --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
           }
 
-          html { color-scheme: light; }
+          html { 
+            color-scheme: dark;
+            scroll-behavior: smooth;
+          }
 
           body {
             margin: 0;
@@ -32,6 +35,26 @@ export default function App() {
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             text-rendering: optimizeLegibility;
+            overflow-x: hidden;
+          }
+
+          /* Custom scrollbar */
+          ::-webkit-scrollbar {
+            width: 12px;
+          }
+
+          ::-webkit-scrollbar-track {
+            background: #0a0e27;
+          }
+
+          ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 6px;
+            border: 2px solid #0a0e27;
+          }
+
+          ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
           }
 
           a { color: var(--accent); text-decoration: none; }
