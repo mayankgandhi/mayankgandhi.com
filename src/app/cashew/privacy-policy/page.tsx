@@ -1,4 +1,4 @@
-import { Link } from "@remix-run/react";
+import Link from "next/link";
 import { memo } from "react";
 
 // Memoized floating shapes
@@ -58,7 +58,7 @@ export default function CashewPrivacyPolicy() {
         }}>
           <div style={{ maxWidth: "900px", margin: "0 auto" }}>
             <Link
-              to="/cashew"
+              href="/cashew"
               style={{
                 display: "inline-flex",
                 alignItems: "center",

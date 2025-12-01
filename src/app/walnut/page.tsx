@@ -1,4 +1,6 @@
-import { Link } from "@remix-run/react";
+'use client';
+
+import Link from "next/link";
 import { memo, useState, useEffect } from "react";
 
 // Static data
@@ -93,7 +95,7 @@ export default function WalnutIndex() {
         {/* Back to Home Link */}
         <div style={{ padding: "24px", maxWidth: "1200px", margin: "0 auto" }}>
           <Link
-            to="/"
+            href="/"
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -339,7 +341,7 @@ export default function WalnutIndex() {
             </p>
             <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap" }}>
               <Link
-                to="/walnut/privacy-policy"
+                href="/walnut/privacy-policy"
                 className="outline-button"
                 style={{
                   padding: "14px 28px",
@@ -356,7 +358,7 @@ export default function WalnutIndex() {
                 Privacy Policy
               </Link>
               <Link
-                to="/walnut/terms"
+                href="/walnut/terms"
                 className="outline-button"
                 style={{
                   padding: "14px 28px",
@@ -397,7 +399,7 @@ export default function WalnutIndex() {
             color: "rgba(0, 0, 0, 0.4)"
           }}>
             Made with care by{" "}
-            <Link to="/" style={{
+            <Link href="/" style={{
               color: "#34C759",
               textDecoration: "none",
               fontWeight: "500",

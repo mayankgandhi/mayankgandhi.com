@@ -1,4 +1,6 @@
-import { Link } from "@remix-run/react";
+'use client';
+
+import Link from "next/link";
 
 export default function TickerPrivacyPolicy() {
   // Generate emoji pattern for background
@@ -116,7 +118,7 @@ export default function TickerPrivacyPolicy() {
         </div>
 
         <Link
-          to="/ticker"
+          href="/ticker"
           style={{
             display: "inline-block",
             color: "#FF9500",

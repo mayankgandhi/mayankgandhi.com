@@ -82,6 +82,15 @@ jspm_packages/
 
 # Next.js build output
 .next
+out
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# Wrangler
+.wrangler
+.dev.vars
 
 # Nuxt.js build / generate output
 .nuxt

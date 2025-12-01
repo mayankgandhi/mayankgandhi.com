@@ -1,4 +1,6 @@
-import { Link } from "@remix-run/react";
+'use client';
+
+import Link from "next/link";
 import { memo, useState, useEffect } from "react";
 
 // Static data
@@ -127,7 +129,7 @@ export default function TickerIndex() {
         {/* Back to Home Link */}
         <div style={{ padding: "24px", maxWidth: "1200px", margin: "0 auto" }}>
           <Link
-            to="/"
+            href="/"
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -573,7 +575,7 @@ export default function TickerIndex() {
         }}>
           <div style={{ marginBottom: "24px" }}>
             <Link
-              to="/ticker/privacy-policy"
+              href="/ticker/privacy-policy"
               style={{
                 color: "#FF9500",
                 textDecoration: "none",
@@ -588,7 +590,7 @@ export default function TickerIndex() {
             </Link>
             <span style={{ color: "rgba(0, 0, 0, 0.3)" }}>•</span>
             <Link
-              to="/ticker/terms"
+              href="/ticker/terms"
               style={{
                 color: "#FF9500",
                 textDecoration: "none",
@@ -615,7 +617,7 @@ export default function TickerIndex() {
             color: "rgba(0, 0, 0, 0.4)"
           }}>
             Made with care by{" "}
-            <Link to="/" style={{
+            <Link href="/" style={{
               color: "#FF9500",
               textDecoration: "none",
               fontWeight: "500",

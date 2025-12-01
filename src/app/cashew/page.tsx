@@ -1,4 +1,6 @@
-import { Link } from "@remix-run/react";
+'use client';
+
+import Link from "next/link";
 import { memo, useState, useEffect } from "react";
 
 // Static data
@@ -88,7 +90,7 @@ export default function CashewIndex() {
         {/* Back to Home Link */}
         <div style={{ padding: "24px", maxWidth: "1200px", margin: "0 auto" }}>
           <Link
-            to="/"
+            href="/"
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -334,7 +336,7 @@ export default function CashewIndex() {
             </p>
             <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap" }}>
               <Link
-                to="/cashew/privacy-policy"
+                href="/cashew/privacy-policy"
                 className="outline-button"
                 style={{
                   padding: "14px 28px",
@@ -351,7 +353,7 @@ export default function CashewIndex() {
                 Privacy Policy
               </Link>
               <Link
-                to="/cashew/terms"
+                href="/cashew/terms"
                 className="outline-button"
                 style={{
                   padding: "14px 28px",
@@ -392,7 +394,7 @@ export default function CashewIndex() {
             color: "rgba(0, 0, 0, 0.4)"
           }}>
             Made with care by{" "}
-            <Link to="/" style={{
+            <Link href="/" style={{
               color: "#007AFF",
               textDecoration: "none",
               fontWeight: "500",
