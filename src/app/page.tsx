@@ -5,9 +5,36 @@ import Link from 'next/link';
 import ExpandableIconCard from '@/components/ExpandableIconCard';
 
 const SOCIAL_LINKS = [
-  { icon: 'GitHub', href: 'https://github.com/mayankgandhi', label: 'GitHub' },
-  { icon: 'LinkedIn', href: 'https://linkedin.com/in/mayankgandhi98', label: 'LinkedIn' },
-  { icon: 'Email', href: 'mailto:mayankgandhi50@gmail.com', label: 'Email' },
+  {
+    name: 'GitHub',
+    username: 'mayankgandhi',
+    href: 'https://github.com/mayankgandhi',
+    iconPath: 'M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z'
+  },
+  {
+    name: 'LinkedIn',
+    username: 'mayankgandhi98',
+    href: 'https://linkedin.com/in/mayankgandhi98',
+    iconPath: 'M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z'
+  },
+  {
+    name: 'Twitter',
+    username: '@mayankgandhi98',
+    href: 'https://twitter.com/mayankgandhi98',
+    iconPath: 'M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z'
+  },
+  {
+    name: 'Instagram',
+    username: 'mayankgandhi98',
+    href: 'https://instagram.com/mayankgandhi98',
+    iconPath: 'M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z'
+  },
+  {
+    name: 'Email',
+    username: 'mayankgandhi50@gmail.com',
+    href: 'mailto:mayankgandhi50@gmail.com',
+    iconPath: 'M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z'
+  }
 ];
 
 const EXPERIENCE_DATA = [
@@ -91,28 +118,23 @@ export default function Home() {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  const handleExperienceExpand = (index: number) => {
-    if (isMobile) {
-      setExpandedExperience(expandedExperience === index ? null : index);
-    }
+  const handleExperienceClick = (index: number) => {
+    setExpandedExperience(expandedExperience === index ? null : index);
   };
 
-  const handleProjectExpand = (index: number) => {
-    if (isMobile) {
-      setExpandedProject(expandedProject === index ? null : index);
-    }
+  const handleProjectClick = (index: number) => {
+    setExpandedProject(expandedProject === index ? null : index);
   };
 
   return (
     <div
       className="page-container"
       style={{
-        fontFamily:
-          "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', system-ui, sans-serif",
+        fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif",
         lineHeight: '1.7',
-        backgroundColor: '#0a0e27',
-        background: '#0a0e27',
-        color: '#e2e8f0',
+        backgroundColor: '#f8fafc',
+        background: '#f8fafc',
+        color: '#1e293b',
         height: '100vh',
         position: 'relative',
         overflow: 'hidden',
@@ -123,118 +145,100 @@ export default function Home() {
       <div
         className="main-container"
         style={{
-          maxWidth: '1600px',
+          maxWidth: '1400px',
           margin: '0 auto',
-          padding: '32px 40px',
+          padding: '48px 40px',
           height: '100vh',
           display: 'flex',
-          gap: '56px',
+          gap: '80px',
           position: 'relative',
           zIndex: 1,
           overflow: 'hidden',
+          alignItems: 'center',
         }}
       >
         {/* Left Column - Header */}
         <aside
           className="left-column"
           style={{
-            flex: '0 0 400px',
+            flex: '0 0 380px',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
-            paddingRight: '32px',
           }}
         >
-          <div
-            className="availability-badge"
-            style={{
-              display: 'inline-block',
-              padding: '8px 16px',
-              background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%)',
-              backdropFilter: 'blur(10px)',
-              WebkitBackdropFilter: 'blur(10px)',
-              borderRadius: '50px',
-              fontSize: '11px',
-              marginBottom: '24px',
-              color: '#a5b4fc',
-              textTransform: 'uppercase',
-              letterSpacing: '0.1em',
-              fontWeight: '600',
-              border: '1px solid rgba(102, 126, 234, 0.3)',
-              boxShadow: '0 8px 32px rgba(102, 126, 234, 0.15)',
-              width: 'fit-content',
-            }}
-          >
-            ✨ Available for Opportunities
+          <div style={{ marginBottom: '40px' }}>
+            <h1
+              className="name-heading"
+              style={{
+                margin: '0 0 16px 0',
+                fontSize: '52px',
+                fontWeight: '700',
+                color: '#0f172a',
+                letterSpacing: '-0.03em',
+                lineHeight: '1.1',
+              }}
+            >
+              Mayank Gandhi
+            </h1>
+
+            <h2
+              className="title-heading"
+              style={{
+                margin: '0 0 24px 0',
+                fontSize: '20px',
+                fontWeight: '500',
+                color: '#64748b',
+                letterSpacing: '-0.01em',
+              }}
+            >
+              Senior iOS Engineer
+            </h2>
+
+            <p
+              className="description-text"
+              style={{
+                fontSize: '16px',
+                color: '#64748b',
+                margin: '0',
+                lineHeight: '1.7',
+                maxWidth: '360px',
+              }}
+            >
+              Crafting exceptional iOS experiences with expertise in scalable architecture, performance
+              optimization, and team leadership
+            </p>
           </div>
 
-          <h1
-            className="name-heading"
-            style={{
-              margin: '0 0 16px 0',
-              fontSize: '56px',
-              fontWeight: '800',
-              background: 'linear-gradient(135deg, #ffffff 0%, #a5b4fc 50%, #c084fc 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-              letterSpacing: '-0.03em',
-              lineHeight: '1.1',
-              textShadow: '0 0 40px rgba(165, 180, 252, 0.3)',
-            }}
-          >
-            Mayank Gandhi
-          </h1>
-
-          <h2
-            className="title-heading"
-            style={{
-              margin: '0 0 24px 0',
-              fontSize: '22px',
-              fontWeight: '500',
-              color: '#cbd5e1',
-              letterSpacing: '-0.01em',
-            }}
-          >
-            Senior iOS Engineer
-          </h2>
-
-          <p
-            className="description-text"
-            style={{
-              fontSize: '16px',
-              color: '#94a3b8',
-              margin: '0 0 32px 0',
-              lineHeight: '1.6',
-            }}
-          >
-            Crafting exceptional iOS experiences with expertise in scalable architecture, performance
-            optimization, and team leadership
-          </p>
-
-          <div className="social-links-container" style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', justifyContent: 'center' }}>
+          <div className="social-links-container" style={{ display: 'flex', flexDirection: 'column', gap: '14px', alignItems: 'flex-start' }}>
             {SOCIAL_LINKS.map((social) => (
               <a
-                key={social.label}
+                key={social.name}
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="social-link"
                 style={{
-                  color: '#cbd5e1',
+                  color: '#475569',
                   textDecoration: 'none',
-                  fontSize: '14px',
-                  fontWeight: '600',
-                  padding: '10px 20px',
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  backdropFilter: 'blur(10px)',
-                  borderRadius: '12px',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
-                  transition: 'all 0.3s ease',
-                  display: 'inline-block',
+                  fontSize: '15px',
+                  fontWeight: '500',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  transition: 'all 0.2s ease',
                 }}
               >
-                {social.icon}
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  style={{ flexShrink: 0, opacity: 0.7 }}
+                >
+                  <path d={social.iconPath} />
+                </svg>
+                <span style={{ opacity: 0.8 }}>{social.username}</span>
               </a>
             ))}
           </div>
@@ -247,11 +251,11 @@ export default function Home() {
             flex: '1',
             display: 'flex',
             flexDirection: 'column',
-            gap: '28px',
+            gap: '48px',
             overflowY: 'auto',
             overflowX: 'hidden',
-            paddingRight: '8px',
-            maxHeight: 'calc(100vh - 64px)',
+            paddingRight: '12px',
+            maxHeight: 'calc(100vh - 96px)',
           }}
         >
           {/* Experience Section */}
@@ -259,14 +263,12 @@ export default function Home() {
             <h2
               className="section-heading"
               style={{
-                fontSize: '26px',
-                fontWeight: '800',
-                background: 'linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-                marginBottom: '16px',
+                fontSize: '28px',
+                fontWeight: '700',
+                color: '#1e293b',
+                marginBottom: '24px',
                 letterSpacing: '-0.02em',
+                textAlign: 'center',
               }}
             >
               Experience
@@ -276,8 +278,9 @@ export default function Home() {
               style={{
                 display: 'flex',
                 flexWrap: 'wrap',
-                gap: '16px',
+                gap: '20px',
                 alignItems: 'flex-start',
+                justifyContent: 'center',
               }}
             >
               {EXPERIENCE_DATA.map((job, index) => {
@@ -295,17 +298,9 @@ export default function Home() {
                     isExpanded={expandedExperience === index}
                     isMobile={isMobile}
                     gradient={gradients[index % gradients.length]}
-                    onExpand={() => {
-                      if (isMobile) {
-                        setExpandedExperience(index);
-                      }
-                    }}
-                    onCollapse={() => {
-                      if (isMobile && expandedExperience === index) {
-                        setExpandedExperience(null);
-                      }
-                    }}
-                    onClick={() => handleExperienceExpand(index)}
+                    onExpand={() => {}}
+                    onCollapse={() => {}}
+                    onClick={() => handleExperienceClick(index)}
                   >
                     <div style={{ width: '100%' }}>
                       <div
@@ -321,10 +316,10 @@ export default function Home() {
                         <div style={{ flex: 1, minWidth: '200px' }}>
                           <h3
                             style={{
-                              margin: '0 0 8px 0',
-                              fontSize: '20px',
-                              fontWeight: '700',
-                              color: '#ffffff',
+                              margin: '0 0 6px 0',
+                              fontSize: '18px',
+                              fontWeight: '600',
+                              color: '#0f172a',
                               letterSpacing: '-0.01em',
                             }}
                           >
@@ -333,46 +328,31 @@ export default function Home() {
                           <p
                             style={{
                               margin: '0 0 4px 0',
-                              fontSize: '17px',
-                              fontWeight: '600',
-                              color: '#e2e8f0',
+                              fontSize: '16px',
+                              fontWeight: '500',
+                              color: '#475569',
                             }}
                           >
                             {job.company}
                           </p>
-                          <p style={{ margin: '0 0 8px 0', fontSize: '14px', color: '#94a3b8' }}>
-                            {job.location}
+                          <p style={{ margin: '0 0 12px 0', fontSize: '14px', color: '#64748b' }}>
+                            {job.location} • {job.period}
                           </p>
-                          <span
-                            style={{
-                              padding: '6px 12px',
-                              background: 'rgba(102, 126, 234, 0.2)',
-                              backdropFilter: 'blur(10px)',
-                              borderRadius: '12px',
-                              fontSize: '12px',
-                              color: '#a5b4fc',
-                              fontWeight: '600',
-                              border: '1px solid rgba(102, 126, 234, 0.3)',
-                              display: 'inline-block',
-                            }}
-                          >
-                            {job.period}
-                          </span>
                         </div>
                       </div>
                       <ul
                         style={{
                           margin: '0',
                           paddingLeft: '20px',
-                          color: '#cbd5e1',
+                          color: '#475569',
                           fontSize: '14px',
-                          lineHeight: '1.6',
+                          lineHeight: '1.7',
                           maxHeight: '200px',
                           overflowY: 'auto',
                         }}
                       >
                         {job.highlights.map((highlight, i) => (
-                          <li key={i} style={{ marginBottom: '8px', color: '#cbd5e1' }}>
+                          <li key={i} style={{ marginBottom: '10px', color: '#475569' }}>
                             {highlight}
                           </li>
                         ))}
@@ -389,14 +369,12 @@ export default function Home() {
             <h2
               className="section-heading"
               style={{
-                fontSize: '26px',
-                fontWeight: '800',
-                background: 'linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-                marginBottom: '16px',
+                fontSize: '28px',
+                fontWeight: '700',
+                color: '#1e293b',
+                marginBottom: '24px',
                 letterSpacing: '-0.02em',
+                textAlign: 'center',
               }}
             >
               Apps
@@ -406,8 +384,9 @@ export default function Home() {
               style={{
                 display: 'flex',
                 flexWrap: 'wrap',
-                gap: '16px',
+                gap: '20px',
                 alignItems: 'flex-start',
+                justifyContent: 'center',
               }}
             >
               {PROJECTS_DATA.map((project, index) => {
@@ -425,25 +404,17 @@ export default function Home() {
                     isExpanded={expandedProject === index}
                     isMobile={isMobile}
                     gradient={gradients[index % gradients.length]}
-                    onExpand={() => {
-                      if (isMobile) {
-                        setExpandedProject(index);
-                      }
-                    }}
-                    onCollapse={() => {
-                      if (isMobile && expandedProject === index) {
-                        setExpandedProject(null);
-                      }
-                    }}
-                    onClick={() => handleProjectExpand(index)}
+                    onExpand={() => {}}
+                    onCollapse={() => {}}
+                    onClick={() => handleProjectClick(index)}
                   >
                     <div style={{ width: '100%' }}>
                       <h3
                         style={{
-                          margin: '0 0 8px 0',
-                          fontSize: '22px',
-                          fontWeight: '700',
-                          color: '#ffffff',
+                          margin: '0 0 4px 0',
+                          fontSize: '18px',
+                          fontWeight: '600',
+                          color: '#0f172a',
                           letterSpacing: '-0.01em',
                         }}
                       >
@@ -451,22 +422,20 @@ export default function Home() {
                       </h3>
                       <p
                         style={{
-                          fontSize: '12px',
-                          color: '#a5b4fc',
+                          fontSize: '13px',
+                          color: '#64748b',
                           margin: '0 0 12px 0',
-                          textTransform: 'uppercase',
-                          letterSpacing: '0.1em',
-                          fontWeight: '600',
+                          fontWeight: '500',
                         }}
                       >
                         {project.subtitle}
                       </p>
                       <p
                         style={{
-                          color: '#cbd5e1',
+                          color: '#475569',
                           marginBottom: '16px',
                           fontSize: '14px',
-                          lineHeight: '1.6',
+                          lineHeight: '1.7',
                         }}
                       >
                         {project.desc}
@@ -478,14 +447,14 @@ export default function Home() {
                         }}
                         className="project-link"
                         style={{
-                          color: '#a5b4fc',
+                          color: '#3b82f6',
                           fontSize: '14px',
                           fontWeight: '600',
                           textDecoration: 'none',
                           padding: '8px 16px',
-                          background: 'rgba(102, 126, 234, 0.15)',
+                          background: 'rgba(59, 130, 246, 0.1)',
                           borderRadius: '10px',
-                          border: '1px solid rgba(102, 126, 234, 0.3)',
+                          border: '1px solid rgba(59, 130, 246, 0.3)',
                           display: 'inline-block',
                           transition: 'all 0.3s ease',
                         }}
@@ -499,65 +468,27 @@ export default function Home() {
             </div>
           </section>
 
-          {/* Blog Section */}
-          <section id="blog" className="content-section">
-            <h2
-              className="section-heading"
-              style={{
-                fontSize: '26px',
-                fontWeight: '800',
-                background: 'linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-                marginBottom: '12px',
-                letterSpacing: '-0.02em',
-              }}
-            >
-              Blog
-            </h2>
-
-            <Link
-              href="/blog"
-              className="blog-link"
-              style={{
-                color: '#a5b4fc',
-                fontSize: '16px',
-                fontWeight: '600',
-                textDecoration: 'none',
-                padding: '12px 24px',
-                background: 'rgba(102, 126, 234, 0.15)',
-                borderRadius: '12px',
-                border: '1px solid rgba(102, 126, 234, 0.3)',
-                display: 'inline-block',
-                transition: 'all 0.3s ease',
-              }}
-            >
-              View Blog →
-            </Link>
-          </section>
         </main>
       </div>
 
       <style jsx>{`
         .social-link:hover {
-          background: rgba(102, 126, 234, 0.2);
-          border-color: rgba(102, 126, 234, 0.4);
-          transform: translateY(-2px);
-          box-shadow: 0 8px 24px rgba(102, 126, 234, 0.2);
-        }
-
-        .project-link:hover {
-          background: rgba(102, 126, 234, 0.25);
-          border-color: rgba(102, 126, 234, 0.5);
+          color: #3b82f6;
           transform: translateX(4px);
         }
 
-        .blog-link:hover {
-          background: rgba(102, 126, 234, 0.25);
-          border-color: rgba(102, 126, 234, 0.5);
-          transform: translateY(-2px);
-          box-shadow: 0 8px 24px rgba(102, 126, 234, 0.2);
+        .social-link:hover svg {
+          opacity: 1;
+        }
+
+        .social-link:hover span {
+          opacity: 1;
+        }
+
+        .project-link:hover {
+          background: rgba(59, 130, 246, 0.2);
+          border-color: rgba(59, 130, 246, 0.5);
+          transform: translateX(4px);
         }
 
         .main-content::-webkit-scrollbar {
@@ -569,12 +500,12 @@ export default function Home() {
         }
 
         .main-content::-webkit-scrollbar-thumb {
-          background: rgba(102, 126, 234, 0.3);
+          background: rgba(148, 163, 184, 0.4);
           border-radius: 3px;
         }
 
         .main-content::-webkit-scrollbar-thumb:hover {
-          background: rgba(102, 126, 234, 0.5);
+          background: rgba(148, 163, 184, 0.6);
         }
 
         /* Mobile Responsive Styles */
@@ -660,15 +591,6 @@ export default function Home() {
             overflow-y: auto !important;
           }
 
-          .availability-badge {
-            font-size: clamp(10px, 2.5vw, 11px) !important;
-            padding: 6px 14px !important;
-            margin-bottom: 20px !important;
-            margin-left: auto !important;
-            margin-right: auto !important;
-            display: block !important;
-          }
-
           .social-links-container {
             justify-content: center !important;
           }
@@ -680,11 +602,6 @@ export default function Home() {
         }
 
         @media (max-width: 480px) {
-          .availability-badge {
-            font-size: 10px !important;
-            padding: 6px 12px !important;
-          }
-
           .social-link {
             font-size: 12px !important;
             padding: 8px 14px !important;

@@ -27,55 +27,43 @@ export default function ExpandableIconCard({
   isMobile = false,
   gradient = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
 }: ExpandableIconCardProps) {
-  const [isHovered, setIsHovered] = useState(false);
-  const isActive = isMobile ? isExpanded : isExpanded || isHovered;
+  const isActive = isExpanded;
 
   return (
     <div
       className={className}
       style={{
         position: 'relative',
-        transition: 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
-        cursor: onClick ? 'pointer' : 'default',
-      }}
-      onMouseEnter={() => {
-        if (!isMobile) {
-          setIsHovered(true);
-          if (onExpand) onExpand();
-        }
-      }}
-      onMouseLeave={() => {
-        if (!isMobile) {
-          setIsHovered(false);
-          if (!isExpanded && onCollapse) onCollapse();
-        }
+        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+        cursor: 'pointer',
       }}
       onClick={onClick}
     >
       <div
         style={{
-          width: isActive ? '340px' : '100px',
-          minHeight: isActive ? 'auto' : '100px',
-          padding: isActive ? '28px' : '16px',
+          width: isActive ? '360px' : '104px',
+          minHeight: isActive ? 'auto' : '104px',
+          padding: isActive ? '24px' : '16px',
           background: isActive
-            ? 'linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.98) 100%)'
-            : 'linear-gradient(135deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.8) 100%)',
+            ? 'rgba(255, 255, 255, 0.95)'
+            : 'rgba(255, 255, 255, 0.7)',
           backdropFilter: 'blur(20px)',
           WebkitBackdropFilter: 'blur(20px)',
           border: isActive
-            ? '2px solid rgba(102, 126, 234, 0.3)'
-            : '2px solid rgba(255,255,255,0.3)',
-          borderRadius: '24px',
+            ? '1.5px solid rgba(59, 130, 246, 0.3)'
+            : '1.5px solid rgba(203, 213, 225, 0.4)',
+          borderRadius: '16px',
           boxShadow: isActive
-            ? '0 20px 60px rgba(102, 126, 234, 0.25), 0 0 0 1px rgba(255,255,255,0.5) inset'
-            : '0 8px 32px rgba(0,0,0,0.08), 0 0 0 1px rgba(255,255,255,0.3) inset',
-          transition: 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
+            ? '0 8px 32px rgba(59, 130, 246, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.8) inset'
+            : '0 2px 8px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(255, 255, 255, 0.6) inset',
+          transition: 'width 0.35s cubic-bezier(0.4, 0, 0.2, 1), padding 0.35s cubic-bezier(0.4, 0, 0.2, 1), background 0.25s ease, border 0.25s ease, box-shadow 0.25s ease',
           overflow: 'hidden',
           display: 'flex',
           flexDirection: 'column',
           alignItems: isActive ? 'flex-start' : 'center',
           justifyContent: isActive ? 'flex-start' : 'center',
           position: 'relative',
+          willChange: isActive ? 'width, padding' : 'auto',
         }}
       >
         <div
@@ -96,38 +84,30 @@ export default function ExpandableIconCard({
           src={icon}
           alt={iconAlt}
           style={{
-            width: '100px',
-            height: '100px',
+            width: '72px',
+            height: '72px',
             objectFit: 'contain',
-            borderRadius: '20px',
-            background: 'linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%)',
-            padding: '16px',
-            border: '2px solid rgba(102, 126, 234, 0.1)',
+            borderRadius: '12px',
             flexShrink: 0,
-            transition: 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
-            transform: isActive ? 'scale(1.05) rotate(2deg)' : 'scale(1) rotate(0deg)',
-            boxShadow: isActive
-              ? '0 12px 40px rgba(102, 126, 234, 0.2)'
-              : '0 4px 16px rgba(0,0,0,0.08)',
+            transition: 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
             position: 'relative',
             zIndex: 1,
           }}
         />
-        {isActive && (
-          <div
-            style={{
-              width: '100%',
-              marginTop: '20px',
-              opacity: isActive ? 1 : 0,
-              transition: 'opacity 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
-              animation: 'fadeInUp 0.4s ease-out',
-              position: 'relative',
-              zIndex: 1,
-            }}
-          >
-            {children}
-          </div>
-        )}
+        <div
+          style={{
+            width: '100%',
+            marginTop: isActive ? '20px' : '0',
+            maxHeight: isActive ? '500px' : '0',
+            opacity: isActive ? 1 : 0,
+            transition: 'opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.1s, max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), margin-top 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
+            position: 'relative',
+            zIndex: 1,
+            overflow: 'hidden',
+          }}
+        >
+          {isActive && children}
+        </div>
       </div>
     </div>
   );
