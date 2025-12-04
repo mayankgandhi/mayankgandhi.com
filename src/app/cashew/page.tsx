@@ -25,14 +25,39 @@ const FEATURES = [
 
 const SCREENSHOTS = [
   {
-    url: "https://cdn.mayankgandhi.com/cashew-screenshot-1.png",
-    title: "Private. Secure. No Account Required.",
-    description: ""
+    url: "https://cdn.mayankgandhi.com/Cashew/Cashew1.png",
+    title: "Track All Your Credit Cards",
+    description: "Manage all your credit cards in one secure place"
   },
   {
-    url: "https://cdn.mayankgandhi.com/cashew-screenshot-2.png",
-    title: "Your Financial Data Stays Yours. Always.",
-    description: ""
+    url: "https://cdn.mayankgandhi.com/Cashew/Cashew2.png",
+    title: "Card Details at a Glance",
+    description: "View balances, limits, and payment due dates"
+  },
+  {
+    url: "https://cdn.mayankgandhi.com/Cashew/Cashew3.png",
+    title: "Add Cards Easily",
+    description: "Quick and simple card entry with all essential details"
+  },
+  {
+    url: "https://cdn.mayankgandhi.com/Cashew/Cashew4.png",
+    title: "Smart Payment Reminders",
+    description: "Never miss a payment with customizable notifications"
+  },
+  {
+    url: "https://cdn.mayankgandhi.com/Cashew/Cashew5.png",
+    title: "Home Screen Widgets",
+    description: "Quick access to your cards right from your home screen"
+  },
+  {
+    url: "https://cdn.mayankgandhi.com/Cashew/Cashew6.png",
+    title: "Lock Screen Widgets",
+    description: "See important card info at a glance on your lock screen"
+  },
+  {
+    url: "https://cdn.mayankgandhi.com/Cashew/Cashew7.png",
+    title: "Spending Insights",
+    description: "Understand your credit card usage patterns"
   }
 ];
 
