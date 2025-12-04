@@ -62,7 +62,6 @@ export default function WalnutPage() {
       appName="Walnut - Medical Documents"
       appIcon="https://cdn.mayankgandhi.com/walnut-app-icon.png"
       tagline="Health records at your fingertips"
-      appStoreLink="#"
       rating={5.0}
       ratingsCount={5}
       features={FEATURES}

@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, ReactNode } from 'react';
+import { ReactNode } from 'react';
+import { tokens } from '@/styles/tokens';
 
 interface ExpandableIconCardProps {
   icon: string;
@@ -19,12 +20,9 @@ export default function ExpandableIconCard({
   icon,
   iconAlt,
   isExpanded,
-  onExpand,
-  onCollapse,
   children,
   onClick,
   className = '',
-  isMobile = false,
   gradient = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
 }: ExpandableIconCardProps) {
   const isActive = isExpanded;
@@ -43,20 +41,20 @@ export default function ExpandableIconCard({
         style={{
           width: isActive ? '360px' : '104px',
           minHeight: isActive ? 'auto' : '104px',
-          padding: isActive ? '24px' : '16px',
+          padding: isActive ? tokens.spacing.lg : tokens.spacing.md,
           background: isActive
-            ? 'rgba(255, 255, 255, 0.95)'
-            : 'rgba(255, 255, 255, 0.7)',
-          backdropFilter: 'blur(20px)',
-          WebkitBackdropFilter: 'blur(20px)',
+            ? 'rgba(255, 255, 255, 0.98)'
+            : 'rgba(255, 255, 255, 0.85)',
+          backdropFilter: tokens.blur.xl,
+          WebkitBackdropFilter: tokens.blur.xl,
           border: isActive
-            ? '1.5px solid rgba(59, 130, 246, 0.3)'
-            : '1.5px solid rgba(203, 213, 225, 0.4)',
-          borderRadius: '16px',
+            ? `1.5px solid ${tokens.colors.blue[500]}40`
+            : `1.5px solid ${tokens.colors.slate[200]}`,
+          borderRadius: tokens.radius.lg,
           boxShadow: isActive
-            ? '0 8px 32px rgba(59, 130, 246, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.8) inset'
-            : '0 2px 8px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(255, 255, 255, 0.6) inset',
-          transition: 'width 0.35s cubic-bezier(0.4, 0, 0.2, 1), padding 0.35s cubic-bezier(0.4, 0, 0.2, 1), background 0.25s ease, border 0.25s ease, box-shadow 0.25s ease',
+            ? `${tokens.shadow.xl}, ${tokens.shadow.innerActive}`
+            : `${tokens.shadow.md}, ${tokens.shadow.inner}`,
+          transition: `width ${tokens.transition.slow}, padding ${tokens.transition.slow}, background ${tokens.transition.smooth}, border ${tokens.transition.smooth}, box-shadow ${tokens.transition.smooth}`,
           overflow: 'hidden',
           display: 'flex',
           flexDirection: 'column',
@@ -74,10 +72,10 @@ export default function ExpandableIconCard({
             right: 0,
             bottom: 0,
             background: isActive ? gradient : 'transparent',
-            opacity: isActive ? 0.05 : 0,
-            transition: 'opacity 0.4s ease',
+            opacity: isActive ? 0.06 : 0,
+            transition: `opacity ${tokens.transition.slow}`,
             pointerEvents: 'none',
-            borderRadius: '24px',
+            borderRadius: tokens.radius.xl,
           }}
         />
         <img
@@ -87,9 +85,9 @@ export default function ExpandableIconCard({
             width: '72px',
             height: '72px',
             objectFit: 'contain',
-            borderRadius: '12px',
+            borderRadius: tokens.radius.md,
             flexShrink: 0,
-            transition: 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
+            transition: `transform ${tokens.transition.slow}`,
             position: 'relative',
             zIndex: 1,
           }}
@@ -97,10 +95,10 @@ export default function ExpandableIconCard({
         <div
           style={{
             width: '100%',
-            marginTop: isActive ? '20px' : '0',
+            marginTop: isActive ? tokens.spacing.lg : '0',
             maxHeight: isActive ? '500px' : '0',
             opacity: isActive ? 1 : 0,
-            transition: 'opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.1s, max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), margin-top 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
+            transition: `opacity ${tokens.transition.smooth} 100ms, max-height ${tokens.transition.slow}, margin-top ${tokens.transition.slow}`,
             position: 'relative',
             zIndex: 1,
             overflow: 'hidden',

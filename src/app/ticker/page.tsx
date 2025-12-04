@@ -25,29 +25,19 @@ const FEATURES = [
 
 const SCREENSHOTS = [
   {
-    url: "https://cdn.mayankgandhi.com/Ticker/Ticker-SS1.jpg",
-    title: "All Your Alarms in One Place",
-    description: "Manage all your reminders and alarms with a clean, organized view"
+    url: "https://cdn.mayankgandhi.com/Ticker/Ticker-SS1.jpg"
   },
   {
-    url: "https://cdn.mayankgandhi.com/Ticker/Ticker-SS2.jpg",
-    title: "Create Custom Alarms",
-    description: "Set up personalized alarms with titles, times, and custom settings"
+    url: "https://cdn.mayankgandhi.com/Ticker/Ticker-SS2.jpg"
   },
   {
-    url: "https://cdn.mayankgandhi.com/Ticker/Ticker-SS3.jpg",
-    title: "Flexible Scheduling",
-    description: "Choose specific days and times for your recurring reminders"
+    url: "https://cdn.mayankgandhi.com/Ticker/Ticker-SS3.jpg"
   },
   {
-    url: "https://cdn.mayankgandhi.com/Ticker/Ticker-SS4.jpg",
-    title: "Smart Notifications",
-    description: "Get timely alerts that help you stay on track throughout the day"
+    url: "https://cdn.mayankgandhi.com/Ticker/Ticker-SS4.jpg"
   },
   {
-    url: "https://cdn.mayankgandhi.com/Ticker/Ticker-SS5.jpg",
-    title: "Never Miss Important Tasks",
-    description: "Reliable reminders for medication, meetings, and daily routines"
+    url: "https://cdn.mayankgandhi.com/Ticker/Ticker-SS5.jpg"
   }
 ];
 

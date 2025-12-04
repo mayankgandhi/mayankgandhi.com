@@ -35,7 +35,7 @@ interface AppStoreTemplateProps {
   appName: string;
   appIcon: string;
   tagline: string;
-  appStoreLink: string;
+  appStoreLink?: string;
   rating?: number;
   ratingsCount?: number;
   features?: Feature[];
@@ -82,44 +82,12 @@ export default function AppStoreTemplate({
 
   return (
     <div style={{
-      fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', sans-serif",
+      fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', sans-serif",
       backgroundColor: "#f2f2f7",
       minHeight: "100vh",
-      paddingBottom: isMobile ? "40px" : "80px"
+      paddingBottom: isMobile ? "40px" : "80px",
+      paddingTop: isMobile ? "20px" : "40px"
     }}>
-      {/* Header with back button */}
-      <div style={{
-        background: "#f2f2f7",
-        padding: isMobile ? "12px 16px" : "24px 40px",
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        position: "sticky",
-        top: 0,
-        zIndex: 100,
-        maxWidth: isMobile ? "100%" : "1200px",
-        margin: "0 auto"
-      }}>
-        <Link
-          href="/"
-          style={{
-            width: "36px",
-            height: "36px",
-            borderRadius: "50%",
-            background: "white",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            textDecoration: "none",
-            color: "#007AFF",
-            fontSize: "20px",
-            fontWeight: "500"
-          }}
-        >
-          ‹
-        </Link>
-      </div>
-
       {/* Main Content Container - Desktop centered */}
       <div style={{
         maxWidth: isMobile ? "100%" : "1200px",
@@ -170,23 +138,25 @@ export default function AppStoreTemplate({
               }}>
                 {tagline}
               </p>
-              <a
-                href={appStoreLink}
-                style={{
-                  background: "#007AFF",
-                  color: "white",
-                  padding: isMobile ? "8px 20px" : "12px 32px",
-                  borderRadius: isMobile ? "16px" : "12px",
-                  textDecoration: "none",
-                  fontSize: isMobile ? "15px" : "17px",
-                  fontWeight: "600",
-                  display: "inline-block",
-                  width: "fit-content",
-                  marginTop: isMobile ? "auto" : "0"
-                }}
-              >
-                {isMobile ? "Open" : "Download on the App Store"}
-              </a>
+              {appStoreLink && (
+                <a
+                  href={appStoreLink}
+                  style={{
+                    background: "#007AFF",
+                    color: "white",
+                    padding: isMobile ? "8px 20px" : "12px 32px",
+                    borderRadius: isMobile ? "16px" : "12px",
+                    textDecoration: "none",
+                    fontSize: isMobile ? "15px" : "17px",
+                    fontWeight: "600",
+                    display: "inline-block",
+                    width: "fit-content",
+                    marginTop: isMobile ? "auto" : "0"
+                  }}
+                >
+                  {isMobile ? "Open" : "Download on the App Store"}
+                </a>
+              )}
             </div>
           </div>
 
@@ -242,9 +212,20 @@ export default function AppStoreTemplate({
               <div style={{ fontSize: isMobile ? "28px" : "32px", marginBottom: "2px" }}>
                 👤
               </div>
-              <div style={{ color: "#8e8e93", fontSize: "11px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+              <Link
+                href="/"
+                style={{
+                  color: "#007AFF",
+                  fontSize: "11px",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                  textDecoration: "none",
+                  display: "block"
+                }}
+              >
                 {appInfo.provider}
-              </div>
+              </Link>
             </div>
           </div>
         </div>
@@ -442,7 +423,17 @@ export default function AppStoreTemplate({
           <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
             <div style={{ display: "flex", justifyContent: "space-between", paddingBottom: "16px", borderBottom: "0.5px solid #e5e5ea" }}>
               <span style={{ fontSize: isMobile ? "15px" : "17px", color: "#8e8e93" }}>Provider</span>
-              <span style={{ fontSize: isMobile ? "15px" : "17px", color: "#000", textAlign: "right" }}>{appInfo.provider}</span>
+              <Link
+                href="/"
+                style={{
+                  fontSize: isMobile ? "15px" : "17px",
+                  color: "#007AFF",
+                  textAlign: "right",
+                  textDecoration: "none"
+                }}
+              >
+                {appInfo.provider}
+              </Link>
             </div>
 
             <div style={{ display: "flex", justifyContent: "space-between", paddingBottom: "16px", borderBottom: "0.5px solid #e5e5ea" }}>
@@ -518,7 +509,15 @@ export default function AppStoreTemplate({
           }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
               <h2 style={{ fontSize: isMobile ? "20px" : "28px", fontWeight: "700", margin: 0 }}>
-                More by {appInfo.provider}
+                More by <Link
+                  href="/"
+                  style={{
+                    color: "#007AFF",
+                    textDecoration: "none"
+                  }}
+                >
+                  {appInfo.provider}
+                </Link>
               </h2>
               <span style={{ fontSize: "20px", color: "#8e8e93" }}>›</span>
             </div>

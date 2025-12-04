@@ -3,10 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import ExpandableIconCard from '@/components/ExpandableIconCard';
-import { tokens } from '@/styles/tokens';
-import { useInView } from '@/hooks/useInView';
 
-// Data remains the same
 const SOCIAL_LINKS = [
   {
     name: 'GitHub',
@@ -100,27 +97,6 @@ const PROJECTS_DATA = [
   },
 ];
 
-// Animated section wrapper component
-function AnimatedSection({ children, id, delay = 0 }: { children: React.ReactNode; id?: string; delay?: number }) {
-  const { ref, isInView } = useInView();
-
-  return (
-    <section
-      // @ts-ignore
-      ref={ref}
-      id={id}
-      style={{
-        opacity: isInView ? 1 : 0,
-        transform: isInView ? 'translateY(0)' : 'translateY(20px)',
-        transition: `opacity ${tokens.transition.smooth} ${delay}ms, transform ${tokens.transition.smooth} ${delay}ms`,
-        willChange: 'opacity, transform',
-      }}
-    >
-      {children}
-    </section>
-  );
-}
-
 export default function Home() {
   const [expandedExperience, setExpandedExperience] = useState<number | null>(null);
   const [expandedProject, setExpandedProject] = useState<number | null>(null);
@@ -149,24 +125,26 @@ export default function Home() {
       className="page-container"
       style={{
         fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-        lineHeight: tokens.lineHeight.relaxed,
-        backgroundColor: tokens.colors.slate[50],
-        color: tokens.colors.slate[800],
-        minHeight: '100vh',
+        lineHeight: '1.7',
+        backgroundColor: '#f8fafc',
+        background: '#f8fafc',
+        color: '#1e293b',
+        height: '100vh',
         position: 'relative',
         overflow: 'hidden',
       }}
     >
+
       {/* Main Container with 2-column layout */}
       <div
         className="main-container"
         style={{
           maxWidth: '1400px',
           margin: '0 auto',
-          padding: `${tokens.spacing['2xl']} ${tokens.spacing.xl}`,
-          minHeight: '100vh',
+          padding: '48px 40px',
+          height: '100vh',
           display: 'flex',
-          gap: tokens.spacing['4xl'],
+          gap: '80px',
           position: 'relative',
           zIndex: 1,
           overflow: 'hidden',
@@ -183,16 +161,16 @@ export default function Home() {
             justifyContent: 'center',
           }}
         >
-          <div style={{ marginBottom: tokens.spacing.xl }}>
+          <div style={{ marginBottom: '40px' }}>
             <h1
               className="name-heading"
               style={{
-                margin: `0 0 ${tokens.spacing.md} 0`,
-                fontSize: tokens.fontSize['5xl'],
-                fontWeight: tokens.fontWeight.bold,
-                color: tokens.colors.slate[900],
-                letterSpacing: tokens.letterSpacing.tighter,
-                lineHeight: tokens.lineHeight.tight,
+                margin: '0 0 16px 0',
+                fontSize: '52px',
+                fontWeight: '700',
+                color: '#0f172a',
+                letterSpacing: '-0.03em',
+                lineHeight: '1.1',
               }}
             >
               Mayank Gandhi
@@ -201,11 +179,11 @@ export default function Home() {
             <h2
               className="title-heading"
               style={{
-                margin: `0 0 ${tokens.spacing.lg} 0`,
-                fontSize: tokens.fontSize.xl,
-                fontWeight: tokens.fontWeight.medium,
-                color: tokens.colors.slate[500],
-                letterSpacing: tokens.letterSpacing.normal,
+                margin: '0 0 24px 0',
+                fontSize: '20px',
+                fontWeight: '500',
+                color: '#64748b',
+                letterSpacing: '-0.01em',
               }}
             >
               Senior iOS Engineer
@@ -214,10 +192,10 @@ export default function Home() {
             <p
               className="description-text"
               style={{
-                fontSize: tokens.fontSize.base,
-                color: tokens.colors.slate[500],
+                fontSize: '16px',
+                color: '#64748b',
                 margin: '0',
-                lineHeight: tokens.lineHeight.relaxed,
+                lineHeight: '1.7',
                 maxWidth: '360px',
               }}
             >
@@ -226,16 +204,8 @@ export default function Home() {
             </p>
           </div>
 
-          <div
-            className="social-links-container"
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: tokens.spacing.sm,
-              alignItems: 'flex-start',
-            }}
-          >
-            {SOCIAL_LINKS.map((social, index) => (
+          <div className="social-links-container" style={{ display: 'flex', flexDirection: 'column', gap: '14px', alignItems: 'flex-start' }}>
+            {SOCIAL_LINKS.map((social) => (
               <a
                 key={social.name}
                 href={social.href}
@@ -243,17 +213,14 @@ export default function Home() {
                 rel="noopener noreferrer"
                 className="social-link"
                 style={{
-                  color: tokens.colors.slate[600],
+                  color: '#475569',
                   textDecoration: 'none',
-                  fontSize: tokens.fontSize.sm,
-                  fontWeight: tokens.fontWeight.medium,
+                  fontSize: '15px',
+                  fontWeight: '500',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: tokens.spacing.md,
-                  padding: `${tokens.spacing.sm} 0`,
-                  transition: `all ${tokens.transition.base}`,
-                  opacity: 0,
-                  animation: `slideIn ${tokens.transition.smooth} ${100 + index * 50}ms forwards`,
+                  gap: '12px',
+                  transition: 'all 0.2s ease',
                 }}
               >
                 <svg
@@ -261,15 +228,11 @@ export default function Home() {
                   height="20"
                   viewBox="0 0 24 24"
                   fill="currentColor"
-                  style={{
-                    flexShrink: 0,
-                    opacity: 0.7,
-                    transition: `opacity ${tokens.transition.base}`,
-                  }}
+                  style={{ flexShrink: 0, opacity: 0.7 }}
                 >
                   <path d={social.iconPath} />
                 </svg>
-                <span style={{ opacity: 0.9 }}>{social.username}</span>
+                <span style={{ opacity: 0.8 }}>{social.username}</span>
               </a>
             ))}
           </div>
@@ -282,23 +245,23 @@ export default function Home() {
             flex: '1',
             display: 'flex',
             flexDirection: 'column',
-            gap: tokens.spacing['2xl'],
+            gap: '48px',
             overflowY: 'auto',
             overflowX: 'hidden',
-            paddingRight: tokens.spacing.md,
+            paddingRight: '12px',
             maxHeight: 'calc(100vh - 96px)',
           }}
         >
           {/* Experience Section */}
-          <AnimatedSection id="experience">
+          <section id="experience" className="content-section">
             <h2
               className="section-heading"
               style={{
-                fontSize: tokens.fontSize['2xl'],
-                fontWeight: tokens.fontWeight.bold,
-                color: tokens.colors.slate[800],
-                marginBottom: tokens.spacing.lg,
-                letterSpacing: tokens.letterSpacing.tight,
+                fontSize: '28px',
+                fontWeight: '700',
+                color: '#1e293b',
+                marginBottom: '24px',
+                letterSpacing: '-0.02em',
                 textAlign: 'center',
               }}
             >
@@ -309,7 +272,7 @@ export default function Home() {
               style={{
                 display: 'flex',
                 flexWrap: 'wrap',
-                gap: tokens.spacing.lg,
+                gap: '20px',
                 alignItems: 'flex-start',
                 justifyContent: 'center',
               }}
@@ -329,6 +292,8 @@ export default function Home() {
                     isExpanded={expandedExperience === index}
                     isMobile={isMobile}
                     gradient={gradients[index % gradients.length]}
+                    onExpand={() => {}}
+                    onCollapse={() => {}}
                     onClick={() => handleExperienceClick(index)}
                   >
                     <div style={{ width: '100%' }}>
@@ -338,39 +303,33 @@ export default function Home() {
                           justifyContent: 'space-between',
                           alignItems: 'start',
                           flexWrap: 'wrap',
-                          gap: tokens.spacing.md,
-                          marginBottom: tokens.spacing.md,
+                          gap: '12px',
+                          marginBottom: '16px',
                         }}
                       >
                         <div style={{ flex: 1, minWidth: '200px' }}>
                           <h3
                             style={{
-                              margin: `0 0 ${tokens.spacing.xs} 0`,
-                              fontSize: tokens.fontSize.lg,
-                              fontWeight: tokens.fontWeight.semibold,
-                              color: tokens.colors.slate[900],
-                              letterSpacing: tokens.letterSpacing.normal,
+                              margin: '0 0 6px 0',
+                              fontSize: '18px',
+                              fontWeight: '600',
+                              color: '#0f172a',
+                              letterSpacing: '-0.01em',
                             }}
                           >
                             {job.title}
                           </h3>
                           <p
                             style={{
-                              margin: `0 0 ${tokens.spacing.xs} 0`,
-                              fontSize: tokens.fontSize.base,
-                              fontWeight: tokens.fontWeight.medium,
-                              color: tokens.colors.slate[600],
+                              margin: '0 0 4px 0',
+                              fontSize: '16px',
+                              fontWeight: '500',
+                              color: '#475569',
                             }}
                           >
                             {job.company}
                           </p>
-                          <p
-                            style={{
-                              margin: `0 0 ${tokens.spacing.md} 0`,
-                              fontSize: tokens.fontSize.sm,
-                              color: tokens.colors.slate[500],
-                            }}
-                          >
+                          <p style={{ margin: '0 0 12px 0', fontSize: '14px', color: '#64748b' }}>
                             {job.location} • {job.period}
                           </p>
                         </div>
@@ -378,22 +337,16 @@ export default function Home() {
                       <ul
                         style={{
                           margin: '0',
-                          paddingLeft: tokens.spacing.lg,
-                          color: tokens.colors.slate[600],
-                          fontSize: tokens.fontSize.sm,
-                          lineHeight: tokens.lineHeight.relaxed,
+                          paddingLeft: '20px',
+                          color: '#475569',
+                          fontSize: '14px',
+                          lineHeight: '1.7',
                           maxHeight: '200px',
                           overflowY: 'auto',
                         }}
                       >
                         {job.highlights.map((highlight, i) => (
-                          <li
-                            key={i}
-                            style={{
-                              marginBottom: tokens.spacing.sm,
-                              color: tokens.colors.slate[600],
-                            }}
-                          >
+                          <li key={i} style={{ marginBottom: '10px', color: '#475569' }}>
                             {highlight}
                           </li>
                         ))}
@@ -403,18 +356,18 @@ export default function Home() {
                 );
               })}
             </div>
-          </AnimatedSection>
+          </section>
 
           {/* Projects Section */}
-          <AnimatedSection id="apps" delay={100}>
+          <section id="projects" className="content-section">
             <h2
               className="section-heading"
               style={{
-                fontSize: tokens.fontSize['2xl'],
-                fontWeight: tokens.fontWeight.bold,
-                color: tokens.colors.slate[800],
-                marginBottom: tokens.spacing.lg,
-                letterSpacing: tokens.letterSpacing.tight,
+                fontSize: '28px',
+                fontWeight: '700',
+                color: '#1e293b',
+                marginBottom: '24px',
+                letterSpacing: '-0.02em',
                 textAlign: 'center',
               }}
             >
@@ -425,7 +378,7 @@ export default function Home() {
               style={{
                 display: 'flex',
                 flexWrap: 'wrap',
-                gap: tokens.spacing.lg,
+                gap: '20px',
                 alignItems: 'flex-start',
                 justifyContent: 'center',
               }}
@@ -445,55 +398,59 @@ export default function Home() {
                     isExpanded={expandedProject === index}
                     isMobile={isMobile}
                     gradient={gradients[index % gradients.length]}
+                    onExpand={() => {}}
+                    onCollapse={() => {}}
                     onClick={() => handleProjectClick(index)}
                   >
                     <div style={{ width: '100%' }}>
                       <h3
                         style={{
-                          margin: `0 0 ${tokens.spacing.xs} 0`,
-                          fontSize: tokens.fontSize.lg,
-                          fontWeight: tokens.fontWeight.semibold,
-                          color: tokens.colors.slate[900],
-                          letterSpacing: tokens.letterSpacing.normal,
+                          margin: '0 0 4px 0',
+                          fontSize: '18px',
+                          fontWeight: '600',
+                          color: '#0f172a',
+                          letterSpacing: '-0.01em',
                         }}
                       >
                         {project.name}
                       </h3>
                       <p
                         style={{
-                          fontSize: tokens.fontSize.xs,
-                          color: tokens.colors.slate[500],
-                          margin: `0 0 ${tokens.spacing.md} 0`,
-                          fontWeight: tokens.fontWeight.medium,
+                          fontSize: '13px',
+                          color: '#64748b',
+                          margin: '0 0 12px 0',
+                          fontWeight: '500',
                         }}
                       >
                         {project.subtitle}
                       </p>
                       <p
                         style={{
-                          color: tokens.colors.slate[600],
-                          marginBottom: tokens.spacing.md,
-                          fontSize: tokens.fontSize.sm,
-                          lineHeight: tokens.lineHeight.relaxed,
+                          color: '#475569',
+                          marginBottom: '16px',
+                          fontSize: '14px',
+                          lineHeight: '1.7',
                         }}
                       >
                         {project.desc}
                       </p>
                       <Link
                         href={project.link}
-                        onClick={(e) => e.stopPropagation()}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                        }}
                         className="project-link"
                         style={{
-                          color: tokens.colors.blue[600],
-                          fontSize: tokens.fontSize.sm,
-                          fontWeight: tokens.fontWeight.semibold,
+                          color: '#3b82f6',
+                          fontSize: '14px',
+                          fontWeight: '600',
                           textDecoration: 'none',
-                          padding: `${tokens.spacing.sm} ${tokens.spacing.md}`,
-                          background: 'rgba(59, 130, 246, 0.08)',
-                          borderRadius: tokens.radius.md,
-                          border: `1px solid ${tokens.colors.blue[600]}30`,
+                          padding: '8px 16px',
+                          background: 'rgba(59, 130, 246, 0.1)',
+                          borderRadius: '10px',
+                          border: '1px solid rgba(59, 130, 246, 0.3)',
                           display: 'inline-block',
-                          transition: `all ${tokens.transition.smooth}`,
+                          transition: 'all 0.3s ease',
                         }}
                       >
                         Learn more →
@@ -503,24 +460,14 @@ export default function Home() {
                 );
               })}
             </div>
-          </AnimatedSection>
+          </section>
+
         </main>
       </div>
 
       <style jsx>{`
-        @keyframes slideIn {
-          from {
-            opacity: 0;
-            transform: translateX(-10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-
         .social-link:hover {
-          color: ${tokens.colors.blue[600]};
+          color: #3b82f6;
           transform: translateX(4px);
         }
 
@@ -532,19 +479,10 @@ export default function Home() {
           opacity: 1;
         }
 
-        .social-link:active {
-          transform: translateX(2px) scale(0.98);
-        }
-
         .project-link:hover {
-          background: rgba(59, 130, 246, 0.12);
-          border-color: ${tokens.colors.blue[600]}50;
+          background: rgba(59, 130, 246, 0.2);
+          border-color: rgba(59, 130, 246, 0.5);
           transform: translateX(4px);
-          box-shadow: ${tokens.shadow.sm};
-        }
-
-        .project-link:active {
-          transform: translateX(2px) scale(0.98);
         }
 
         .main-content::-webkit-scrollbar {
@@ -556,12 +494,12 @@ export default function Home() {
         }
 
         .main-content::-webkit-scrollbar-thumb {
-          background: ${tokens.colors.slate[300]};
-          border-radius: ${tokens.radius.sm};
+          background: rgba(148, 163, 184, 0.4);
+          border-radius: 3px;
         }
 
         .main-content::-webkit-scrollbar-thumb:hover {
-          background: ${tokens.colors.slate[400]};
+          background: rgba(148, 163, 184, 0.6);
         }
 
         /* Mobile Responsive Styles */
@@ -570,8 +508,8 @@ export default function Home() {
             flex-direction: column !important;
             height: auto !important;
             min-height: 100vh !important;
-            padding: ${tokens.spacing.lg} ${tokens.spacing.md} !important;
-            gap: ${tokens.spacing.xl} !important;
+            padding: 24px 20px !important;
+            gap: 32px !important;
             overflow-y: auto !important;
           }
 
@@ -604,34 +542,86 @@ export default function Home() {
             text-align: center;
             max-width: 100%;
           }
-
-          .social-links-container {
-            justify-content: center !important;
-            align-items: center !important;
-          }
         }
 
         @media (max-width: 768px) {
           .main-container {
-            padding: ${tokens.spacing.md} ${tokens.spacing.sm} !important;
-            gap: ${tokens.spacing.lg} !important;
+            padding: 20px 16px !important;
+            gap: 24px !important;
+          }
+
+          .left-column {
+            padding-bottom: 0 !important;
           }
 
           .name-heading {
             font-size: clamp(32px, 10vw, 48px) !important;
-            margin-bottom: ${tokens.spacing.sm} !important;
+            margin-bottom: 12px !important;
           }
 
           .title-heading {
             font-size: clamp(16px, 4vw, 20px) !important;
-            margin-bottom: ${tokens.spacing.md} !important;
+            margin-bottom: 16px !important;
           }
 
           .description-text {
             font-size: clamp(14px, 3.5vw, 16px) !important;
-            margin-bottom: ${tokens.spacing.lg} !important;
+            margin-bottom: 24px !important;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .main-container {
+            padding: 16px 12px !important;
+            gap: 20px !important;
+          }
+        }
+
+        /* Page container responsive */
+        @media (max-width: 1024px) {
+          .page-container {
+            height: auto !important;
+            min-height: 100vh !important;
+            overflow-y: auto !important;
           }
 
+          .social-links-container {
+            justify-content: center !important;
+          }
+
+          .social-link {
+            font-size: clamp(12px, 3vw, 14px) !important;
+            padding: 8px 16px !important;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .social-link {
+            font-size: 12px !important;
+            padding: 8px 14px !important;
+          }
+        }
+
+        /* Section heading responsive */
+        @media (max-width: 1024px) {
+          .section-heading {
+            font-size: clamp(22px, 5vw, 26px) !important;
+            text-align: center;
+          }
+
+          .content-section {
+            text-align: center;
+          }
+        }
+
+        /* Card containers responsive */
+        @media (max-width: 1024px) {
+          .content-section > div {
+            justify-content: center !important;
+          }
+        }
+
+        @media (max-width: 768px) {
           .content-section > div {
             flex-direction: column !important;
             align-items: stretch !important;
@@ -640,22 +630,6 @@ export default function Home() {
           .expandable-icon-card {
             width: 100% !important;
             max-width: 100% !important;
-          }
-        }
-
-        /* Reduced motion */
-        @media (prefers-reduced-motion: reduce) {
-          *,
-          *::before,
-          *::after {
-            animation-duration: 0.01ms !important;
-            animation-iteration-count: 1 !important;
-            transition-duration: 0.01ms !important;
-          }
-
-          .social-link:hover,
-          .project-link:hover {
-            transform: none !important;
           }
         }
       `}</style>
