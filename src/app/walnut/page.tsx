@@ -33,6 +33,26 @@ const SCREENSHOTS = [
     url: "https://cdn.mayankgandhi.com/walnut-screenshot-2.png",
     title: "All Your Medical Records in One Place",
     description: ""
+  },
+  {
+    url: "https://cdn.mayankgandhi.com/Walnut1.PNG",
+    title: "Medical Records Management",
+    description: ""
+  },
+  {
+    url: "https://cdn.mayankgandhi.com/Walnut2.PNG",
+    title: "Prescription Tracking",
+    description: ""
+  },
+  {
+    url: "https://cdn.mayankgandhi.com/Walnut3.PNG",
+    title: "Health Metrics Dashboard",
+    description: ""
+  },
+  {
+    url: "https://cdn.mayankgandhi.com/Walnut4.PNG",
+    title: "Document Scanner",
+    description: ""
   }
 ];
 

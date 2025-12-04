@@ -67,7 +67,7 @@ export default function CashewPage() {
       appName="Cashew - Credit Card Tracker"
       appIcon="https://cdn.mayankgandhi.com/cashew-app-icon.png"
       tagline="Safe. Private. Secure."
-      appStoreLink="#"
+      appStoreLink="https://apps.apple.com/in/app/cashew-credit-card-tracker/id6746769434"
       rating={5.0}
       ratingsCount={2}
       features={FEATURES}

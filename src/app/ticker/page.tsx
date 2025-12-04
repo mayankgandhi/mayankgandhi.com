@@ -57,7 +57,7 @@ export default function TickerPage() {
       appName="Ticker - Smart Alarms"
       appIcon="https://cdn.mayankgandhi.com/ticker-app-icon.png"
       tagline="Never miss what matters"
-      appStoreLink="#"
+      appStoreLink="https://apps.apple.com/in/app/ticker-smart-alarms/id6753949420"
       rating={5.0}
       ratingsCount={3}
       features={FEATURES}
