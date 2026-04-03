@@ -84,6 +84,21 @@ export const tokens = {
       400: '#22d3ee',
       500: '#06b6d4',
     },
+    dark: {
+      bg: '#0a0a0f',
+      surface: 'rgba(255,255,255, 0.02)',
+      border: 'rgba(255,255,255, 0.06)',
+      borderHover: 'rgba(255,255,255, 0.12)',
+      textPrimary: '#f8fafc',
+      textSecondary: '#e2e8f0',
+      textMuted: '#94a3b8',
+      textSubtle: '#64748b',
+      textDim: '#475569',
+      accent: '#818cf8',
+      accentBg: 'rgba(99,102,241, 0.08)',
+      accentBorder: 'rgba(99,102,241, 0.12)',
+      glow: 'rgba(99,102,241, 0.4)',
+    },
   },
 
   // Border radius

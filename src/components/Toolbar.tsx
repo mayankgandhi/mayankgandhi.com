@@ -10,14 +10,22 @@ interface BreadcrumbItem {
   path: string;
 }
 
+const APP_ROUTES: Record<string, string> = {
+  ticker: 'Ticker',
+  cashew: 'Cashew',
+  walnut: 'Walnut',
+  onelist: 'OneList',
+};
+
 export default function Toolbar() {
   const pathname = usePathname();
   const [isMobile, setIsMobile] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const isHome = pathname === '/';
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
+      setIsMobile(window.innerWidth <= 900);
     };
 
     const handleScroll = () => {
@@ -44,31 +52,15 @@ export default function Toolbar() {
     if (pathname === '/') return breadcrumbs;
 
     const paths = pathname.split('/').filter(Boolean);
+    const appName = APP_ROUTES[paths[0]];
 
-    // Handle app pages
-    if (paths[0] === 'ticker') {
+    if (appName) {
       breadcrumbs.push({ label: 'Apps', path: '/#apps' });
-      breadcrumbs.push({ label: 'Ticker', path: '/ticker' });
+      breadcrumbs.push({ label: appName, path: `/${paths[0]}` });
       if (paths[1] === 'privacy-policy') {
-        breadcrumbs.push({ label: 'Privacy Policy', path: '/ticker/privacy-policy' });
+        breadcrumbs.push({ label: 'Privacy Policy', path: `/${paths[0]}/privacy-policy` });
       } else if (paths[1] === 'terms') {
-        breadcrumbs.push({ label: 'Terms', path: '/ticker/terms' });
-      }
-    } else if (paths[0] === 'cashew') {
-      breadcrumbs.push({ label: 'Apps', path: '/#apps' });
-      breadcrumbs.push({ label: 'Cashew', path: '/cashew' });
-      if (paths[1] === 'privacy-policy') {
-        breadcrumbs.push({ label: 'Privacy Policy', path: '/cashew/privacy-policy' });
-      } else if (paths[1] === 'terms') {
-        breadcrumbs.push({ label: 'Terms', path: '/cashew/terms' });
-      }
-    } else if (paths[0] === 'walnut') {
-      breadcrumbs.push({ label: 'Apps', path: '/#apps' });
-      breadcrumbs.push({ label: 'Walnut', path: '/walnut' });
-      if (paths[1] === 'privacy-policy') {
-        breadcrumbs.push({ label: 'Privacy Policy', path: '/walnut/privacy-policy' });
-      } else if (paths[1] === 'terms') {
-        breadcrumbs.push({ label: 'Terms', path: '/walnut/terms' });
+        breadcrumbs.push({ label: 'Terms', path: `/${paths[0]}/terms` });
       }
     }
 
@@ -76,6 +68,23 @@ export default function Toolbar() {
   };
 
   const breadcrumbs = getBreadcrumbs();
+
+  const bgColor = isHome
+    ? (scrolled ? 'rgba(10, 10, 15, 0.85)' : 'rgba(10, 10, 15, 0.95)')
+    : (scrolled ? 'rgba(255, 255, 255, 0.88)' : 'rgba(255, 255, 255, 0.95)');
+
+  const borderColor = isHome
+    ? (scrolled ? 'rgba(255, 255, 255, 0.08)' : 'rgba(255, 255, 255, 0.06)')
+    : (scrolled ? tokens.colors.slate[200] : tokens.colors.slate[100]);
+
+  const linkColor = (index: number) => {
+    if (isHome) {
+      if (index === 0) return '#f8fafc';
+      if (index === breadcrumbs.length - 1) return '#f1f5f9';
+      return '#94a3b8';
+    }
+    return index === breadcrumbs.length - 1 ? tokens.colors.slate[900] : tokens.colors.slate[500];
+  };
 
   return (
     <>
@@ -86,10 +95,10 @@ export default function Toolbar() {
           left: 0,
           right: 0,
           zIndex: tokens.zIndex.fixed,
-          backgroundColor: scrolled ? 'rgba(255, 255, 255, 0.88)' : 'rgba(255, 255, 255, 0.95)',
+          backgroundColor: bgColor,
           backdropFilter: tokens.blur.md,
           WebkitBackdropFilter: tokens.blur.md,
-          borderBottom: `1px solid ${scrolled ? tokens.colors.slate[200] : tokens.colors.slate[100]}`,
+          borderBottom: `1px solid ${borderColor}`,
           transition: `all ${tokens.transition.smooth}`,
           boxShadow: scrolled ? tokens.shadow.md : 'none',
         }}
@@ -119,7 +128,7 @@ export default function Toolbar() {
               {index > 0 && (
                 <span
                   style={{
-                    color: '#94a3b8',
+                    color: isHome ? '#64748b' : '#94a3b8',
                     fontSize: isMobile ? '14px' : '16px',
                     fontWeight: '300',
                     userSelect: 'none',
@@ -136,7 +145,7 @@ export default function Toolbar() {
                 style={{
                   fontSize: index === 0 ? (isMobile ? tokens.fontSize.base : tokens.fontSize.lg) : (isMobile ? tokens.fontSize.sm : tokens.fontSize.base),
                   fontWeight: index === 0 ? tokens.fontWeight.bold : index === breadcrumbs.length - 1 ? tokens.fontWeight.semibold : tokens.fontWeight.medium,
-                  color: index === breadcrumbs.length - 1 ? tokens.colors.slate[900] : tokens.colors.slate[500],
+                  color: linkColor(index),
                   textDecoration: 'none',
                   position: 'relative',
                   transition: `color ${tokens.transition.base}`,
@@ -204,36 +213,8 @@ export default function Toolbar() {
           transform: scale(0.98);
         }
 
-        /* Dark mode support */
-        @media (prefers-color-scheme: dark) {
-          nav {
-            background-color: rgba(15, 23, 42, 0.85) !important;
-            border-bottom-color: rgba(255, 255, 255, 0.08) !important;
-          }
-
-          nav[style*="rgba(255, 255, 255, 0.85)"] {
-            background-color: rgba(15, 23, 42, 0.85) !important;
-          }
-
-          .breadcrumb-link {
-            color: #94a3b8 !important;
-          }
-
-          .breadcrumb-link:hover {
-            color: #e2e8f0 !important;
-          }
-
-          .breadcrumb-link:last-of-type {
-            color: #f1f5f9 !important;
-          }
-
-          .breadcrumb-link:first-of-type {
-            color: #f8fafc !important;
-          }
-        }
-
         /* Mobile refinements */
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
           .breadcrumb-link {
             font-size: 14px !important;
           }
