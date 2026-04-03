@@ -163,7 +163,7 @@ export default function Home() {
         style={{
           maxWidth: '1400px',
           margin: '0 auto',
-          padding: `${tokens.spacing['2xl']} ${tokens.spacing.xl}`,
+          padding: `${tokens.spacing.xl} ${tokens.spacing.xl} ${tokens.spacing['3xl']} ${tokens.spacing.xl}`,
           minHeight: '100vh',
           display: 'flex',
           gap: tokens.spacing['4xl'],
@@ -283,14 +283,110 @@ export default function Home() {
             display: 'flex',
             flexDirection: 'column',
             gap: tokens.spacing['2xl'],
-            overflowY: 'auto',
-            overflowX: 'hidden',
-            paddingRight: tokens.spacing.md,
-            maxHeight: 'calc(100vh - 96px)',
           }}
         >
+          {/* Projects Section */}
+          <AnimatedSection id="apps">
+            <h2
+              className="section-heading"
+              style={{
+                fontSize: tokens.fontSize['2xl'],
+                fontWeight: tokens.fontWeight.bold,
+                color: tokens.colors.slate[800],
+                marginBottom: tokens.spacing.lg,
+                letterSpacing: tokens.letterSpacing.tight,
+                textAlign: 'center',
+              }}
+            >
+              Apps
+            </h2>
+
+            <div
+              style={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                gap: tokens.spacing.lg,
+                alignItems: 'flex-start',
+                justifyContent: 'center',
+              }}
+            >
+              {PROJECTS_DATA.map((project, index) => {
+                const gradients = [
+                  'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                  'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+                  'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+                ];
+                return (
+                  <ExpandableIconCard
+                    key={project.name}
+                    className="expandable-icon-card"
+                    icon={project.icon}
+                    iconAlt={`${project.name} icon`}
+                    isExpanded={expandedProject === index}
+                    isMobile={isMobile}
+                    gradient={gradients[index % gradients.length]}
+                    onClick={() => handleProjectClick(index)}
+                  >
+                    <div style={{ width: '100%' }}>
+                      <h3
+                        style={{
+                          margin: `0 0 ${tokens.spacing.xs} 0`,
+                          fontSize: tokens.fontSize.lg,
+                          fontWeight: tokens.fontWeight.semibold,
+                          color: tokens.colors.slate[900],
+                          letterSpacing: tokens.letterSpacing.normal,
+                        }}
+                      >
+                        {project.name}
+                      </h3>
+                      <p
+                        style={{
+                          fontSize: tokens.fontSize.xs,
+                          color: tokens.colors.slate[500],
+                          margin: `0 0 ${tokens.spacing.md} 0`,
+                          fontWeight: tokens.fontWeight.medium,
+                        }}
+                      >
+                        {project.subtitle}
+                      </p>
+                      <p
+                        style={{
+                          color: tokens.colors.slate[600],
+                          marginBottom: tokens.spacing.md,
+                          fontSize: tokens.fontSize.sm,
+                          lineHeight: tokens.lineHeight.relaxed,
+                        }}
+                      >
+                        {project.desc}
+                      </p>
+                      <Link
+                        href={project.link}
+                        onClick={(e) => e.stopPropagation()}
+                        className="project-link"
+                        style={{
+                          color: tokens.colors.blue[600],
+                          fontSize: tokens.fontSize.sm,
+                          fontWeight: tokens.fontWeight.semibold,
+                          textDecoration: 'none',
+                          padding: `${tokens.spacing.sm} ${tokens.spacing.md}`,
+                          background: 'rgba(59, 130, 246, 0.08)',
+                          borderRadius: tokens.radius.md,
+                          border: `1px solid ${tokens.colors.blue[600]}30`,
+                          display: 'inline-block',
+                          transition: `all ${tokens.transition.smooth}`,
+                        }}
+                      >
+                        Learn more →
+                      </Link>
+                    </div>
+                  </ExpandableIconCard>
+                );
+              })}
+            </div>
+          </AnimatedSection>
+
           {/* Experience Section */}
-          <AnimatedSection id="experience">
+          <AnimatedSection id="experience" delay={100}>
             <h2
               className="section-heading"
               style={{
@@ -398,106 +494,6 @@ export default function Home() {
                           </li>
                         ))}
                       </ul>
-                    </div>
-                  </ExpandableIconCard>
-                );
-              })}
-            </div>
-          </AnimatedSection>
-
-          {/* Projects Section */}
-          <AnimatedSection id="apps" delay={100}>
-            <h2
-              className="section-heading"
-              style={{
-                fontSize: tokens.fontSize['2xl'],
-                fontWeight: tokens.fontWeight.bold,
-                color: tokens.colors.slate[800],
-                marginBottom: tokens.spacing.lg,
-                letterSpacing: tokens.letterSpacing.tight,
-                textAlign: 'center',
-              }}
-            >
-              Apps
-            </h2>
-
-            <div
-              style={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                gap: tokens.spacing.lg,
-                alignItems: 'flex-start',
-                justifyContent: 'center',
-              }}
-            >
-              {PROJECTS_DATA.map((project, index) => {
-                const gradients = [
-                  'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                  'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-                  'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-                ];
-                return (
-                  <ExpandableIconCard
-                    key={project.name}
-                    className="expandable-icon-card"
-                    icon={project.icon}
-                    iconAlt={`${project.name} icon`}
-                    isExpanded={expandedProject === index}
-                    isMobile={isMobile}
-                    gradient={gradients[index % gradients.length]}
-                    onClick={() => handleProjectClick(index)}
-                  >
-                    <div style={{ width: '100%' }}>
-                      <h3
-                        style={{
-                          margin: `0 0 ${tokens.spacing.xs} 0`,
-                          fontSize: tokens.fontSize.lg,
-                          fontWeight: tokens.fontWeight.semibold,
-                          color: tokens.colors.slate[900],
-                          letterSpacing: tokens.letterSpacing.normal,
-                        }}
-                      >
-                        {project.name}
-                      </h3>
-                      <p
-                        style={{
-                          fontSize: tokens.fontSize.xs,
-                          color: tokens.colors.slate[500],
-                          margin: `0 0 ${tokens.spacing.md} 0`,
-                          fontWeight: tokens.fontWeight.medium,
-                        }}
-                      >
-                        {project.subtitle}
-                      </p>
-                      <p
-                        style={{
-                          color: tokens.colors.slate[600],
-                          marginBottom: tokens.spacing.md,
-                          fontSize: tokens.fontSize.sm,
-                          lineHeight: tokens.lineHeight.relaxed,
-                        }}
-                      >
-                        {project.desc}
-                      </p>
-                      <Link
-                        href={project.link}
-                        onClick={(e) => e.stopPropagation()}
-                        className="project-link"
-                        style={{
-                          color: tokens.colors.blue[600],
-                          fontSize: tokens.fontSize.sm,
-                          fontWeight: tokens.fontWeight.semibold,
-                          textDecoration: 'none',
-                          padding: `${tokens.spacing.sm} ${tokens.spacing.md}`,
-                          background: 'rgba(59, 130, 246, 0.08)',
-                          borderRadius: tokens.radius.md,
-                          border: `1px solid ${tokens.colors.blue[600]}30`,
-                          display: 'inline-block',
-                          transition: `all ${tokens.transition.smooth}`,
-                        }}
-                      >
-                        Learn more →
-                      </Link>
                     </div>
                   </ExpandableIconCard>
                 );
