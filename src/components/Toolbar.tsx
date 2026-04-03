@@ -69,21 +69,14 @@ export default function Toolbar() {
 
   const breadcrumbs = getBreadcrumbs();
 
-  const bgColor = isHome
-    ? (scrolled ? 'rgba(10, 10, 15, 0.85)' : 'rgba(10, 10, 15, 0.95)')
-    : (scrolled ? 'rgba(255, 255, 255, 0.88)' : 'rgba(255, 255, 255, 0.95)');
+  const bgColor = scrolled ? 'rgba(10, 10, 15, 0.85)' : 'rgba(10, 10, 15, 0.95)';
 
-  const borderColor = isHome
-    ? (scrolled ? 'rgba(255, 255, 255, 0.08)' : 'rgba(255, 255, 255, 0.06)')
-    : (scrolled ? tokens.colors.slate[200] : tokens.colors.slate[100]);
+  const borderColor = scrolled ? 'rgba(255, 255, 255, 0.08)' : 'rgba(255, 255, 255, 0.06)';
 
   const linkColor = (index: number) => {
-    if (isHome) {
-      if (index === 0) return '#f8fafc';
-      if (index === breadcrumbs.length - 1) return '#f1f5f9';
-      return '#94a3b8';
-    }
-    return index === breadcrumbs.length - 1 ? tokens.colors.slate[900] : tokens.colors.slate[500];
+    if (index === 0) return '#f8fafc';
+    if (index === breadcrumbs.length - 1) return '#f1f5f9';
+    return '#94a3b8';
   };
 
   return (
@@ -128,7 +121,7 @@ export default function Toolbar() {
               {index > 0 && (
                 <span
                   style={{
-                    color: isHome ? '#64748b' : '#94a3b8',
+                    color: '#64748b',
                     fontSize: isMobile ? '14px' : '16px',
                     fontWeight: '300',
                     userSelect: 'none',
@@ -192,7 +185,7 @@ export default function Toolbar() {
           left: 0;
           width: 0;
           height: 2px;
-          background: linear-gradient(90deg, #3b82f6, #2563eb);
+          background: linear-gradient(90deg, #818cf8, #6366f1);
           transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
           border-radius: 2px;
         }
@@ -202,7 +195,7 @@ export default function Toolbar() {
         }
 
         .breadcrumb-link:hover {
-          color: ${tokens.colors.slate[900]} !important;
+          color: #f8fafc !important;
         }
 
         .breadcrumb-link:focus {

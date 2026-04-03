@@ -1,10 +1,10 @@
 :root {
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", "Segoe UI", Roboto, sans-serif;
-  --text: #0f172a;
-  --text-muted: #475569;
-  --bg-page: #f8fafc;
-  --border: #e5e7eb;
-  --accent: #007AFF;
+  --text: #f8fafc;
+  --text-muted: #94a3b8;
+  --bg-page: #0a0a0f;
+  --border: rgba(255,255,255, 0.06);
+  --accent: #818cf8;
   --radius-lg: 16px;
   --radius-md: 12px;
   --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
@@ -64,78 +64,41 @@ a {
   padding: 0 16px;
 }
 
-/* Header */
-.site-header {
-  background: linear-gradient(180deg, #eaf2ff 0%, #f7fbff 100%);
-  padding: clamp(24px, 5vw, 56px) 0;
-  border-bottom: 1px solid var(--border);
+/* Typography */
+.section-heading {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-size: clamp(22px, 4vw, 28px);
+  font-weight: 700;
+  color: #f8fafc;
+  letter-spacing: -0.01em;
 }
 
-.site-title {
-  margin: 0;
-  font-size: clamp(36px, 6vw, 56px);
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  color: #0b1220;
+.subheading {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-size: clamp(18px, 3vw, 20px);
+  font-weight: 600;
+  color: #e2e8f0;
 }
 
-.site-subtitle {
-  margin: 8px 0 20px 0;
-  font-size: clamp(18px, 4vw, 24px);
-  font-weight: 500;
+.text-muted {
   color: var(--text-muted);
 }
 
-.contact {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-  font-size: clamp(12px, 2vw, 14px);
-  color: var(--text-muted);
+/* Cards */
+.card {
+  background: rgba(255,255,255, 0.02);
+  padding: clamp(20px, 4vw, 32px);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255,255,255, 0.06);
+  box-shadow: var(--shadow-sm);
 }
 
-.contact a {
-  color: var(--text-muted);
-}
-
-/* Navigation */
-.site-nav {
-  background: white;
-  border-bottom: 1px solid var(--border);
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  padding: 12px 0;
-  backdrop-filter: saturate(180%) blur(8px);
-}
-
-.tabs {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.tab {
-  background: transparent;
-  color: #334155;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 999px;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: 500;
-  transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.tab:hover {
-  background: #f1f5f9;
-}
-
-.tab.is-active {
-  background: var(--accent);
-  color: white;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: clamp(16px, 3vw, 24px);
 }
 
 /* Main and layout */
@@ -158,43 +121,6 @@ a {
 
 .row-between {
   justify-content: space-between;
-}
-
-/* Cards */
-.card {
-  background: white;
-  padding: clamp(20px, 4vw, 32px);
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-sm);
-}
-
-.cards-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
-  gap: clamp(16px, 3vw, 24px);
-}
-
-/* Typography */
-.section-heading {
-  margin-top: 0;
-  margin-bottom: 12px;
-  font-size: clamp(22px, 4vw, 28px);
-  font-weight: 700;
-  color: #0f172a;
-  letter-spacing: -0.01em;
-}
-
-.subheading {
-  margin-top: 0;
-  margin-bottom: 12px;
-  font-size: clamp(18px, 3vw, 20px);
-  font-weight: 600;
-  color: #1e293b;
-}
-
-.text-muted {
-  color: var(--text-muted);
 }
 
 /* Buttons */
@@ -223,19 +149,19 @@ a {
 }
 
 .btn-secondary {
-  background: #f1f5f9;
-  color: #334155;
+  background: rgba(255,255,255, 0.06);
+  color: #e2e8f0;
 }
 
 .btn-secondary:hover {
-  filter: brightness(0.98);
+  filter: brightness(1.1);
 }
 
 /* Markdown Content Styles */
 .markdown-content h1 {
   font-size: clamp(28px, 5vw, 36px);
   font-weight: 700;
-  color: #1e293b;
+  color: #f8fafc;
   margin: 32px 0 16px 0;
   line-height: 1.2;
 }
@@ -243,7 +169,7 @@ a {
 .markdown-content h2 {
   font-size: clamp(24px, 4vw, 30px);
   font-weight: 600;
-  color: #1e293b;
+  color: #f8fafc;
   margin: 28px 0 14px 0;
   line-height: 1.3;
 }
@@ -251,7 +177,7 @@ a {
 .markdown-content h3 {
   font-size: clamp(20px, 3vw, 24px);
   font-weight: 600;
-  color: #334155;
+  color: #e2e8f0;
   margin: 24px 0 12px 0;
   line-height: 1.4;
 }
@@ -259,32 +185,32 @@ a {
 .markdown-content h4 {
   font-size: clamp(18px, 2.5vw, 20px);
   font-weight: 600;
-  color: #334155;
+  color: #e2e8f0;
   margin: 20px 0 10px 0;
 }
 
 .markdown-content p {
   font-size: clamp(15px, 2vw, 17px);
-  color: #475569;
+  color: #94a3b8;
   line-height: 1.8;
   margin: 16px 0;
 }
 
 .markdown-content a {
-  color: #007AFF;
+  color: #818cf8;
   text-decoration: none;
   border-bottom: 1px solid transparent;
   transition: border-color 0.2s;
 }
 
 .markdown-content a:hover {
-  border-bottom-color: #007AFF;
+  border-bottom-color: #818cf8;
 }
 
 .markdown-content ul,
 .markdown-content ol {
   font-size: clamp(15px, 2vw, 17px);
-  color: #475569;
+  color: #94a3b8;
   line-height: 1.8;
   margin: 16px 0;
   padding-left: 28px;
@@ -295,7 +221,7 @@ a {
 }
 
 .markdown-content blockquote {
-  border-left: 4px solid #007AFF;
+  border-left: 4px solid #818cf8;
   padding-left: 20px;
   margin: 20px 0;
   color: #64748b;
@@ -303,12 +229,12 @@ a {
 }
 
 .markdown-content code {
-  background-color: #f1f5f9;
+  background-color: rgba(255,255,255, 0.06);
   padding: 2px 6px;
   border-radius: 4px;
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
   font-size: clamp(13px, 1.8vw, 15px);
-  color: #e11d48;
+  color: #f472b6;
 }
 
 .markdown-content pre {
@@ -336,7 +262,7 @@ a {
 
 .markdown-content hr {
   border: none;
-  border-top: 1px solid #e5e7eb;
+  border-top: 1px solid rgba(255,255,255, 0.06);
   margin: 32px 0;
 }
 
@@ -348,15 +274,15 @@ a {
 
 .markdown-content th,
 .markdown-content td {
-  border: 1px solid #e5e7eb;
+  border: 1px solid rgba(255,255,255, 0.06);
   padding: 12px;
   text-align: left;
 }
 
 .markdown-content th {
-  background-color: #f9fafb;
+  background-color: rgba(255,255,255, 0.04);
   font-weight: 600;
-  color: #1e293b;
+  color: #e2e8f0;
 }
 
 @keyframes fadeInUp {

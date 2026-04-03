@@ -5,7 +5,7 @@ import { tokens } from '@/styles/tokens';
 
 const dark = tokens.colors.dark;
 
-export default function CashewPrivacyPolicy() {
+export default function OneListPrivacyPolicy() {
   return (
     <div style={{
       fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', sans-serif",
@@ -34,8 +34,8 @@ export default function CashewPrivacyPolicy() {
             marginBottom: "24px"
           }}>
             <img
-              src="https://cdn.mayankgandhi.com/cashew-app-icon.png"
-              alt="Cashew App Icon"
+              src="https://cdn.mayankgandhi.com/onelist-app-icon.png"
+              alt="OneList App Icon"
               style={{
                 width: "100px",
                 height: "100px",
@@ -50,7 +50,7 @@ export default function CashewPrivacyPolicy() {
                 color: dark.textPrimary,
                 letterSpacing: "-0.03em"
               }}>
-                Cashew
+                OneList
               </h1>
               <p style={{
                 margin: "0",
@@ -58,7 +58,7 @@ export default function CashewPrivacyPolicy() {
                 color: dark.textSubtle,
                 fontWeight: "500"
               }}>
-                Credit Card Tracker
+                Task Manager
               </p>
             </div>
           </div>
@@ -87,10 +87,10 @@ export default function CashewPrivacyPolicy() {
             <p style={{ fontSize: '15px', color: dark.textMuted, lineHeight: '1.6', margin: '12px 0' }}><strong style={{ fontWeight: 600, color: dark.textSecondary }}>Effective Date: 01 June 2025</strong></p>
 
             <h2 style={{ fontSize: '20px', fontWeight: '600', color: dark.textPrimary, margin: '24px 0 12px 0', paddingBottom: '8px', borderBottom: `1px solid rgba(255,255,255, 0.06)` }}>1. Introduction</h2>
-            <p style={{ fontSize: '15px', color: dark.textMuted, lineHeight: '1.6', margin: '12px 0' }}>Cashew - Credit Card Tracker ("we," "our," or "the App") is committed to protecting your privacy. This Privacy Policy explains how we handle information in our credit card tracking app.</p>
+            <p style={{ fontSize: '15px', color: dark.textMuted, lineHeight: '1.6', margin: '12px 0' }}>OneList - Task Manager ("we," "our," or "the App") is committed to protecting your privacy. This Privacy Policy explains how we handle information in our task management app.</p>
 
             <h2 style={{ fontSize: '20px', fontWeight: '600', color: dark.textPrimary, margin: '24px 0 12px 0', paddingBottom: '8px', borderBottom: `1px solid rgba(255,255,255, 0.06)` }}>2. Our Privacy Commitment</h2>
-            <p style={{ fontSize: '15px', color: dark.textMuted, lineHeight: '1.6', margin: '12px 0' }}>We do not collect, store, or have access to any of your personal or financial data. All information you enter into the App remains exclusively on your device and in your personal iCloud account.</p>
+            <p style={{ fontSize: '15px', color: dark.textMuted, lineHeight: '1.6', margin: '12px 0' }}>We do not collect, store, or have access to any of your personal data. All information you enter into the App remains exclusively on your device and in your personal iCloud account.</p>
 
             <h2 style={{ fontSize: '20px', fontWeight: '600', color: dark.textPrimary, margin: '24px 0 12px 0', paddingBottom: '8px', borderBottom: `1px solid rgba(255,255,255, 0.06)` }}>3. Information Storage and Synchronization</h2>
 
@@ -113,8 +113,8 @@ export default function CashewPrivacyPolicy() {
             <p style={{ fontSize: '15px', color: dark.textMuted, lineHeight: '1.6', margin: '12px 0' }}>We do not collect, store, or have access to:</p>
             <ul style={{ paddingLeft: '24px', margin: '12px 0' }}>
               <li style={{ fontSize: '15px', color: dark.textMuted, lineHeight: '1.6', margin: '8px 0' }}>Personal identification information</li>
-              <li style={{ fontSize: '15px', color: dark.textMuted, lineHeight: '1.6', margin: '8px 0' }}>Financial account numbers or credit card details</li>
-              <li style={{ fontSize: '15px', color: dark.textMuted, lineHeight: '1.6', margin: '8px 0' }}>Transaction history or spending patterns</li>
+              <li style={{ fontSize: '15px', color: dark.textMuted, lineHeight: '1.6', margin: '8px 0' }}>Task content or lists</li>
+              <li style={{ fontSize: '15px', color: dark.textMuted, lineHeight: '1.6', margin: '8px 0' }}>Usage patterns or behavior data</li>
               <li style={{ fontSize: '15px', color: dark.textMuted, lineHeight: '1.6', margin: '8px 0' }}>Device identifiers or tracking information</li>
               <li style={{ fontSize: '15px', color: dark.textMuted, lineHeight: '1.6', margin: '8px 0' }}>Usage analytics or behavior data</li>
               <li style={{ fontSize: '15px', color: dark.textMuted, lineHeight: '1.6', margin: '8px 0' }}>Location information</li>
@@ -176,7 +176,7 @@ export default function CashewPrivacyPolicy() {
             <p style={{ fontSize: '15px', color: dark.textMuted, lineHeight: '1.6', margin: '12px 0' }}>If you have questions about this Privacy Policy or our privacy practices, please contact us at:</p>
             <p style={{ fontSize: '15px', color: dark.textMuted, lineHeight: '1.6', margin: '12px 0' }}><a href="mailto:mayankgandhi50@gmail.com" style={{ color: dark.accent, textDecoration: 'none' }}>mayankgandhi50@gmail.com</a></p>
 
-            <p style={{ fontSize: '15px', color: dark.textSubtle, lineHeight: '1.6', margin: '12px 0', fontStyle: 'italic' }}>By using Cashew - Credit Card Tracker, you acknowledge that you have read and understood this Privacy Policy.</p>
+            <p style={{ fontSize: '15px', color: dark.textSubtle, lineHeight: '1.6', margin: '12px 0', fontStyle: 'italic' }}>By using OneList - Task Manager, you acknowledge that you have read and understood this Privacy Policy.</p>
         </div>
       </div>
     </div>

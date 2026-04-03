@@ -1,25 +1,28 @@
 'use client';
 
 import Link from "next/link";
+import { tokens } from '@/styles/tokens';
+
+const dark = tokens.colors.dark;
 
 export default function TickerPrivacyPolicy() {
   return (
     <div style={{
       fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', sans-serif",
-      backgroundColor: "#f2f2f7",
+      backgroundColor: dark.bg,
       minHeight: "100vh",
       paddingBottom: "80px",
       paddingTop: "40px"
     }}>
-      {/* Main Content Container */}
       <div style={{
         maxWidth: "1200px",
         margin: "0 auto",
         padding: "0 40px"
       }}>
-        {/* Hero Section with App Header */}
+        {/* App Header */}
         <div style={{
-          background: "white",
+          background: dark.surface,
+          border: `1px solid ${dark.border}`,
           padding: "32px 40px 40px",
           marginBottom: "12px",
           borderRadius: "16px"
@@ -37,7 +40,6 @@ export default function TickerPrivacyPolicy() {
                 width: "100px",
                 height: "100px",
                 borderRadius: "22px",
-                boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)"
               }}
             />
             <div>
@@ -45,15 +47,15 @@ export default function TickerPrivacyPolicy() {
                 margin: "0 0 4px 0",
                 fontSize: "32px",
                 fontWeight: "700",
-                color: "#1d1d1f",
-                letterSpacing: "-0.01em"
+                color: dark.textPrimary,
+                letterSpacing: "-0.03em"
               }}>
                 Ticker
               </h1>
               <p style={{
                 margin: "0",
                 fontSize: "15px",
-                color: "#6e6e73",
+                color: dark.textSubtle,
                 fontWeight: "500"
               }}>
                 Task & Reminder Manager
@@ -65,27 +67,27 @@ export default function TickerPrivacyPolicy() {
             margin: "24px 0 0 0",
             fontSize: "28px",
             fontWeight: "700",
-            color: "#1d1d1f",
+            color: dark.textPrimary,
             letterSpacing: "-0.01em",
             paddingTop: "24px",
-            borderTop: "0.5px solid #e5e5ea"
+            borderTop: `1px solid rgba(255,255,255, 0.06)`
           }}>
             Privacy Policy
           </h2>
         </div>
 
-        {/* Content Section */}
+        {/* Content */}
         <div style={{
-          background: "white",
+          background: dark.surface,
+          border: `1px solid ${dark.border}`,
           padding: "32px 40px",
           borderRadius: "16px",
           marginBottom: "12px"
         }}>
-
           <p style={{
             margin: "0 0 24px 0",
-            fontSize: "17px",
-            color: "#1d1d1f",
+            fontSize: "15px",
+            color: dark.textMuted,
             lineHeight: "1.6"
           }}>
             Ticker does not collect or transmit any personal data.
@@ -94,27 +96,27 @@ export default function TickerPrivacyPolicy() {
           <div style={{
             marginTop: "32px",
             paddingTop: "32px",
-            borderTop: "0.5px solid #e5e5ea"
+            borderTop: `1px solid rgba(255,255,255, 0.06)`
           }}>
             <h3 style={{
               margin: "0 0 12px 0",
               fontSize: "20px",
               fontWeight: "600",
-              color: "#1d1d1f"
+              color: dark.textPrimary
             }}>
               Contact
             </h3>
             <p style={{
               margin: "0",
-              fontSize: "17px",
-              color: "#1d1d1f",
+              fontSize: "15px",
+              color: dark.textMuted,
               lineHeight: "1.6"
             }}>
               If you have any questions, please feel free to{" "}
               <a
                 href="mailto:mayankgandhi50@gmail.com"
                 style={{
-                  color: "#007AFF",
+                  color: dark.accent,
                   textDecoration: "none"
                 }}
               >

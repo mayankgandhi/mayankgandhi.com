@@ -99,3 +99,4 @@ dist
 # Storybook build outputs
 .out
 .storybook-out
+.gstack/
