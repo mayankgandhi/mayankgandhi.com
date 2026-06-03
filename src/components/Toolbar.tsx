@@ -44,6 +44,12 @@ export default function Toolbar() {
     };
   }, []);
 
+  // The homepage redesign ships its own top navigation, so the global
+  // breadcrumb toolbar is suppressed on "/". App subpages keep their breadcrumbs.
+  if (isHome) {
+    return null;
+  }
+
   const getBreadcrumbs = (): BreadcrumbItem[] => {
     const breadcrumbs: BreadcrumbItem[] = [
       { label: 'Mayank Gandhi', path: '/' }
