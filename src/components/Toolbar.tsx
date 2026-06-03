@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { tokens } from '@/styles/tokens';
 
 interface BreadcrumbItem {
   label: string;
@@ -16,6 +15,12 @@ const APP_ROUTES: Record<string, string> = {
   walnut: 'Walnut',
   onelist: 'OneList',
 };
+
+// "Engineering Field Notes" palette (matches the homepage redesign).
+const INK = '#16130E';
+const INK_SOFT = '#5c5448';
+const LINE_STRONG = 'rgba(22,19,14,0.42)';
+const MONO = "'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace";
 
 export default function Toolbar() {
   const pathname = usePathname();
@@ -61,7 +66,7 @@ export default function Toolbar() {
     const appName = APP_ROUTES[paths[0]];
 
     if (appName) {
-      breadcrumbs.push({ label: 'Apps', path: '/#apps' });
+      breadcrumbs.push({ label: 'Apps', path: '/#work' });
       breadcrumbs.push({ label: appName, path: `/${paths[0]}` });
       if (paths[1] === 'privacy-policy') {
         breadcrumbs.push({ label: 'Privacy Policy', path: `/${paths[0]}/privacy-policy` });
@@ -75,14 +80,12 @@ export default function Toolbar() {
 
   const breadcrumbs = getBreadcrumbs();
 
-  const bgColor = scrolled ? 'rgba(10, 10, 15, 0.85)' : 'rgba(10, 10, 15, 0.95)';
-
-  const borderColor = scrolled ? 'rgba(255, 255, 255, 0.08)' : 'rgba(255, 255, 255, 0.06)';
+  const bgColor = scrolled ? 'rgba(236, 230, 217, 0.86)' : 'rgba(236, 230, 217, 0.94)';
 
   const linkColor = (index: number) => {
-    if (index === 0) return '#f8fafc';
-    if (index === breadcrumbs.length - 1) return '#f1f5f9';
-    return '#94a3b8';
+    if (index === 0) return INK;
+    if (index === breadcrumbs.length - 1) return INK;
+    return INK_SOFT;
   };
 
   return (
@@ -93,23 +96,22 @@ export default function Toolbar() {
           top: 0,
           left: 0,
           right: 0,
-          zIndex: tokens.zIndex.fixed,
+          zIndex: 100,
           backgroundColor: bgColor,
-          backdropFilter: tokens.blur.md,
-          WebkitBackdropFilter: tokens.blur.md,
-          borderBottom: `1px solid ${borderColor}`,
-          transition: `all ${tokens.transition.smooth}`,
-          boxShadow: scrolled ? tokens.shadow.md : 'none',
+          backdropFilter: 'blur(8px)',
+          WebkitBackdropFilter: 'blur(8px)',
+          borderBottom: `1px solid ${INK}`,
+          transition: 'background-color 300ms cubic-bezier(0.22, 0.61, 0.36, 1)',
         }}
       >
         <div
           style={{
-            maxWidth: '1400px',
+            maxWidth: '1180px',
             margin: '0 auto',
-            padding: isMobile ? '12px 20px' : '16px 40px',
+            padding: isMobile ? '12px 18px' : '14px 32px',
             display: 'flex',
             alignItems: 'center',
-            gap: isMobile ? '12px' : '16px',
+            gap: isMobile ? '8px' : '12px',
           }}
         >
           {breadcrumbs.map((item, index) => (
@@ -119,39 +121,40 @@ export default function Toolbar() {
                 display: 'flex',
                 alignItems: 'center',
                 gap: isMobile ? '8px' : '12px',
-                animation: 'slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                animation: 'crumbIn 0.4s cubic-bezier(0.22, 0.61, 0.36, 1)',
                 animationDelay: `${index * 0.05}s`,
                 animationFillMode: 'backwards',
+                minWidth: 0,
               }}
             >
               {index > 0 && (
                 <span
                   style={{
-                    color: '#64748b',
-                    fontSize: isMobile ? '14px' : '16px',
-                    fontWeight: '300',
+                    color: LINE_STRONG,
+                    fontFamily: MONO,
+                    fontSize: isMobile ? '12px' : '13px',
+                    fontWeight: 500,
                     userSelect: 'none',
-                    animation: 'fadeIn 0.3s ease',
-                    animationDelay: `${index * 0.05}s`,
-                    animationFillMode: 'backwards',
                   }}
                 >
-                  →
+                  /
                 </span>
               )}
               <Link
                 href={item.path}
                 style={{
-                  fontSize: index === 0 ? (isMobile ? tokens.fontSize.base : tokens.fontSize.lg) : (isMobile ? tokens.fontSize.sm : tokens.fontSize.base),
-                  fontWeight: index === 0 ? tokens.fontWeight.bold : index === breadcrumbs.length - 1 ? tokens.fontWeight.semibold : tokens.fontWeight.medium,
+                  fontFamily: MONO,
+                  fontSize: index === 0 ? (isMobile ? '12px' : '13px') : (isMobile ? '11px' : '12px'),
+                  fontWeight: index === 0 ? 700 : 500,
                   color: linkColor(index),
                   textDecoration: 'none',
                   position: 'relative',
-                  transition: `color ${tokens.transition.base}`,
-                  letterSpacing: index === 0 ? tokens.letterSpacing.tight : tokens.letterSpacing.normal,
+                  textTransform: 'uppercase',
+                  letterSpacing: index === 0 ? '0.06em' : '0.04em',
                   whiteSpace: 'nowrap',
+                  transition: 'color 200ms cubic-bezier(0.22, 0.61, 0.36, 1)',
                 }}
-                className="breadcrumb-link"
+                className="fn-crumb"
               >
                 {item.label}
               </Link>
@@ -160,11 +163,11 @@ export default function Toolbar() {
         </div>
       </nav>
 
-      {/* Spacer to prevent content from going under fixed toolbar */}
-      <div style={{ height: isMobile ? '48px' : '56px' }} />
+      {/* Spacer to prevent content from going under the fixed toolbar */}
+      <div style={{ height: isMobile ? '48px' : '54px' }} />
 
       <style jsx global>{`
-        @keyframes slideIn {
+        @keyframes crumbIn {
           from {
             opacity: 0;
             transform: translateX(-8px);
@@ -175,79 +178,39 @@ export default function Toolbar() {
           }
         }
 
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-          }
-          to {
-            opacity: 1;
-          }
-        }
-
-        .breadcrumb-link::after {
+        .fn-crumb::after {
           content: '';
           position: absolute;
-          bottom: -2px;
+          bottom: -3px;
           left: 0;
           width: 0;
-          height: 2px;
-          background: linear-gradient(90deg, #818cf8, #6366f1);
-          transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-          border-radius: 2px;
+          height: 1.5px;
+          background: #ff3d1f;
+          transition: width 0.25s cubic-bezier(0.22, 0.61, 0.36, 1);
         }
 
-        .breadcrumb-link:hover::after {
+        .fn-crumb:hover::after {
           width: 100%;
         }
 
-        .breadcrumb-link:hover {
-          color: #f8fafc !important;
+        .fn-crumb:hover {
+          color: #16130e !important;
         }
 
-        .breadcrumb-link:focus {
-          outline: none;
-        }
-
-        .breadcrumb-link:active {
-          transform: scale(0.98);
-        }
-
-        /* Mobile refinements */
-        @media (max-width: 900px) {
-          .breadcrumb-link {
-            font-size: 14px !important;
-          }
-
-          .breadcrumb-link::after {
-            bottom: -1px;
-            height: 1.5px;
-          }
-        }
-
-        /* Accessibility */
-        .breadcrumb-link:focus-visible {
-          outline: 2px solid #3b82f6;
+        .fn-crumb:focus-visible {
+          outline: 2px solid #ff3d1f;
           outline-offset: 4px;
-          border-radius: 4px;
         }
 
-        /* Smooth transitions for reduced motion preference */
         @media (prefers-reduced-motion: reduce) {
-          .breadcrumb-link,
-          .breadcrumb-link::after {
+          .fn-crumb,
+          .fn-crumb::after {
             transition: none !important;
           }
-
-          @keyframes slideIn {
+          @keyframes crumbIn {
             from, to {
               opacity: 1;
               transform: translateX(0);
-            }
-          }
-
-          @keyframes fadeIn {
-            from, to {
-              opacity: 1;
             }
           }
         }

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { tokens } from '@/styles/tokens';
+import FieldNotesTheme from './FieldNotesTheme';
 
 interface Feature {
   title: string;
@@ -45,6 +45,8 @@ interface AppStoreTemplateProps {
   appInfo: AppInfo;
   privacyPolicyLink: string;
   termsLink: string;
+  /** Optional per-app signature accent. Falls back to a name-based default. */
+  accentColor?: string;
   developerApps?: Array<{
     name: string;
     icon: string;
@@ -53,7 +55,15 @@ interface AppStoreTemplateProps {
   }>;
 }
 
-const dark = tokens.colors.dark;
+// Per-app signature colors echoing the homepage's CSS variables.
+function signatureFor(appName: string): string {
+  const k = appName.toLowerCase();
+  if (k.includes('cashew')) return '#2faa55';
+  if (k.includes('walnut')) return '#1f97ad';
+  if (k.includes('ticker')) return '#e07a00';
+  if (k.includes('onelist')) return '#6366f1';
+  return '#FF3D1F';
+}
 
 export default function AppStoreTemplate({
   appName,
@@ -68,526 +78,302 @@ export default function AppStoreTemplate({
   appInfo,
   privacyPolicyLink,
   termsLink,
+  accentColor,
   developerApps = []
 }: AppStoreTemplateProps) {
   const [showAllChanges, setShowAllChanges] = useState(false);
+  const sig = accentColor ?? signatureFor(appName);
 
   return (
-    <div className="app-store-page">
-      <div className="app-store-container">
-        {/* Hero Section */}
-        <div className="app-store-card app-store-hero">
-          <div className="hero-layout">
-            <img
-              src={appIcon}
-              alt={appName}
-              className="app-icon"
-            />
-            <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-              <h1 style={{
-                fontSize: '32px',
-                fontWeight: '700',
-                margin: '0 0 8px 0',
-                color: dark.textPrimary,
-                lineHeight: '1.2',
-                letterSpacing: '-0.03em',
-              }}>
-                {appName}
-              </h1>
-              <p style={{
-                fontSize: '14px',
-                color: dark.textSubtle,
-                margin: '0 0 24px 0',
-              }}>
-                {tagline}
-              </p>
-              {appStoreLink && (
-                <a
-                  href={appStoreLink}
-                  className="app-store-badge"
-                  style={{
-                    background: 'rgba(255,255,255,0.06)',
-                    border: `1px solid rgba(255,255,255,0.12)`,
-                    borderRadius: '10px',
-                    padding: '10px 20px',
-                    color: dark.textPrimary,
-                    fontSize: '14px',
-                    fontWeight: '600',
-                    textDecoration: 'none',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '8px',
-                    width: 'fit-content',
-                    transition: 'border-color 0.2s ease',
-                  }}
-                >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
-                  </svg>
-                  Download on the App Store
-                </a>
-              )}
-            </div>
-          </div>
-
-          {/* Stats Row */}
-          <div className="stats-row">
-            <div style={{ textAlign: "center" }}>
-              <div className="section-label">
-                {ratingsCount} RATING{ratingsCount !== 1 ? 'S' : ''}
-              </div>
-              <div style={{ fontSize: '24px', fontWeight: '600', color: dark.textMuted, marginBottom: '2px' }}>
-                {rating.toFixed(1)}
-              </div>
-              <div style={{ color: dark.textMuted, fontSize: '11px' }}>
-                {'★'.repeat(Math.floor(rating))}
-              </div>
-            </div>
-
-            <div style={{ textAlign: "center" }}>
-              <div className="section-label">AGES</div>
-              <div style={{ fontSize: '24px', fontWeight: '600', color: dark.textMuted, marginBottom: '2px' }}>
-                {appInfo.ageRating}
-              </div>
-              <div style={{ color: dark.textMuted, fontSize: '11px' }}>Years</div>
-            </div>
-
-            <div style={{ textAlign: "center" }}>
-              <div className="section-label">CATEGORY</div>
-              <div style={{ fontSize: '32px', marginBottom: '2px' }}>💳</div>
-              <div style={{ color: dark.textMuted, fontSize: '11px' }}>{appInfo.category}</div>
-            </div>
-
-            <div style={{ textAlign: "center" }}>
-              <div className="section-label">DEVELOPER</div>
-              <div style={{ fontSize: '32px', marginBottom: '2px' }}>👤</div>
-              <Link
-                href="/"
-                style={{
-                  color: dark.accent,
-                  fontSize: '11px',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap',
-                  textDecoration: 'none',
-                  display: 'block',
-                }}
-              >
-                {appInfo.provider}
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        {/* What's New */}
-        {whatsNew && (
-          <div className="app-store-card">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-              <h2 className="section-label" style={{ fontSize: '11px', margin: 0 }}>WHAT'S NEW</h2>
-            </div>
-
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
-              <span style={{ fontSize: '13px', color: dark.textSubtle }}>Version {whatsNew.version}</span>
-              <span style={{ fontSize: '13px', color: dark.textSubtle }}>{whatsNew.date}</span>
-            </div>
-
-            <div style={{ fontSize: '14px', lineHeight: '1.5', color: dark.textMuted }}>
-              {whatsNew.changes.slice(0, showAllChanges ? undefined : 3).map((change, i) => (
-                <div key={i} style={{ marginBottom: '8px' }}>{change}</div>
-              ))}
-              {whatsNew.changes.length > 3 && (
-                <button
-                  onClick={() => setShowAllChanges(!showAllChanges)}
-                  style={{
-                    color: dark.accent,
-                    background: 'none',
-                    border: 'none',
-                    padding: '8px 0 0 0',
-                    fontSize: '14px',
-                    cursor: 'pointer',
-                    fontFamily: 'inherit',
-                  }}
-                >
-                  {showAllChanges ? 'less' : 'more'}
-                </button>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* Preview/Screenshots */}
-        {screenshots.length > 0 && (
-          <div className="app-store-card" style={{ padding: '32px 0' }}>
-            <h2 className="section-label" style={{ fontSize: '11px', margin: '0 0 24px 40px' }}>PREVIEW</h2>
-            <div className="screenshots-scroll">
-              {screenshots.map((screenshot, index) => (
-                <div key={index} className="screenshot-card">
-                  <div style={{
-                    background: dark.surface,
-                    border: `1px solid ${dark.border}`,
-                    borderRadius: '12px',
-                    overflow: 'hidden',
-                  }}>
-                    <img
-                      src={screenshot.url}
-                      alt={`Screenshot ${index + 1}`}
-                      style={{
-                        width: '100%',
-                        height: 'auto',
-                        display: 'block',
-                      }}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Features */}
-        {features.length > 0 && (
-          <div className="app-store-card">
-            <h2 className="section-label" style={{ fontSize: '11px', margin: '0 0 16px 0' }}>FEATURES</h2>
-            <div className="features-grid">
-              {features.map((feature, index) => (
-                <div key={index} style={{
-                  display: 'flex',
-                  gap: '12px',
-                  padding: '16px',
-                  background: dark.surface,
-                  border: `1px solid ${dark.border}`,
-                  borderRadius: '12px',
-                }}>
-                  {feature.icon && (
-                    <div style={{ fontSize: '28px', flexShrink: 0 }}>{feature.icon}</div>
-                  )}
-                  <div>
-                    <h3 style={{
-                      fontSize: '15px',
-                      fontWeight: '600',
-                      margin: '0 0 4px 0',
-                      color: dark.textPrimary,
-                    }}>
-                      {feature.title}
-                    </h3>
-                    <p style={{
-                      fontSize: '13px',
-                      color: dark.textSubtle,
-                      margin: 0,
-                      lineHeight: '1.5',
-                    }}>
-                      {feature.description}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Information */}
-        <div className="app-store-card">
-          <h2 className="section-label" style={{ fontSize: '11px', margin: '0 0 16px 0' }}>INFORMATION</h2>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            {[
-              { label: 'Provider', value: appInfo.provider, isLink: true, href: '/' },
-              { label: 'Size', value: appInfo.size },
-              { label: 'Category', value: appInfo.category },
-              { label: 'Compatibility', value: appInfo.compatibility },
-              { label: 'Languages', value: appInfo.languages },
-              { label: 'Age Rating', value: `${appInfo.ageRating}+` },
-              { label: 'Copyright', value: `© ${appInfo.copyright}` },
-            ].map((item, index) => (
-              <div key={index} style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                paddingBottom: '16px',
-                borderBottom: '1px solid rgba(255,255,255, 0.04)',
-              }}>
-                <span style={{ fontSize: '14px', color: dark.textSubtle }}>{item.label}</span>
-                {item.isLink ? (
-                  <Link href={item.href!} style={{ fontSize: '14px', color: dark.accent, textDecoration: 'none' }}>
-                    {item.value}
-                  </Link>
-                ) : (
-                  <span style={{ fontSize: '14px', color: dark.textSecondary, textAlign: 'right' }}>{item.value}</span>
+    <>
+      <FieldNotesTheme />
+      <div className="fn-page as-page">
+        <div className="fn-wrap">
+          {/* Hero */}
+          <section className="fn-card as-hero">
+            <div className="as-hero-top">
+              <img
+                src={appIcon}
+                alt={appName}
+                className="as-appicon"
+                style={{ borderBottom: `3px solid ${sig}` }}
+              />
+              <div className="as-hero-main">
+                <h1 className="as-name">{appName}</h1>
+                <p className="fn-sub">{tagline}</p>
+                {appStoreLink && (
+                  <a
+                    href={appStoreLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="fn-btn as-getbtn"
+                  >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
+                    </svg>
+                    Download on the App Store
+                  </a>
                 )}
               </div>
-            ))}
-
-            <Link
-              href={privacyPolicyLink}
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                paddingBottom: '16px',
-                borderBottom: '1px solid rgba(255,255,255, 0.04)',
-                textDecoration: 'none',
-                color: dark.accent,
-                fontSize: '14px',
-                alignItems: 'center',
-              }}
-            >
-              <span>Privacy Policy</span>
-              <span style={{ fontSize: '16px' }}>→</span>
-            </Link>
-
-            <Link
-              href={termsLink}
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                textDecoration: 'none',
-                color: dark.accent,
-                fontSize: '14px',
-                alignItems: 'center',
-              }}
-            >
-              <span>Terms of Use</span>
-              <span style={{ fontSize: '16px' }}>→</span>
-            </Link>
-          </div>
-        </div>
-
-        {/* More by Developer */}
-        {developerApps.length > 0 && (
-          <div className="app-store-card">
-            <h2 className="section-label" style={{ fontSize: '11px', margin: '0 0 16px 0' }}>
-              MORE BY {appInfo.provider.toUpperCase()}
-            </h2>
-
-            <div className="developer-apps-grid">
-              {developerApps.map((app, index) => (
-                <Link
-                  key={index}
-                  href={app.link}
-                  className="developer-app-link"
-                  style={{
-                    display: 'flex',
-                    gap: '12px',
-                    textDecoration: 'none',
-                    alignItems: 'center',
-                    padding: '12px',
-                    borderRadius: '12px',
-                    background: dark.surface,
-                    border: `1px solid ${dark.border}`,
-                    transition: 'border-color 0.2s ease',
-                  }}
-                >
-                  <img
-                    src={app.icon}
-                    alt={app.name}
-                    style={{
-                      width: '64px',
-                      height: '64px',
-                      borderRadius: '14px',
-                    }}
-                  />
-                  <div style={{ flex: 1 }}>
-                    <h3 style={{
-                      fontSize: '15px',
-                      fontWeight: '600',
-                      margin: '0 0 2px 0',
-                      color: dark.textPrimary,
-                    }}>
-                      {app.name}
-                    </h3>
-                    <p style={{
-                      fontSize: '13px',
-                      color: dark.textSubtle,
-                      margin: 0,
-                    }}>
-                      {app.tagline}
-                    </p>
-                  </div>
-                </Link>
-              ))}
             </div>
-          </div>
-        )}
 
-        {/* Back to Portfolio CTA */}
-        <div style={{
-          textAlign: 'center',
-          padding: '40px 0 20px',
-        }}>
-          <Link
-            href="/"
-            className="back-to-portfolio"
-            style={{
-              color: dark.accent,
-              fontSize: '14px',
-              fontWeight: '500',
-              textDecoration: 'none',
-              transition: 'color 0.2s ease',
-            }}
-          >
-            ← Back to Portfolio
-          </Link>
+            {/* Stat band */}
+            <div className="as-stats">
+              <div className="as-stat">
+                <div className="as-stat-k">Rating</div>
+                <div className="as-stat-v">{rating.toFixed(1)}</div>
+                <div className="as-stat-sub">
+                  <span className="as-stars">{'★'.repeat(Math.floor(rating))}</span> ({ratingsCount})
+                </div>
+              </div>
+              <div className="as-stat">
+                <div className="as-stat-k">Age</div>
+                <div className="as-stat-v">{appInfo.ageRating}+</div>
+                <div className="as-stat-sub">Years</div>
+              </div>
+              <div className="as-stat">
+                <div className="as-stat-k">Category</div>
+                <div className="as-stat-v as-stat-v--sm">{appInfo.category}</div>
+              </div>
+              <div className="as-stat">
+                <div className="as-stat-k">Developer</div>
+                <Link href="/" className="as-stat-v as-stat-v--sm as-stat-link">
+                  {appInfo.provider}
+                </Link>
+              </div>
+            </div>
+          </section>
+
+          {/* What's New */}
+          {whatsNew && (
+            <section className="fn-card">
+              <div className="fn-eyebrow">What&apos;s New</div>
+              <div className="as-version-row fn-mono">
+                <span>Version {whatsNew.version}</span>
+                <span className="as-muted">{whatsNew.date}</span>
+              </div>
+              <ul className="as-changes">
+                {whatsNew.changes.slice(0, showAllChanges ? undefined : 3).map((change, i) => (
+                  <li key={i}>{change}</li>
+                ))}
+              </ul>
+              {whatsNew.changes.length > 3 && (
+                <button
+                  type="button"
+                  onClick={() => setShowAllChanges(!showAllChanges)}
+                  className="as-toggle fn-mono"
+                >
+                  {showAllChanges ? '− Show less' : '+ Show more'}
+                </button>
+              )}
+            </section>
+          )}
+
+          {/* Preview */}
+          {screenshots.length > 0 && (
+            <section className="fn-card as-preview">
+              <div className="fn-eyebrow">Preview</div>
+              <div className="as-shots">
+                {screenshots.map((screenshot, index) => (
+                  <div key={index} className="as-shot">
+                    <img src={screenshot.url} alt={`${appName} screenshot ${index + 1}`} />
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Features */}
+          {features.length > 0 && (
+            <section className="fn-card">
+              <div className="fn-eyebrow">Features</div>
+              <div className="as-features">
+                {features.map((feature, index) => (
+                  <div key={index} className="as-feature">
+                    {feature.icon && <div className="as-feature-icon">{feature.icon}</div>}
+                    <div>
+                      <h3 className="as-feature-title">{feature.title}</h3>
+                      <p className="as-feature-desc">{feature.description}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Information */}
+          <section className="fn-card">
+            <div className="fn-eyebrow">Information</div>
+            <div className="as-info">
+              {[
+                { label: 'Provider', value: appInfo.provider, href: '/' },
+                { label: 'Size', value: appInfo.size },
+                { label: 'Category', value: appInfo.category },
+                { label: 'Compatibility', value: appInfo.compatibility },
+                { label: 'Languages', value: appInfo.languages },
+                { label: 'Age Rating', value: `${appInfo.ageRating}+` },
+                { label: 'Copyright', value: `© ${appInfo.copyright}` },
+              ].map((item, index) => (
+                <div key={index} className="as-info-row">
+                  <span className="as-info-k fn-mono">{item.label}</span>
+                  {item.href ? (
+                    <Link href={item.href} className="as-info-v as-info-link">{item.value}</Link>
+                  ) : (
+                    <span className="as-info-v">{item.value}</span>
+                  )}
+                </div>
+              ))}
+              <Link href={privacyPolicyLink} className="as-info-row as-info-cta">
+                <span>Privacy Policy</span>
+                <span className="as-arrow">→</span>
+              </Link>
+              <Link
+                href={termsLink}
+                className="as-info-row as-info-cta"
+                style={{ borderBottom: 'none' }}
+              >
+                <span>Terms of Use</span>
+                <span className="as-arrow">→</span>
+              </Link>
+            </div>
+          </section>
+
+          {/* More by developer */}
+          {developerApps.length > 0 && (
+            <section className="fn-card">
+              <div className="fn-eyebrow">More by {appInfo.provider}</div>
+              <div className="as-devapps">
+                {developerApps.map((app, index) => (
+                  <Link key={index} href={app.link} className="as-devapp">
+                    <img src={app.icon} alt={app.name} className="as-devapp-icon" />
+                    <div>
+                      <h3 className="as-devapp-name">{app.name}</h3>
+                      <p className="as-devapp-tag">{app.tagline}</p>
+                    </div>
+                    <span className="as-devapp-arrow">↗</span>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Back */}
+          <div className="as-backrow">
+            <Link href="/" className="fn-back">← Back to Portfolio</Link>
+          </div>
         </div>
       </div>
 
-      <style>{`
-        .app-store-page {
-          background-color: ${dark.bg};
-          min-height: 100vh;
-          padding-bottom: 80px;
-          padding-top: 40px;
+      <style dangerouslySetInnerHTML={{ __html: `
+        .as-page{padding-top:24px;}
+
+        /* Hero */
+        .as-hero-top{display:flex;align-items:center;gap:32px;}
+        .as-appicon{
+          width:150px;height:150px;border-radius:32px;flex-shrink:0;
+          border:1px solid var(--fn-ink);background:var(--fn-paper-2);object-fit:cover;
         }
-
-        .app-store-container {
-          max-width: 1200px;
-          margin: 0 auto;
-          padding: 0 40px;
+        .as-hero-main{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;}
+        .as-name{
+          font-family:'Bricolage Grotesque',sans-serif;font-weight:800;letter-spacing:-0.035em;
+          line-height:1.02;font-size:clamp(1.8rem,4vw,2.7rem);color:var(--fn-ink);margin:0 0 6px;
         }
+        .as-getbtn{margin-top:20px;}
 
-        .app-store-card {
-          background: ${dark.surface};
-          border: 1px solid ${dark.border};
-          padding: 32px 40px;
-          margin-bottom: 12px;
-          border-radius: 16px;
+        /* Stat band */
+        .as-stats{
+          display:grid;grid-template-columns:repeat(4,1fr);
+          margin-top:30px;border-top:1px solid var(--fn-ink);
         }
-
-        .section-label {
-          font-size: 11px;
-          font-weight: 600;
-          text-transform: uppercase;
-          letter-spacing: 0.08em;
-          color: ${dark.textDim};
+        .as-stat{padding:20px 22px 4px;border-right:1px solid var(--fn-line);}
+        .as-stat:last-child{border-right:none;}
+        .as-stat-k{
+          font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10.5px;font-weight:600;
+          letter-spacing:0.1em;text-transform:uppercase;color:var(--fn-acc);margin-bottom:10px;
         }
-
-        .hero-layout {
-          display: grid;
-          grid-template-columns: 200px 1fr;
-          gap: 40px;
-          margin-bottom: 16px;
-          align-items: center;
+        .as-stat-v{
+          font-family:'Bricolage Grotesque',sans-serif;font-weight:800;letter-spacing:-0.03em;
+          font-size:clamp(1.5rem,3vw,2.1rem);line-height:1;color:var(--fn-ink);
         }
-
-        .app-icon {
-          width: 200px;
-          height: 200px;
-          border-radius: 45px;
+        .as-stat-v--sm{font-size:clamp(0.95rem,1.6vw,1.15rem);letter-spacing:-0.01em;font-weight:700;line-height:1.2;}
+        .as-stat-link{display:inline-block;transition:color .2s var(--fn-ease);}
+        .as-stat-link:hover{color:var(--fn-acc-ink);}
+        .as-stat-sub{
+          font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;
+          color:var(--fn-ink-soft);margin-top:8px;letter-spacing:0.02em;
         }
+        .as-stars{color:var(--fn-acc);letter-spacing:1px;}
 
-        .stats-row {
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 32px;
-          padding-top: 24px;
-          border-top: 1px solid rgba(255,255,255, 0.04);
-          max-width: 800px;
+        /* What's New */
+        .as-version-row{display:flex;justify-content:space-between;font-size:13px;color:var(--fn-ink);margin-bottom:14px;}
+        .as-version-row .as-muted{color:var(--fn-ink-soft);}
+        .as-changes{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;}
+        .as-changes li{position:relative;padding-left:22px;font-size:15px;color:var(--fn-ink);line-height:1.5;}
+        .as-changes li::before{content:"\\203A";position:absolute;left:2px;top:-1px;color:var(--fn-acc);font-size:18px;line-height:1.3;}
+        .as-toggle{
+          margin-top:16px;background:none;border:none;cursor:pointer;padding:0;
+          color:var(--fn-acc-ink);font-size:12px;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;
         }
+        .as-toggle:hover{text-decoration:underline;}
 
-        .screenshots-scroll {
-          display: flex;
-          gap: 24px;
-          overflow-x: auto;
-          padding: 0 40px;
-          scroll-snap-type: x mandatory;
-          -webkit-overflow-scrolling: touch;
+        /* Preview */
+        .as-preview{padding-left:0;padding-right:0;}
+        .as-preview .fn-eyebrow{padding:0 36px;}
+        .as-shots{display:flex;gap:18px;overflow-x:auto;padding:4px 36px 6px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;}
+        .as-shot{flex:0 0 auto;width:248px;scroll-snap-align:start;border:1px solid var(--fn-ink);background:var(--fn-paper-2);}
+        .as-shot img{width:100%;height:auto;display:block;}
+
+        /* Features */
+        .as-features{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+        .as-feature{display:flex;gap:14px;padding:18px;border:1px solid var(--fn-line);background:var(--fn-paper);}
+        .as-feature-icon{
+          font-size:22px;flex-shrink:0;width:40px;height:40px;display:flex;align-items:center;justify-content:center;
+          border:1px solid var(--fn-line);background:var(--fn-paper-2);
         }
+        .as-feature-title{font-family:'Bricolage Grotesque',sans-serif;font-size:15px;font-weight:700;margin:2px 0 4px;color:var(--fn-ink);letter-spacing:-0.01em;}
+        .as-feature-desc{font-size:13px;color:var(--fn-ink-soft);margin:0;line-height:1.55;}
 
-        .screenshot-card {
-          flex: 0 0 auto;
-          width: 280px;
-          scroll-snap-align: start;
+        /* Information */
+        .as-info{display:flex;flex-direction:column;}
+        .as-info-row{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:13px 0;border-bottom:1px solid var(--fn-line);}
+        .as-info-k{font-size:12px;letter-spacing:0.04em;text-transform:uppercase;color:var(--fn-ink-soft);}
+        .as-info-v{font-size:14px;color:var(--fn-ink);text-align:right;font-weight:500;}
+        .as-info-link{text-decoration:none;color:var(--fn-acc-ink);transition:opacity .2s;}
+        .as-info-link:hover{opacity:0.7;}
+        .as-info-cta{text-decoration:none;color:var(--fn-ink);font-weight:600;font-size:14.5px;transition:padding-left .2s var(--fn-ease),color .2s;}
+        .as-info-cta:hover{color:var(--fn-acc-ink);padding-left:6px;}
+        .as-arrow{color:var(--fn-acc);font-size:17px;}
+
+        /* More by developer */
+        .as-devapps{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+        .as-devapp{
+          display:flex;gap:14px;align-items:center;padding:14px;text-decoration:none;
+          border:1px solid var(--fn-line);background:var(--fn-paper);position:relative;
+          transition:transform .2s var(--fn-ease),box-shadow .2s var(--fn-ease),border-color .2s;
         }
+        .as-devapp:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--fn-ink);border-color:var(--fn-ink);}
+        .as-devapp-icon{width:58px;height:58px;border-radius:14px;border:1px solid var(--fn-line);flex-shrink:0;}
+        .as-devapp-name{font-family:'Bricolage Grotesque',sans-serif;font-size:15px;font-weight:700;margin:0 0 2px;color:var(--fn-ink);letter-spacing:-0.01em;}
+        .as-devapp-tag{font-size:13px;color:var(--fn-ink-soft);margin:0;}
+        .as-devapp-arrow{margin-left:auto;color:var(--fn-acc);font-size:18px;}
 
-        .features-grid {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          gap: 16px;
+        /* Back */
+        .as-backrow{text-align:center;padding:34px 0 8px;}
+
+        @media (max-width:760px){
+          .as-hero-top{flex-direction:row;align-items:flex-start;gap:18px;}
+          .as-appicon{width:84px;height:84px;border-radius:20px;}
+          .as-getbtn{margin-top:14px;font-size:11px;padding:10px 14px;}
+          .as-stats{grid-template-columns:repeat(2,1fr);}
+          .as-stat:nth-child(2){border-right:none;}
+          .as-stat:nth-child(1),.as-stat:nth-child(2){border-bottom:1px solid var(--fn-line);}
+          .as-features{grid-template-columns:1fr;}
+          .as-devapps{grid-template-columns:1fr;}
+          .as-preview .fn-eyebrow{padding:0 18px;}
+          .as-shots{padding:4px 18px 6px;}
+          .as-shot{width:210px;}
         }
-
-        .developer-apps-grid {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          gap: 16px;
-        }
-
-        .developer-app-link:hover {
-          border-color: rgba(255,255,255,0.12) !important;
-        }
-
-        .app-store-badge:hover {
-          border-color: rgba(255,255,255,0.2) !important;
-        }
-
-        .back-to-portfolio:hover {
-          color: #a5b4fc !important;
-        }
-
-        @media (max-width: 900px) {
-          .app-store-page {
-            padding-top: 20px;
-            padding-bottom: 40px;
-          }
-
-          .app-store-container {
-            padding: 0;
-          }
-
-          .app-store-card {
-            border-radius: 0;
-            padding: 20px 16px;
-            border-left: none;
-            border-right: none;
-          }
-
-          .hero-layout {
-            display: flex;
-            gap: 16px;
-            align-items: flex-start;
-          }
-
-          .hero-layout h1 {
-            font-size: 24px !important;
-          }
-
-          .hero-layout p {
-            margin-bottom: 12px !important;
-          }
-
-          .app-icon {
-            width: 80px;
-            height: 80px;
-            border-radius: 18px;
-          }
-
-          .stats-row {
-            gap: 12px;
-          }
-
-          .stats-row > div > div:nth-child(2) {
-            font-size: 20px !important;
-          }
-
-          .screenshots-scroll {
-            gap: 12px;
-            padding: 0 16px;
-          }
-
-          .screenshot-card {
-            width: 240px;
-          }
-
-          .features-grid {
-            grid-template-columns: 1fr;
-            gap: 12px;
-          }
-
-          .developer-apps-grid {
-            grid-template-columns: 1fr;
-          }
-
-          .section-label {
-            margin-left: 0 !important;
-          }
-        }
-      `}</style>
-    </div>
+      ` }} />
+    </>
   );
 }
